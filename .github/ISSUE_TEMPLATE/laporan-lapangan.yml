@@ -1,0 +1,51 @@
+name: Laporan lapangan
+description: Kirim kondisi api dari lapangan. Laporan tampil di peta setelah pembaruan berikutnya (maks. 3 jam).
+title: "[Laporan] "
+labels: ["laporan-lapangan"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Laporan ini **publik**. Jangan tulis data pribadi (nomor HP, NIK, alamat rumah warga).
+        Koordinat bisa diambil dari Google Maps (tekan lama di peta, salin angka) atau dari aplikasi GPS.
+  - type: input
+    id: koordinat
+    attributes:
+      label: Koordinat
+      description: "Lintang, bujur. Contoh: -2.7634, 114.1032"
+      placeholder: "-2.7634, 114.1032"
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      options:
+        - Api menyala
+        - Api membesar
+        - Asap tanpa api terlihat
+        - Bara / api di bawah permukaan (gambut)
+        - Sudah dipadamkan
+        - Dalam pendinginan
+        - Tidak ditemukan api (titik panas palsu)
+    validations:
+      required: true
+  - type: input
+    id: tim
+    attributes:
+      label: Tim
+      description: "Nama regu atau instansi. Contoh: Daops Manggala Agni Pulang Pisau, BPBD, MPA Desa"
+  - type: input
+    id: luas
+    attributes:
+      label: Perkiraan luas (ha)
+  - type: textarea
+    id: catatan
+    attributes:
+      label: Catatan
+      description: Jenis lahan, akses jalan, sumber air, kebutuhan bantuan, dan sebagainya.
+  - type: input
+    id: foto
+    attributes:
+      label: Foto
+      description: Tautan foto (Google Drive, dsb.) atau seret foto ke kolom Catatan.
