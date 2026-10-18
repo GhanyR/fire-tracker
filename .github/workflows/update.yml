@@ -1,0 +1,101 @@
+name: Perbarui data & situs
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"   # tiap 3 jam
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["web/**", "pipeline/**", "inputs/**", ".github/workflows/update.yml"]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  issues: write
+
+concurrency:
+  group: perbarui-data
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      PAN_REPO_URL: https://github.com/${{ github.repository }}
+      PAN_PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+      PAN_PREV_DATA_URL: https://raw.githubusercontent.com/${{ github.repository }}/data/data
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      GENERIC_WEBHOOK_URL: ${{ secrets.GENERIC_WEBHOOK_URL }}
+      REPORTS_CSV_URL: ${{ secrets.REPORTS_CSV_URL }}
+      PAN_NOTIFY_PROVINCES: ${{ vars.NOTIFY_PROVINCES }}
+      # kunci peta 3D Google (lihat README, bagian Citra 3D ala Google Earth)
+      PAN_CESIUM_TOKEN: ${{ vars.CESIUM_TOKEN }}
+      PAN_GOOGLE_TILES_KEY: ${{ vars.GOOGLE_TILES_KEY }}
+      TELEGRAM_BOT_USERNAME: ${{ vars.TELEGRAM_BOT_USERNAME }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pipeline/requirements.txt
+      - name: Pastikan label laporan lapangan ada
+        continue-on-error: true
+        run: |
+          curl -s -o /dev/null -X POST -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/labels \
+            -d '{"name":"laporan-lapangan","color":"d9501c","description":"Laporan dari tim lapangan (tampil di peta)"}'
+      - name: Pasang dependensi
+        run: pip install -r pipeline/requirements.txt
+      - name: Uji cepat pipeline (data tiruan)
+        run: |
+          python pipeline/tests/make_fixtures.py
+          PAN_OFFLINE=1 python -m pipeline.build --out /tmp/uji --no-tiles
+      - name: Cache ubin peta dasar
+        uses: actions/cache@v4
+        with:
+          path: cache/tiles
+          key: ubin-dasar-v1-${{ github.run_id }}
+          restore-keys: ubin-dasar-v1-
+      - name: Ambil & olah data terbaru
+        run: python -m pipeline.build --out site/data
+      - name: Susun situs
+        run: python web/build_site.py --out site
+      - name: Simpan data ke cabang 'data' (URL tetap untuk alat lain)
+        run: |
+          cd site
+          git init -q -b data
+          git config user.name "pantau-api-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git commit -q -m "data $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" data
+          rm -rf .git
+      - name: Siapkan GitHub Pages
+        id: pages
+        continue-on-error: true
+        uses: actions/configure-pages@v5
+      - name: Unggah situs
+        if: steps.pages.outcome == 'success'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+    outputs:
+      pages: ${{ steps.pages.outcome }}
+
+  deploy:
+    needs: build
+    if: needs.build.outputs.pages == 'success'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

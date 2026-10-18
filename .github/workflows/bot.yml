@@ -1,0 +1,54 @@
+name: Bot Telegram (peringatan lokasi)
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # tiap 10 menit: jawab pesan & kirim peringatan setelah data baru
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bot-telegram
+  cancel-in-progress: false
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      SUBS_KEY: ${{ secrets.SUBS_KEY }}
+      PAN_PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+      PAN_PREV_DATA_URL: https://raw.githubusercontent.com/${{ github.repository }}/data/data
+    steps:
+      - name: Lewati bila bot belum diatur
+        id: cek
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$SUBS_KEY" ]; then echo "aktif=0" >> "$GITHUB_OUTPUT"; echo "Bot belum diatur (secrets TELEGRAM_BOT_TOKEN dan SUBS_KEY)."; else echo "aktif=1" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/checkout@v4
+        if: steps.cek.outputs.aktif == '1'
+      - name: Ambil status bot
+        if: steps.cek.outputs.aktif == '1'
+        run: |
+          mkdir -p state
+          if git fetch -q --depth 1 origin bot-state; then git show origin/bot-state:state.json > state/state.json; else echo "status baru"; fi
+      - uses: actions/setup-python@v5
+        if: steps.cek.outputs.aktif == '1'
+        with:
+          python-version: "3.12"
+      - name: Jalankan bot
+        if: steps.cek.outputs.aktif == '1'
+        run: |
+          pip install -q requests cryptography
+          python -m pipeline.bot --state state/state.json
+      - name: Simpan status (terenkripsi) ke cabang bot-state
+        if: steps.cek.outputs.aktif == '1'
+        run: |
+          cd state
+          git init -q -b bot-state
+          git config user.name "pantau-api-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state.json
+          git commit -q -m "status bot"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" bot-state
