@@ -1614,15 +1614,16 @@ function updateLayers(){if(!deckgl)return;setAttrib();
   if(Ly.px.on&&S.px&&(!is3d||zoom>6.5)){const {list}=pxVisible(T);const P=S.px;const fl=FLK;const z3=i=>is3d?natZ(P.lon[i],P.lat[i])+60:0;
     out.push(new deck.IconLayer({id:'px-glow',data:list,iconAtlas:softSprite(),iconMapping:SOFT_MAP,getIcon:()=>'s',sizeUnits:'meters',sizeMinPixels:lightBase?5:8,sizeMaxPixels:90,billboard:false,
       getPosition:i=>[P.lon[i],P.lat[i],z3(i)],getSize:i=>(zoom>=9.5?650+Math.min(900,Math.sqrt(P.frp[i])*60):1500+Math.min(2400,Math.sqrt(P.frp[i])*140)),
-      getColor:i=>{const a=pxAge(i,T);const c=ageCol(a);const f=a<12?0.8+0.2*Math.sin(fl*0.9+hash01(i)*40):1;return [c[0],c[1],c[2],Math.round((a<6?235:a<18?170:100)*f*Ly.px.op)]},
-      parameters:lightBase?SOFT:ADD,alphaCutoff:0.01,updateTriggers:{getColor:[T,fl,Ly.px.op],getPosition:is3d,getSize:zoom>=9.5}}));
+      getColor:i=>{const a=pxAge(i,T);const c=ageCol(zoom<8?Math.max(a,7):a);const f=a<12?0.8+0.2*Math.sin(fl*0.9+hash01(i)*40):1;return [c[0],c[1],c[2],Math.round((a<6?235:a<18?170:100)*f*Ly.px.op*(zoom<8?0.55:1))]},
+      parameters:lightBase||zoom<8?SOFT:ADD,alphaCutoff:0.01,updateTriggers:{getColor:[T,fl,Ly.px.op,zoom<8],getPosition:is3d,getSize:zoom>=9.5}}));
     // diperbesar: api baru tampil sebagai nyala beranimasi, bukan titik
     const flameZ=!is3d&&zoom>=10.3;let dots=list;
     if(flameZ){const live=list.filter(i=>pxAge(i,T)<12);dots=list.filter(i=>pxAge(i,T)>=12);const tt=performance.now()/1000;
-      out.push(new deck.ScatterplotLayer({id:'px-f',data:live,getPosition:i=>[P.lon[i],P.lat[i]],radiusUnits:'meters',getRadius:i=>(60+Math.min(90,Math.sqrt(P.frp[i])*7))*(1-pxAge(i,T)/24),radiusMinPixels:1.5,
-        getFillColor:i=>{const f=0.72+0.28*Math.sin(tt*6+hash01(i)*40)*Math.sin(tt*2.3+hash01(i+5)*20);return [255,Math.round(196+44*f),Math.round(110+90*f),Math.round(255*f*Ly.px.op)]},parameters:ADD,pickable:true,updateTriggers:{getFillColor:[fl,Ly.px.op],getRadius:T}}))}
-    out.push(new deck.ScatterplotLayer({id:'px',data:dots,getPosition:i=>[P.lon[i],P.lat[i],z3(i)],radiusUnits:'meters',getRadius:i=>flameZ?90:150+Math.min(120,Math.sqrt(P.frp[i])*6),radiusMinPixels:1.6,radiusMaxPixels:14,stroked:zoom>9.5&&!flameZ,getLineColor:[50,14,8,170],lineWidthMinPixels:.5,
-      getFillColor:i=>{const a=pxAge(i,T);const c=ageCol(Math.max(0,a-3));return [c[0],c[1],c[2],Math.round(255*Ly.px.op)]},pickable:true,updateTriggers:{getFillColor:[T,Ly.px.op],getPosition:is3d}}))}
+      out.push(new deck.IconLayer({id:'px-f',data:live,iconAtlas:softSprite(),iconMapping:SOFT_MAP,getIcon:()=>'s',sizeUnits:'meters',billboard:false,getPosition:i=>[P.lon[i],P.lat[i]],
+        getSize:i=>(560+Math.min(260,Math.sqrt(P.frp[i])*22))*(1-pxAge(i,T)/30),getColor:i=>{const f=0.72+0.28*Math.sin(tt*6+hash01(i)*40)*Math.sin(tt*2.3+hash01(i+5)*20);const a=pxAge(i,T);return [255,Math.round(150+60*f-a*4),Math.round(50+40*f),Math.round(235*f*Ly.px.op)]},
+        parameters:ADD,alphaCutoff:0.01,pickable:true,updateTriggers:{getColor:[fl,Ly.px.op,T],getSize:T}}))}
+    out.push(new deck.ScatterplotLayer({id:'px',data:dots,getPosition:i=>[P.lon[i],P.lat[i],z3(i)],radiusUnits:'meters',getRadius:i=>flameZ?55:150+Math.min(120,Math.sqrt(P.frp[i])*6),radiusMinPixels:1.6,radiusMaxPixels:14,stroked:zoom>9.5&&!flameZ,getLineColor:[50,14,8,170],lineWidthMinPixels:.5,
+      getFillColor:i=>{const a=pxAge(i,T);const c=ageCol(Math.max(0,a-3));return [c[0],c[1],c[2],Math.round((flameZ?150:255)*Ly.px.op)]},pickable:true,updateTriggers:{getFillColor:[T,Ly.px.op,flameZ],getPosition:is3d}}))}
   if(Ly.px.on&&S.px&&!is3d&&zoom>=8.4){const puffs=smoke2d(vis,T);if(puffs.length)out.push(new deck.IconLayer({id:'smoke2d',data:puffs,iconAtlas:softSprite(),iconMapping:SOFT_MAP,getIcon:()=>'s',sizeUnits:'meters',billboard:false,
     getPosition:p=>p.p,getSize:p=>p.s,getColor:p=>[p.g,p.g-3,p.g-9,Math.round(p.a*Ly.px.op)],parameters:SOFT,alphaCutoff:0.01,updateTriggers:{getColor:Ly.px.op}}))}
   if(Ly.proj&&Ly.proj.on&&S.sel&&!is3d){const pr=projSpread(S.sel);if(pr){out.push(new deck.PolygonLayer({id:'proj',data:[pr],getPolygon:p=>p.poly,filled:true,stroked:true,getFillColor:[255,128,32,Math.round(46*Ly.proj.op)],getLineColor:[255,170,70,Math.round(235*Ly.proj.op)],getLineWidth:1.6,lineWidthUnits:'pixels',getDashArray:[6,4],extensions:ext,pickable:true}));
@@ -1630,12 +1631,13 @@ function updateLayers(){if(!deckgl)return;setAttrib();
   if(Ly.spread.on){const A=vis.filter(d=>d.dist>=1&&(d.cls!=='rendah'||zoom>7));out.push(new deck.PathLayer({id:'spread',data:A,getPath:d=>arrowPath(d.lon,d.lat,d.brg,Math.max(d.dist,2)),getColor:lightBase?[23,32,26,Math.round(220*Ly.spread.op)]:[160,215,255,Math.round(230*Ly.spread.op)],getWidth:2,widthUnits:'pixels',capRounded:true,jointRounded:true,updateTriggers:{getColor:[lightBase,Ly.spread.op]},extensions:ext}))}
   // penanda insiden: cincin tipis warna prioritas dengan titik putih (bukan lencana)
   const sel=S.sel;const rad=d=>sel===d?12:4+d.score/14;const zz=d=>is3d?natZ(d.lon,d.lat)+300:0;const ut={getPosition:is3d};
-  out.push(new deck.ScatterplotLayer({id:'inc-sh',data:vis,getPosition:d=>[d.lon,d.lat,zz(d)],radiusUnits:'pixels',getRadius:d=>rad(d)+1.2,filled:false,stroked:true,getLineColor:[0,0,0,110],getLineWidth:3.5,lineWidthUnits:'pixels',updateTriggers:{...ut,getRadius:sel&&sel.id}}));
+  const mk=vis.filter(d=>sel===d||d.cls==='kritis'||(d.cls==='tinggi'&&zoom>5.4)||(d.cls==='sedang'&&zoom>6.6)||zoom>7.8);
+  out.push(new deck.ScatterplotLayer({id:'inc-sh',data:mk,getPosition:d=>[d.lon,d.lat,zz(d)],radiusUnits:'pixels',getRadius:d=>rad(d)+1.2,filled:false,stroked:true,getLineColor:[0,0,0,110],getLineWidth:3.5,lineWidthUnits:'pixels',updateTriggers:{...ut,getRadius:sel&&sel.id}}));
   if(sel&&vis.includes(sel))out.push(new deck.ScatterplotLayer({id:'inc-sel',data:[sel],getPosition:d=>[d.lon,d.lat,zz(d)],radiusUnits:'pixels',getRadius:19,filled:false,stroked:true,getLineColor:[255,255,255,225],getLineWidth:1.5,lineWidthUnits:'pixels',updateTriggers:ut}));
-  out.push(new deck.ScatterplotLayer({id:'inc',data:vis,getPosition:d=>[d.lon,d.lat,zz(d)],radiusUnits:'pixels',getRadius:rad,stroked:true,lineWidthUnits:'pixels',getLineWidth:d=>sel===d?2.5:1.75,
+  out.push(new deck.ScatterplotLayer({id:'inc',data:mk,getPosition:d=>[d.lon,d.lat,zz(d)],radiusUnits:'pixels',getRadius:rad,stroked:true,lineWidthUnits:'pixels',getLineWidth:d=>sel===d?2.5:1.75,
     getLineColor:d=>[...clsRGB(d.cls),d.n24>0?255:150],getFillColor:d=>[...clsRGB(d.cls),d.n24>0?(sel===d?95:62):24],pickable:true,
     updateTriggers:{...ut,getRadius:sel&&sel.id,getLineWidth:sel&&sel.id,getFillColor:[dark,sel&&sel.id],getLineColor:dark}}));
-  out.push(new deck.ScatterplotLayer({id:'inc-c',data:vis,getPosition:d=>[d.lon,d.lat,zz(d)],radiusUnits:'pixels',getRadius:d=>sel===d?2.6:1.7,getFillColor:[255,255,255,235],updateTriggers:{...ut,getRadius:sel&&sel.id}}));
+  out.push(new deck.ScatterplotLayer({id:'inc-c',data:mk,getPosition:d=>[d.lon,d.lat,zz(d)],radiusUnits:'pixels',getRadius:d=>sel===d?2.6:1.7,getFillColor:[255,255,255,235],updateTriggers:{...ut,getRadius:sel&&sel.id}}));
   if(Ly.wind.on&&S.wx.length){out.push(new deck.PathLayer({id:'wind',data:S.wx.filter(w=>w.ws!=null),getPath:w=>{const a=windAt(w,T)||w;return arrowPath(w.lon,w.lat,(a.wd+180)%360,Math.max(4,a.ws*0.9))},getColor:satBase||dark?[150,200,255,Math.round(230*Ly.wind.op)]:[53,106,156,Math.round(230*Ly.wind.op)],getWidth:1.8,widthUnits:'pixels',pickable:true,updateTriggers:{getPath:Math.round(T/3),getColor:[dark,satBase]},extensions:ext}))}
   if(Ly.aq.on){out.push(new deck.ScatterplotLayer({id:'aq',data:S.aq,getPosition:a=>[a.lon,a.lat],radiusUnits:'pixels',getRadius:a=>7+Math.min(14,Math.sqrt(aqAvg24(a)||0)/2.5),getFillColor:a=>[...hex2rgb(ispu(aqAvg24(a)).col),Math.round(225*Ly.aq.op)],stroked:true,getLineColor:[255,255,255,230],lineWidthMinPixels:1.5,pickable:true,extensions:ext}))}
   if(Ly.res.on){out.push(new deck.ScatterplotLayer({id:'res',data:S.res.filter(r=>r.t!=='A'&&r.t!=='H'),getPosition:r=>[r.lon,r.lat],radiusUnits:'pixels',getRadius:r=>r.t==='M'?6:4.5,getFillColor:r=>[...RES_COL[r.t],Math.round(240*Ly.res.op)],stroked:true,getLineColor:[255,255,255,240],lineWidthMinPixels:1.2,pickable:true,extensions:ext}))}
@@ -1814,7 +1816,8 @@ function buildStatic(){const P=SCN.pkg,G=SCN.g,I=G.I,d=SCN.inc;const OW=SCN.lowP
   x.lineCap='round';x.lineJoin='round';
   if(P.osm&&SCN.show.osm){const sc=clamp(22/mpp,0.8,3);
     for(const l of P.osm.lakes){if(l.c.length<3)continue;x.beginPath();x.moveTo(X(l.c[0][0]),Y(l.c[0][1]));for(const p of l.c)x.lineTo(X(p[0]),Y(p[1]));x.closePath();x.fillStyle='rgba(60,140,215,0.55)';x.fill()}
-    for(const r of P.osm.water){line(r.c,r.rank===1?'rgba(95,180,255,0.95)':'rgba(110,190,255,0.8)',(r.rank===1?3.4:r.rank===2?1.9:1.2)*sc,r.rank>=3?[3*sc,3*sc]:null)}
+    const real=SCN.ground&&SCN.ground!=='pkg';const wk=real?0.5:1;
+    for(const r of P.osm.water){line(r.c,r.rank===1?'rgba(95,180,255,'+(0.95*wk)+')':'rgba(110,190,255,'+(0.8*wk)+')',(r.rank===1?3.4:r.rank===2?1.9:1.2)*sc*(real?0.6:1),r.rank>=3?[3*sc,3*sc]:null)}
     for(const r of P.osm.roads.slice().sort((a,b)=>b.rank-a.rank)){if(r.rank<=3)line(r.c,'rgba(20,16,12,0.5)',(r.rank===1?5:r.rank===2?4:2.6)*sc);line(r.c,r.rank<=2?'rgba(255,232,180,0.98)':r.rank===3?'rgba(255,246,228,0.85)':'rgba(236,220,186,0.8)',(r.rank===1?3:r.rank===2?2.2:r.rank===3?1.4:1)*sc,r.rank===4?[4*sc,3*sc]:null)}}
   if(SCN.show.rings){for(const km of [1,2,5,10]){const r=km*1000/mpp;if(r*2>Math.max(OW,OH)*1.4)continue;x.beginPath();x.arc(X(d.lon),Y(d.lat),r,0,Math.PI*2);x.strokeStyle='rgba(255,255,255,0.6)';x.lineWidth=1.6*OW/1024;x.setLineDash([8*OW/1024,6*OW/1024]);x.stroke()}
     x.setLineDash([]);x.beginPath();x.arc(X(d.lon),Y(d.lat),4*OW/1024,0,Math.PI*2);x.fillStyle='#fff';x.fill()}
