@@ -1,0 +1,1763 @@
+{
+  "meta": {
+    "dibuat": "2026-10-17T17:30+07:00",
+    "cakupan": "Karhutla dan kabut asap Indonesia, berita Sep-Okt 2026 (utama 7-17 Okt)",
+    "catatan_metodologi": [
+      "Hotspot 'keyakinan tinggi' (Kemenhut, ~21:00 WIB) dan hotspot 'semua tingkat kepercayaan' (SiPongi via Databoks, 24 jam) adalah dua seri berbeda; jangan dicampur.",
+      "Hotspot bukan jumlah kebakaran atau luas terbakar.",
+      "Angka luas berbeda antar lembaga (BNPB, BPBD, SiPongi, Walhi); setiap entri mencantumkan lembaganya.",
+      "Entri bertanggal di luar Sep-Okt 2026 diberi catatan PERHATIAN atau hanya referensi (kontak, Daops).",
+      "Halaman asianews.network tidak bisa dibaca (rate limit) dan tidak dipakai."
+    ]
+  },
+  "status_darurat": [
+    {
+      "wilayah": "Nasional",
+      "tingkat": "nasional",
+      "status": "Belum ditetapkan bencana nasional",
+      "mulai": null,
+      "berakhir": null,
+      "keterangan": "Kepala BNPB baru Letjen TNI Kristomei Sianturi (dilantik 15 Okt) akan evaluasi status. Menkopolkam Dudung (12 Okt): 'Belum, kami masih mampu menangani.'",
+      "sumber": "https://katadata.co.id/berita/nasional/6ad0bc1675808/kepala-bnpb-belum-bisa-pastikan-karhutla-jadi-bencana-nasional-ini-alasannya",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "wilayah": "Provinsi Kalimantan Tengah",
+      "tingkat": "provinsi",
+      "status": "Tanggap darurat karhutla",
+      "mulai": "2026-08-31",
+      "berakhir": "2026-09-29",
+      "keterangan": "Ditetapkan gubernur 31 Agu. Laporan perpanjangan setelah 29 Sep tidak ditemukan.",
+      "sumber": "https://www.rctiplus.com/news/detail/inews/5463384/karhutla-meluas--pemprov-kalteng-tetapkan-status-tanggap-darurat-hingga-29-september",
+      "tanggal": "2026-09-01"
+    },
+    {
+      "wilayah": "Kota Palangka Raya, Kalteng",
+      "tingkat": "kabupaten/kota",
+      "status": "Tanggap darurat karhutla dan kekeringan (perpanjangan 30 hari)",
+      "mulai": "2026-09-09",
+      "berakhir": "2026-10-08",
+      "keterangan": "Status siaga karhutla sejak 1 Jun 2026. Laporan perpanjangan setelah 8 Okt tidak ditemukan.",
+      "sumber": "https://infopublik.id/kategori/prioritas-nasional-2026/987934/pemkot-palangka-raya-perpanjang-status-tanggap-darurat-karhutla-30-hari",
+      "tanggal": "2026-09-08"
+    },
+    {
+      "wilayah": "Kab. Kotawaringin Timur, Kalteng",
+      "tingkat": "kabupaten/kota",
+      "status": "Tanggap darurat karhutla (perpanjangan 15 hari)",
+      "mulai": "2026-10-01",
+      "berakhir": "2026-10-15",
+      "keterangan": "Berakhir hanya jika hujan cukup dan tidak ada hotspot/asap per 15 Okt. Keputusan setelah 15 Okt tidak ditemukan.",
+      "sumber": "https://journalarta.com/news/2026/09/29/karhutla-masih-parah-kotim-kembali-perpanjang-status-tanggap-darurat/",
+      "tanggal": "2026-09-29"
+    },
+    {
+      "wilayah": "Kab. Kapuas, Kalteng",
+      "tingkat": "kabupaten/kota",
+      "status": "Tanggap darurat kekeringan dan karhutla (perpanjangan 14 hari)",
+      "mulai": "2026-09-30",
+      "berakhir": "2026-10-13",
+      "keterangan": "Tanggal mulai disimpulkan dari rapat 29 Sep dan perpanjangan 14 hari.",
+      "sumber": "https://journalarta.com/news/2026/09/30/status-tanggap-darurat-kekeringan-dan-karhutla-di-kapuas-kembali-diperpanjang/",
+      "tanggal": "2026-09-30"
+    },
+    {
+      "wilayah": "Provinsi Kalimantan Barat",
+      "tingkat": "provinsi",
+      "status": "Tanggap darurat bencana asap akibat karhutla (perpanjangan)",
+      "mulai": "2026-09-07",
+      "berakhir": "2026-09-20",
+      "keterangan": "Laporan perpanjangan setelah 20 Sep tidak ditemukan.",
+      "sumber": "https://www.metrotvnews.com/read/NP6CLGp0-pemprov-kalbar-perpanjang-status-darurat-asap-karhutla-hingga-20-september",
+      "tanggal": "2026-09-10"
+    },
+    {
+      "wilayah": "Kab. Kubu Raya, Kalbar",
+      "tingkat": "kabupaten/kota",
+      "status": "Tanggap darurat bencana (diperpanjang)",
+      "mulai": null,
+      "berakhir": null,
+      "keterangan": "Tanggal tidak disebut di sumber.",
+      "sumber": "https://www.metrotvnews.com/read/NP6CLGp0-pemprov-kalbar-perpanjang-status-darurat-asap-karhutla-hingga-20-september",
+      "tanggal": "2026-09-10"
+    },
+    {
+      "wilayah": "Provinsi Kalimantan Barat",
+      "tingkat": "provinsi",
+      "status": "Siaga darurat bencana asap",
+      "mulai": "2026-02-02",
+      "berakhir": "2026-11-15",
+      "keterangan": "PERHATIAN: sumber bertanggal 29 Jul 2026, di luar rentang Sep-Okt. Delapan kabupaten juga berstatus siaga.",
+      "sumber": "https://www.metrotvnews.com/read/bD2CwmVn-status-siaga-darurat-bencana-asap-di-kalbar-hingga-november-2026",
+      "tanggal": "2026-07-29"
+    },
+    {
+      "wilayah": "Provinsi Sumatera Selatan",
+      "tingkat": "provinsi",
+      "status": "Siaga darurat karhutla",
+      "mulai": "2026-04-22",
+      "berakhir": "2026-11-30",
+      "keterangan": "PERHATIAN: sumber bertanggal 24 Apr 2026, di luar rentang Sep-Okt. Ogan Ilir dan OKI juga tetapkan siaga.",
+      "sumber": "https://www.antaranews.com/berita/5540707/pemprov-sumsel-tetapkan-siaga-darurat-karhutla-hingga-november-2026",
+      "tanggal": "2026-04-24"
+    }
+  ],
+  "insiden_berita": [
+    {
+      "lokasi": "Taman Nasional Tanjung Puting",
+      "provinsi": "Kalimantan Tengah",
+      "kabupaten": "Kotawaringin Barat dan Seruyan",
+      "kecamatan": null,
+      "desa": null,
+      "lat": -2.95,
+      "lon": 111.9,
+      "koordinat": "perkiraan kawasan taman nasional",
+      "tanggal_kejadian": "2026-10-12",
+      "luas_ha": 513.89,
+      "jenis_lahan": "Taman nasional, tanah mineral (bukan gambut)",
+      "korban": null,
+      "pengungsi": null,
+      "ringkasan": "Api baru 513,89 ha per 12 Okt (BNPB). Heli water bombing di Kalteng hampir sepekan tak bisa terbang karena jarak pandang.",
+      "sumber": "https://kabar24.bisnis.com/read/20261013/15/2012121/bnpb-karhutla-di-kalimantan-hingga-51389-hektare",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "lokasi": "TN Tanjung Puting: Pesalat, Teluk Pulai, Sungai Buluh Kecil, Sungai Buluh Besar, Sungai Bawung, Tanjung Rengas",
+      "provinsi": "Kalimantan Tengah",
+      "kabupaten": "Kotawaringin Barat dan Seruyan",
+      "kecamatan": null,
+      "desa": null,
+      "lat": null,
+      "lon": null,
+      "koordinat": null,
+      "tanggal_kejadian": "2026-10-14",
+      "luas_ha": null,
+      "jenis_lahan": "Taman nasional",
+      "korban": null,
+      "pengungsi": null,
+      "ringkasan": "Menhut petakan front api; target cegah api masuk zona inti. ~160 pasukan darat, butuh ~30 sumur bor, drone termal. Relawan TNTP kirim surat terbuka, kewalahan.",
+      "sumber": "https://rm.id/baca-berita/government-action/330211/karhutla-tanjung-puting-menhut-petakan-4-medan-perang-lawan-api",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "lokasi": "Blok Pusung Dawa (Grid A83) menjalar ke Mentigen, TN Bromo Tengger Semeru",
+      "provinsi": "Jawa Timur",
+      "kabupaten": "Probolinggo",
+      "kecamatan": null,
+      "desa": "Ngadirejo",
+      "lat": -7.93,
+      "lon": 112.96,
+      "koordinat": "perkiraan area Mentigen/Cemoro Lawang",
+      "tanggal_kejadian": "2026-10-15",
+      "luas_ha": null,
+      "jenis_lahan": "Ladang warga lalu kawasan taman nasional, medan curam",
+      "korban": "4 tewas (Sukaris PNS BB TNBTS; Wisnu Yuda Pratama dan Sefriel Ardiansyah staf PT Mitra Indo Permai; Hendra Rony Wagiyanata Manggala Agni), 2 luka bakar berat (Munawi MPA, Suraji)",
+      "pengungsi": null,
+      "ringkasan": "Api mulai 13 Okt 14:23, padam 14 Okt 11:45, muncul lagi 15 Okt 09:20. Sekitar 13:00 angin dan perubahan perilaku api menjebak 6 personel.",
+      "sumber": "https://www.kehutanan.go.id/news/kemenhut-berduka-atas-gugurnya-empat-petugas-dan-relawan-saat-pemadaman-karhutla-di-bromo",
+      "tanggal": "2026-10-16"
+    },
+    {
+      "lokasi": "Dusun Serdang, Desa Jelutung II",
+      "provinsi": "Kepulauan Bangka Belitung",
+      "kabupaten": "Bangka Selatan",
+      "kecamatan": "Simpang Rimba",
+      "desa": "Jelutung II",
+      "lat": -2.56,
+      "lon": 106.0,
+      "koordinat": "pusat Kecamatan Simpang Rimba (Wikipedia), bukan titik desa",
+      "tanggal_kejadian": "2026-10-10",
+      "luas_ha": 8.3,
+      "jenis_lahan": "Lahan gambut menjalar ke permukiman",
+      "korban": "Tidak ada korban jiwa; ibu dan anak terjebak di pondok dievakuasi tim SAR",
+      "pengungsi": "Sekitar 500 mengungsi ke sekolah dan masjid; 1.800-2.400 jiwa terdampak",
+      "ringkasan": "305 rumah hangus total (BPBD via Reuters) dan 50 bangunan walet. Angka awal BPBD 500-600 rumah, belum final.",
+      "sumber": "https://www.internazionale.it/ultime-notizie-reuters/2026/10/12/wildfires-spread-into-residential-areas-in-indonesia-s-bangka-belitung-destroying-over-300-houses",
+      "tanggal": "2026-10-12"
+    },
+    {
+      "lokasi": "10 distrik di Kab. Merauke (Eli Kobel, Ilwayab, Kurik, Ngguti, Sota, Tanah Miring, Muting, Subur, Kaptel, Nokenjere)",
+      "provinsi": "Papua Selatan",
+      "kabupaten": "Merauke",
+      "kecamatan": "10 distrik",
+      "desa": "Bumun, Wanam, Harapan Makmur, Salam Epe, Sota, Sarmayam Indah, Set Agung, Wakai, Ihalik, Kondo",
+      "lat": null,
+      "lon": null,
+      "koordinat": "tersebar",
+      "tanggal_kejadian": "2026-10-09",
+      "luas_ha": 63,
+      "jenis_lahan": null,
+      "korban": null,
+      "pengungsi": null,
+      "ringkasan": "BNPB: ~63 ha di 9 lokasi (Bumun 20 ha, Wanam 9, Harapan Makmur 7, Salam Epe 7, Sota 5, Sarmayam Indah 5, Set Agung 4, Wakai 3, Ihalik 3); Kondo masih disurvei.",
+      "sumber": "https://databoks.katadata.co.id/lingkungan/statistik/6ace0460c8422/papua-selatan-dilanda-karhutla-pada-9-oktober-2026-ini-sebarannya",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "lokasi": "Kawasan puncak Gunung Arjuno, Tahura Raden Soerjo",
+      "provinsi": "Jawa Timur",
+      "kabupaten": "Pasuruan",
+      "kecamatan": null,
+      "desa": null,
+      "lat": -7.76,
+      "lon": 112.59,
+      "koordinat": "perkiraan puncak Gunung Arjuno",
+      "tanggal_kejadian": "2026-10-16",
+      "luas_ha": null,
+      "jenis_lahan": "Hutan Tahura (pegunungan)",
+      "korban": null,
+      "pengungsi": null,
+      "ringkasan": "Api mulai Jumat 16 Okt malam. Semua jalur pendakian Arjuno-Welirang ditutup mulai 17 Okt. Luas masih didata. Judul Kompas 17 Okt: api meluas ke Gunung Ringgit, ratusan ha.",
+      "sumber": "https://www.suarasurabaya.net/kelanakota/2026/pendakian-gunung-arjuno-welirang-ditutup-mulai-17-oktober-akibat-kebakaran-di-tahura-raden-soerjo/",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "lokasi": "Londerang, Parit 4, Parit 5, Rantau Rasau",
+      "provinsi": "Jambi",
+      "kabupaten": "Tanjung Jabung Timur",
+      "kecamatan": null,
+      "desa": null,
+      "lat": null,
+      "lon": null,
+      "koordinat": null,
+      "tanggal_kejadian": "2026-10-08",
+      "luas_ha": 12533,
+      "jenis_lahan": "Gambut",
+      "korban": null,
+      "pengungsi": null,
+      "ringkasan": "Analisis Walhi Jambi (8 Okt). Api Parit 4 mulai 9 Agu; Area 7, 8, 9 masih terbakar. Total Walhi se-Jambi 43.451 ha vs Satgas 4.267 ha (6 Okt).",
+      "sumber": "https://mongabay.co.id/2026/10/15/gambut-jambi-terus-membara-derita-warga-terpapar-kabut-asap/",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "lokasi": "Dusun Trans III, konsesi PT Alam Lestari Nusantara",
+      "provinsi": "Jambi",
+      "kabupaten": "Sarolangun",
+      "kecamatan": "Pauh",
+      "desa": "Sepintun",
+      "lat": null,
+      "lon": null,
+      "koordinat": null,
+      "tanggal_kejadian": "2026-10-08",
+      "luas_ha": 2500,
+      "jenis_lahan": "Konsesi perkebunan (anak usaha PTPN III)",
+      "korban": null,
+      "pengungsi": null,
+      "ringkasan": "Walhi: lebih dari 2.500 ha terbakar di konsesi; total Sarolangun 8.922 ha.",
+      "sumber": "https://mongabay.co.id/2026/10/15/gambut-jambi-terus-membara-derita-warga-terpapar-kabut-asap/",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "lokasi": "Taman Nasional Berbak dan Sembilang",
+      "provinsi": "Jambi / Sumatera Selatan",
+      "kabupaten": "Tanjung Jabung Timur / Banyuasin",
+      "kecamatan": "Banyuasin II (asal api)",
+      "desa": "Tanah Pilih (Bagan 6, asal api)",
+      "lat": null,
+      "lon": null,
+      "koordinat": null,
+      "tanggal_kejadian": "2026-09-12",
+      "luas_ha": 11339,
+      "jenis_lahan": "Taman nasional gambut",
+      "korban": null,
+      "pengungsi": null,
+      "ringkasan": "11.339 ha terbakar, >2.134 ha di zona inti; api menjalar dari Banyuasin II, Sumsel sejak 12 Sep (Walhi).",
+      "sumber": "https://mongabay.co.id/2026/10/15/gambut-jambi-terus-membara-derita-warga-terpapar-kabut-asap/",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "lokasi": "7 kabupaten: OKI, Banyuasin, Musi Banyuasin, Muara Enim, PALI, Musi Rawas, Musi Rawas Utara",
+      "provinsi": "Sumatera Selatan",
+      "kabupaten": "7 kabupaten",
+      "kecamatan": null,
+      "desa": null,
+      "lat": null,
+      "lon": null,
+      "koordinat": null,
+      "tanggal_kejadian": "2026-10-12",
+      "luas_ha": null,
+      "jenis_lahan": "Rawa gambut, konsesi HTI dan perkebunan",
+      "korban": "2 kematian di Palembang dan OKI diduga terkait asap (belum dikonfirmasi medis)",
+      "pengungsi": null,
+      "ringkasan": "Asap pekat ~2 pekan di Palembang, Prabumulih, PALI. Kebakaran di Ogan Ilir dan Musi Banyuasin dilaporkan sebagian belum tertangani (13 Okt).",
+      "sumber": "https://mongabay.co.id/2026/10/12/7-kabupaten-di-sumatera-selatan-terus-terbakar-rawa-gambut-kembali-membara/",
+      "tanggal": "2026-10-12"
+    },
+    {
+      "lokasi": "Titik api FRP tertinggi sepekan (Kalimantan)",
+      "provinsi": "Kalimantan (tidak disebut)",
+      "kabupaten": null,
+      "kecamatan": null,
+      "desa": null,
+      "lat": -2.8,
+      "lon": 110.68,
+      "koordinat": "dari sumber",
+      "tanggal_kejadian": "2026-10-11",
+      "luas_ha": null,
+      "jenis_lahan": null,
+      "korban": null,
+      "pengungsi": null,
+      "ringkasan": "FRP 843 MW, tertinggi periode 8-15 Okt; rata-rata 7,0 MW per hotspot.",
+      "sumber": "https://databoks.katadata.co.id/demografi/statistik/c41d1243366cd51/arah-angin-asap-karhutla-sepekan-titik-api-terpanas-843-mw-di-kalimantan",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "lokasi": "TN Way Kambas (Lampung) dan Halmahera Timur (Maluku Utara)",
+      "provinsi": "Lampung; Maluku Utara",
+      "kabupaten": "Lampung Timur; Halmahera Timur",
+      "kecamatan": null,
+      "desa": null,
+      "lat": null,
+      "lon": null,
+      "koordinat": null,
+      "tanggal_kejadian": "2026-10-12",
+      "luas_ha": null,
+      "jenis_lahan": "Taman nasional / hutan",
+      "korban": null,
+      "pengungsi": null,
+      "ringkasan": "BNPB kerahkan heli water bombing ke area sulit: Way Kambas, Tanjung Puting (Pangkalan Bun), Halmahera Timur.",
+      "sumber": "https://infopublik.id/kategori/bencana/993035/bnpb-beberkan-kondisi-karhutla-di-enam-provinsi-tanjung-puting-paling-terdampak",
+      "tanggal": "2026-10-14"
+    }
+  ],
+  "angka_nasional": [
+    {
+      "indikator": "Hotspot keyakinan tinggi nasional",
+      "nilai": 1201,
+      "waktu_data": "2026-10-06 malam",
+      "lembaga": "Kemenhut/SiPongi",
+      "catatan": null,
+      "sumber": "https://infopublik.id/kategori/bencana/992842/kementerian-kehutanan-perkuat-pengendalian-karhutla-di-kalteng-dan-sumsel",
+      "tanggal": "2026-10-08"
+    },
+    {
+      "indikator": "Hotspot keyakinan tinggi nasional",
+      "nilai": 1176,
+      "waktu_data": "2026-10-07 21:00 WIB",
+      "lembaga": "Kemenhut/SiPongi",
+      "catatan": "Turun 25 dari hari sebelumnya",
+      "sumber": "https://infopublik.id/kategori/bencana/992842/kementerian-kehutanan-perkuat-pengendalian-karhutla-di-kalteng-dan-sumsel",
+      "tanggal": "2026-10-08"
+    },
+    {
+      "indikator": "Hotspot keyakinan tinggi nasional",
+      "nilai": 387,
+      "waktu_data": "2026-10-08",
+      "lembaga": "Kemenhut/SiPongi",
+      "catatan": "Turun 789",
+      "sumber": "https://www.rctiplus.com/news/detail/inews/5490672/hotspot-karhutla-turun-jadi-387-titik-sumsel-dan-kalteng-masih-tertinggi",
+      "tanggal": "2026-10-10"
+    },
+    {
+      "indikator": "Hotspot keyakinan tinggi nasional",
+      "nilai": 437,
+      "waktu_data": "2026-10-09",
+      "lembaga": "Kemenhut",
+      "catatan": null,
+      "sumber": "https://bernama.com/en/world/news.php?id=2618566",
+      "tanggal": "2026-10-11"
+    },
+    {
+      "indikator": "Hotspot keyakinan tinggi nasional",
+      "nilai": 793,
+      "waktu_data": "2026-10-10 21:10 WIB",
+      "lembaga": "Kemenhut",
+      "catatan": "6 provinsi prioritas: 421",
+      "sumber": "https://bernama.com/en/world/news.php?id=2618566",
+      "tanggal": "2026-10-11"
+    },
+    {
+      "indikator": "Hotspot keyakinan tinggi nasional",
+      "nilai": 909,
+      "waktu_data": "2026-10-11 21:00",
+      "lembaga": "Kemenhut",
+      "catatan": null,
+      "sumber": "https://bernama.com/en/world/news.php?id=2619000",
+      "tanggal": "2026-10-12"
+    },
+    {
+      "indikator": "Hotspot keyakinan tinggi nasional",
+      "nilai": 1085,
+      "waktu_data": "2026-10-12 malam",
+      "lembaga": "Kemenhut/SiPongi",
+      "catatan": null,
+      "sumber": "https://katadata.co.id/ekonomi-hijau/ekonomi-sirkular/6acedcb4a3072/asap-kebakaran-hutan-memburuk-ini-5-wilayah-dengan-polusi-udara-berbahaya",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "indikator": "Hotspot keyakinan tinggi nasional",
+      "nilai": 244,
+      "waktu_data": "2026-10-13 21:00 WIB",
+      "lembaga": "Kemenhut",
+      "catatan": "Turun 77,5% dari 1.085",
+      "sumber": "https://infopublik.id/kategori/bencana/993052/kemenhut-catat-penurunan-titik-panas-karhutla-sumatra-selatan-jadi-fokus-penanganan",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "indikator": "Hotspot keyakinan tinggi nasional",
+      "nilai": 372,
+      "waktu_data": "2026-10-14 21:00",
+      "lembaga": "Kemenhut",
+      "catatan": "6 provinsi prioritas: 294 (dari 148)",
+      "sumber": "https://bernama.com/en/news.php?id=2620605",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "indikator": "Hotspot keyakinan tinggi nasional",
+      "nilai": 799,
+      "waktu_data": "2026-10-15 malam",
+      "lembaga": "Kemenhut",
+      "catatan": "Naik 427 dari hari sebelumnya; angka terbaru yang ditemukan",
+      "sumber": "https://www.aljazeera.com/news/2026/10/16/four-killed-as-indonesia-battles-worst-forest-fires-in-more-than-a-decade",
+      "tanggal": "2026-10-16"
+    },
+    {
+      "indikator": "Hotspot semua tingkat kepercayaan, 24 jam",
+      "nilai": 24952,
+      "waktu_data": "2026-10-08 11:15 WIB",
+      "lembaga": "SiPongi via Databoks",
+      "catatan": "Tinggi 1.002; sedang 22.885; rendah 1.065. Metode berbeda dari angka keyakinan tinggi.",
+      "sumber": "https://databoks.katadata.co.id/demografi/statistik/bce2ef2418be220/kemenhut-jumlah-hotspot-di-indonesia-capai-24952-dalam-24-jam-terakhir-kamis-8-oktober-2026",
+      "tanggal": "2026-10-08"
+    },
+    {
+      "indikator": "Hotspot semua tingkat kepercayaan, 24 jam",
+      "nilai": 11772,
+      "waktu_data": "2026-10-10 11:15 WIB",
+      "lembaga": "SiPongi via Databoks",
+      "catatan": "Tinggi 578; sedang 10.736; rendah 458",
+      "sumber": "https://databoks.katadata.co.id/demografi/statistik/e81c68400bc2e63/kemenhut-jumlah-titik-panas-di-indonesia-capai-11772-dalam-24-jam-terakhir-sabtu-10-oktober-2026",
+      "tanggal": "2026-10-10"
+    },
+    {
+      "indikator": "Hotspot semua tingkat kepercayaan, 24 jam",
+      "nilai": 19712,
+      "waktu_data": "2026-10-15 11:15 WIB",
+      "lembaga": "SiPongi via Databoks",
+      "catatan": "Tinggi 1.498; sedang 17.008; rendah 1.206",
+      "sumber": "https://databoks.katadata.co.id/en/demographics/statistics/a4797a523e37b56/19712-hotspots-detected-in-indonesia-in-the-last-24-hours-thursday-15-october-2026",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "indikator": "Akumulasi hotspot 17-30 Sep",
+      "nilai": 9080,
+      "waktu_data": "2026-09-17 s/d 2026-09-30",
+      "lembaga": "Kemenhut",
+      "catatan": "Rata-rata 649/hari; puncak 1.843 pada 20 Sep",
+      "sumber": "https://infopublik.id/kategori/bencana/993052/kemenhut-catat-penurunan-titik-panas-karhutla-sumatra-selatan-jadi-fokus-penanganan",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "indikator": "Akumulasi hotspot 1-13 Okt",
+      "nilai": 7519,
+      "waktu_data": "2026-10-01 s/d 2026-10-13",
+      "lembaga": "Kemenhut",
+      "catatan": "Puncak Oktober 1.029 pada 8 Okt (versi Kemenhut)",
+      "sumber": "https://infopublik.id/kategori/bencana/993052/kemenhut-catat-penurunan-titik-panas-karhutla-sumatra-selatan-jadi-fokus-penanganan",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "indikator": "Akumulasi hotspot 1-12 Okt, 33 provinsi",
+      "nilai": 12183,
+      "waktu_data": "2026-10-01 s/d 2026-10-12",
+      "lembaga": "SiPongi",
+      "catatan": "Kalteng 3.268; Papua Selatan 2.921; Sumsel 2.376",
+      "sumber": "https://rm.id/baca-berita/nasional/329885/rumah-hangus-1673-penerbangan-delay-karhutla-makin-melebar",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "indikator": "Luas karhutla nasional Jan-Jul 2026",
+      "nilai": 202004.3,
+      "satuan": "ha",
+      "waktu_data": "Jan-Jul 2026",
+      "lembaga": "SiPongi Kemenhut",
+      "catatan": "Naik ~69% (+82.791,04 ha) vs periode sama 2025",
+      "sumber": "https://disway.id/read/973907/karhutla-2026-melebar-luas-lahan-terbakar-tembus-202-ribu-hektare-kalsel-paling-parah",
+      "tanggal": "2026-10-16"
+    },
+    {
+      "indikator": "Estimasi luas terbakar tambahan setelah Juli",
+      "nilai": 600000,
+      "satuan": "ha",
+      "waktu_data": "Agu-Okt 2026",
+      "lembaga": "Estimasi LSM (via Reuters)",
+      "catatan": "Minimal; bukan angka resmi. Reuters: kebakaran terparah dalam 11 tahun.",
+      "sumber": "https://www.internazionale.it/ultime-notizie-reuters/2026/10/12/wildfires-spread-into-residential-areas-in-indonesia-s-bangka-belitung-destroying-over-300-houses",
+      "tanggal": "2026-10-12"
+    },
+    {
+      "indikator": "Luas karhutla kumulatif 6 provinsi prioritas",
+      "nilai": 129899.59,
+      "satuan": "ha",
+      "waktu_data": "per 2026-10-12",
+      "lembaga": "BNPB",
+      "catatan": "Padam 129.260,36 ha; masih ditangani 639,23 ha. Basis SiPongi 72.009,10 ha (31 Jul) + 57.376,60 ha data manual 1 Agu-11 Okt.",
+      "sumber": "https://kabar24.bisnis.com/read/20261013/15/2012121/bnpb-karhutla-di-kalimantan-hingga-51389-hektare",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "indikator": "Lahan gambut sedang terbakar, 6 provinsi prioritas",
+      "nilai": 663,
+      "satuan": "ha",
+      "waktu_data": "sekitar 2026-10-12",
+      "lembaga": "BNPB",
+      "catatan": "Bukan total nasional (klarifikasi BNPB/Kemenhut); laporan resmi 639,23 ha",
+      "sumber": "https://www.viva.co.id/berita/nasional/1935727-bnpb-klarifikasi-data-663-hektare-karhutla-ternyata-bukan-total-di-seluruh-indonesia",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "indikator": "Kerugian ekonomi dan kesehatan karhutla Jan-Agu 2026",
+      "nilai": "Rp39,29 T - Rp123,1 T",
+      "waktu_data": "Jan-Agu 2026",
+      "lembaga": "CELIOS",
+      "catatan": "Kejadian karhutla Jan-Jun naik 366% vs 2025 (data Gakkum KLHK)",
+      "sumber": "https://www.kabarbursa.com/ekonomi-hijau/karhutla-2026-naik-366-kerugian-ekonomi-tembus-rp123-t",
+      "tanggal": "2026-09-02"
+    },
+    {
+      "indikator": "Kejadian karhutla tercatat BNPB",
+      "nilai": 627,
+      "waktu_data": "hingga 2026-09-07",
+      "lembaga": "BNPB",
+      "catatan": "Dari 1.730 total kejadian bencana 2026",
+      "sumber": "https://katadata.co.id/berita/nasional/6a9ffcfd1ec62/bnpb-ajukan-tambahan-dana-siap-pakai-rp-5-67-triliun-untuk-tangani-bencana",
+      "tanggal": "2026-09-08"
+    }
+  ],
+  "angka_provinsi": [
+    {
+      "provinsi": "Kalimantan Barat",
+      "indikator": "Luas karhutla kumulatif",
+      "nilai": 51124.71,
+      "satuan": "ha",
+      "waktu_data": "per 2026-10-12",
+      "lembaga": "BNPB",
+      "catatan": "Masih ditangani 16,34 ha",
+      "sumber": "https://kabar24.bisnis.com/read/20261013/15/2012121/bnpb-karhutla-di-kalimantan-hingga-51389-hektare",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "provinsi": "Kalimantan Tengah",
+      "indikator": "Luas karhutla kumulatif",
+      "nilai": 23304.72,
+      "satuan": "ha",
+      "waktu_data": "per 2026-10-12",
+      "lembaga": "BNPB",
+      "catatan": "Masih ditangani 10,80 ha (sumber terpisah: 521,69 ha ditangani per 13 Okt termasuk TNTP)",
+      "sumber": "https://kabar24.bisnis.com/read/20261013/15/2012121/bnpb-karhutla-di-kalimantan-hingga-51389-hektare",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "provinsi": "Kalimantan Selatan",
+      "indikator": "Luas karhutla kumulatif",
+      "nilai": 22043.32,
+      "satuan": "ha",
+      "waktu_data": "per 2026-10-12",
+      "lembaga": "BNPB",
+      "catatan": "Masih ditangani 8,80 ha",
+      "sumber": "https://kabar24.bisnis.com/read/20261013/15/2012121/bnpb-karhutla-di-kalimantan-hingga-51389-hektare",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "provinsi": "Riau",
+      "indikator": "Luas karhutla kumulatif",
+      "nilai": 20690.2,
+      "satuan": "ha",
+      "waktu_data": "per 2026-10-12",
+      "lembaga": "BNPB",
+      "catatan": "Masih ditangani 1 ha",
+      "sumber": "https://kabar24.bisnis.com/read/20261013/15/2012121/bnpb-karhutla-di-kalimantan-hingga-51389-hektare",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "provinsi": "Sumatera Selatan",
+      "indikator": "Luas karhutla kumulatif",
+      "nilai": 8409.6,
+      "satuan": "ha",
+      "waktu_data": "per 2026-10-12",
+      "lembaga": "BNPB",
+      "catatan": "Masih ditangani 6,90 ha",
+      "sumber": "https://kabar24.bisnis.com/read/20261013/15/2012121/bnpb-karhutla-di-kalimantan-hingga-51389-hektare",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "provinsi": "Jambi",
+      "indikator": "Luas karhutla kumulatif",
+      "nilai": 4327.04,
+      "satuan": "ha",
+      "waktu_data": "per 2026-10-12",
+      "lembaga": "BNPB",
+      "catatan": "Masih ditangani 81,50 ha",
+      "sumber": "https://kabar24.bisnis.com/read/20261013/15/2012121/bnpb-karhutla-di-kalimantan-hingga-51389-hektare",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "provinsi": "Jambi",
+      "indikator": "Luas terbakar (analisis satelit LSM)",
+      "nilai": 43451,
+      "satuan": "ha",
+      "waktu_data": "per 2026-10-08",
+      "lembaga": "Walhi Jambi",
+      "catatan": "~10x angka Satgas 4.267 ha (6 Okt). Gambut 17.899 ha. Tanjabtim 12.533; Sarolangun 8.922; Tebo 7.063; Batanghari 6.318; Muaro Jambi 4.618; Tanjabbar 2.047; Bungo 1.259; Merangin 584",
+      "sumber": "https://mongabay.co.id/2026/10/15/gambut-jambi-terus-membara-derita-warga-terpapar-kabut-asap/",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "provinsi": "Kalimantan Selatan",
+      "indikator": "Luas karhutla 1 Jan-14 Okt",
+      "nilai": 27202.97,
+      "satuan": "ha",
+      "waktu_data": "2026-01-01 s/d 2026-10-14",
+      "lembaga": "BPBD Kalsel",
+      "catatan": "4.926 kejadian di 13 kab/kota; berbeda dari angka BNPB",
+      "sumber": "https://disway.id/read/973907/karhutla-2026-melebar-luas-lahan-terbakar-tembus-202-ribu-hektare-kalsel-paling-parah",
+      "tanggal": "2026-10-16"
+    },
+    {
+      "provinsi": "Kalimantan Selatan",
+      "indikator": "Luas karhutla per kabupaten 1 Jan-10 Sep",
+      "nilai": 20206.06,
+      "satuan": "ha",
+      "waktu_data": "2026-01-01 s/d 2026-09-10",
+      "lembaga": "BPBD Kalsel",
+      "catatan": "Kab. Banjar ~5.100 ha; Kota Banjarbaru ~2.539 ha; Tanah Laut peringkat 3",
+      "sumber": "https://www.metrotvnews.com/read/b7WCmP88-luas-karhutla-di-kalsel-capai-20-206-hektare",
+      "tanggal": "2026-09-11"
+    },
+    {
+      "provinsi": "Kalimantan Tengah",
+      "indikator": "Luas karhutla Kab. Kotawaringin Timur",
+      "nilai": 2009,
+      "satuan": "ha",
+      "waktu_data": "per 2026-09-29",
+      "lembaga": "BPBD Kotim",
+      "catatan": "Lebih dari 2.009 ha; 1.176 kejadian; 38.304 hotspot",
+      "sumber": "https://journalarta.com/news/2026/09/29/karhutla-masih-parah-kotim-kembali-perpanjang-status-tanggap-darurat/",
+      "tanggal": "2026-09-29"
+    },
+    {
+      "provinsi": "Kalimantan Tengah",
+      "indikator": "Luas karhutla Kota Palangka Raya sejak 1 Jun",
+      "nilai": 837.28,
+      "satuan": "ha",
+      "waktu_data": "per 2026-09-07",
+      "lembaga": "Pemkot Palangka Raya",
+      "catatan": "475 kejadian",
+      "sumber": "https://infopublik.id/kategori/prioritas-nasional-2026/987934/pemkot-palangka-raya-perpanjang-status-tanggap-darurat-karhutla-30-hari",
+      "tanggal": "2026-09-08"
+    },
+    {
+      "provinsi": "Kalimantan Barat",
+      "indikator": "Luas karhutla Jan-Agu",
+      "nilai": 38310.86,
+      "satuan": "ha",
+      "waktu_data": "Jan-Agu 2026",
+      "lembaga": "SiPongi (dikutip CELIOS)",
+      "catatan": "Lebih rendah dari angka BNPB per 12 Okt",
+      "sumber": "https://www.kabarbursa.com/ekonomi-hijau/karhutla-2026-naik-366-kerugian-ekonomi-tembus-rp123-t",
+      "tanggal": "2026-09-02"
+    },
+    {
+      "provinsi": "Papua Selatan",
+      "indikator": "Indikasi luas karhutla 2026",
+      "nilai": 25838.53,
+      "satuan": "ha",
+      "waktu_data": "2026 (hingga akhir Sep)",
+      "lembaga": "SiPongi (via Mongabay)",
+      "catatan": "Papua Tengah 2.519,88 ha; Papua Barat 2.496,39 ha",
+      "sumber": "https://mongabay.co.id/2026/10/01/puluhan-ribu-hektar-hutan-dan-lahan-di-papua-terbakar/",
+      "tanggal": "2026-10-01"
+    },
+    {
+      "provinsi": "6 provinsi prioritas",
+      "indikator": "Hotspot keyakinan tinggi per provinsi",
+      "nilai": {
+        "Kalimantan Tengah": 225,
+        "Sumatera Selatan": 224,
+        "Kalimantan Barat": 47,
+        "Kalimantan Selatan": 31,
+        "Jambi": 16,
+        "Riau": 0
+      },
+      "waktu_data": "2026-10-07 21:00 WIB",
+      "lembaga": "Kemenhut/SiPongi",
+      "catatan": null,
+      "sumber": "https://infopublik.id/kategori/bencana/992842/kementerian-kehutanan-perkuat-pengendalian-karhutla-di-kalteng-dan-sumsel",
+      "tanggal": "2026-10-08"
+    },
+    {
+      "provinsi": "6 provinsi prioritas",
+      "indikator": "Hotspot keyakinan tinggi per provinsi",
+      "nilai": {
+        "Sumatera Selatan": 130,
+        "Kalimantan Tengah": 86,
+        "Kalimantan Selatan": 37,
+        "Kalimantan Barat": 12,
+        "Jambi": 3,
+        "Riau": 0
+      },
+      "waktu_data": "2026-10-08",
+      "lembaga": "Kemenhut/SiPongi",
+      "catatan": "Total 6 provinsi 268",
+      "sumber": "https://www.rctiplus.com/news/detail/inews/5490672/hotspot-karhutla-turun-jadi-387-titik-sumsel-dan-kalteng-masih-tertinggi",
+      "tanggal": "2026-10-10"
+    },
+    {
+      "provinsi": "6 provinsi prioritas",
+      "indikator": "Hotspot keyakinan tinggi per provinsi",
+      "nilai": {
+        "Kalimantan Tengah": 288,
+        "Sumatera Selatan": 60,
+        "Kalimantan Barat": 44,
+        "Kalimantan Selatan": 28,
+        "Jambi": 1,
+        "Riau": 0
+      },
+      "waktu_data": "2026-10-10 21:10 WIB",
+      "lembaga": "Kemenhut",
+      "catatan": "Total 6 provinsi 421",
+      "sumber": "https://bernama.com/en/world/news.php?id=2618566",
+      "tanggal": "2026-10-11"
+    },
+    {
+      "provinsi": "6 provinsi prioritas",
+      "indikator": "Hotspot keyakinan tinggi per provinsi",
+      "nilai": {
+        "Kalimantan Tengah": 65,
+        "Sumatera Selatan": 59
+      },
+      "waktu_data": "2026-10-13 21:00 WIB",
+      "lembaga": "Kemenhut",
+      "catatan": "Kalteng turun dari 227; Sumsel turun dari 147",
+      "sumber": "https://infopublik.id/kategori/bencana/993052/kemenhut-catat-penurunan-titik-panas-karhutla-sumatra-selatan-jadi-fokus-penanganan",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "provinsi": "6 provinsi prioritas",
+      "indikator": "Hotspot keyakinan tinggi per provinsi",
+      "nilai": {
+        "Kalimantan Tengah": 130,
+        "Sumatera Selatan": 91,
+        "Kalimantan Barat": 59,
+        "Jambi": 9,
+        "Kalimantan Selatan": 5,
+        "Riau": 0
+      },
+      "waktu_data": "2026-10-14 21:00",
+      "lembaga": "Kemenhut",
+      "catatan": "Total 6 provinsi 294",
+      "sumber": "https://bernama.com/en/news.php?id=2620605",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "provinsi": "Nasional (7 teratas)",
+      "indikator": "Hotspot semua tingkat kepercayaan per provinsi, 24 jam",
+      "nilai": {
+        "Kalimantan Tengah": 7935,
+        "Sumatera Selatan": 2938,
+        "Kalimantan Timur": 1369,
+        "Kalimantan Barat": 1251,
+        "Kalimantan Selatan": 1155,
+        "Jambi": 790,
+        "Papua Selatan": 644
+      },
+      "waktu_data": "2026-10-15 11:15 WIB",
+      "lembaga": "SiPongi via Databoks",
+      "catatan": null,
+      "sumber": "https://databoks.katadata.co.id/en/demographics/statistics/a4797a523e37b56/19712-hotspots-detected-in-indonesia-in-the-last-24-hours-thursday-15-october-2026",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "provinsi": "Nasional (7 teratas)",
+      "indikator": "Hotspot semua tingkat kepercayaan per provinsi, 24 jam",
+      "nilai": {
+        "Kalimantan Tengah": 8092,
+        "Papua Selatan": 6437,
+        "Sumatera Selatan": 3321,
+        "Kalimantan Timur": 1246,
+        "Kalimantan Selatan": 880,
+        "Kalimantan Barat": 755,
+        "Maluku": 562
+      },
+      "waktu_data": "2026-10-08 11:15 WIB",
+      "lembaga": "SiPongi via Databoks",
+      "catatan": null,
+      "sumber": "https://databoks.katadata.co.id/demografi/statistik/bce2ef2418be220/kemenhut-jumlah-hotspot-di-indonesia-capai-24952-dalam-24-jam-terakhir-kamis-8-oktober-2026",
+      "tanggal": "2026-10-08"
+    },
+    {
+      "provinsi": "Sumatera Selatan",
+      "indikator": "Hotspot di gambut/mangrove per kabupaten",
+      "nilai": {
+        "OKI": 2005,
+        "Banyuasin": 885,
+        "Musi Banyuasin": 619,
+        "Muara Enim": 535,
+        "PALI": 197,
+        "Musi Rawas Utara": 139,
+        "Musi Rawas": 6
+      },
+      "waktu_data": "2026-01-01 s/d 2026-10-04 (MODIS)",
+      "lembaga": "HaKI (via Mongabay)",
+      "catatan": "Walhi: 22.690 hotspot di konsesi (1 Sep-2 Okt)",
+      "sumber": "https://mongabay.co.id/2026/10/12/7-kabupaten-di-sumatera-selatan-terus-terbakar-rawa-gambut-kembali-membara/",
+      "tanggal": "2026-10-12"
+    }
+  ],
+  "sumber_daya": [
+    {
+      "jenis": "Armada udara siaga",
+      "jumlah": 61,
+      "wilayah": "Nasional",
+      "keterangan": "44 water bombing, 17 patroli dan OMC; 55 di provinsi prioritas, 6 di luar",
+      "sumber": "https://bernama.com/en/world/news.php?id=2619000",
+      "tanggal": "2026-10-12"
+    },
+    {
+      "jenis": "Armada udara (BNPB)",
+      "jumlah": 56,
+      "wilayah": "6 provinsi prioritas",
+      "keterangan": "43 water bombing, 13 patroli/OMC (per 28 Sep)",
+      "sumber": "https://news.detik.com/berita/d-8685218/bnpb-karhutla-seluas-96-07-hektare-belum-padam",
+      "tanggal": "2026-09-30"
+    },
+    {
+      "jenis": "Personel Satgas karhutla",
+      "jumlah": 59035,
+      "wilayah": "6 provinsi prioritas",
+      "keterangan": "Riau 14.837; Kalbar 14.575; Sumsel 11.026; Kalsel 7.927; Jambi 5.984; Kalteng 4.686 (per 28 Sep)",
+      "sumber": "https://news.detik.com/berita/d-8685218/bnpb-karhutla-seluas-96-07-hektare-belum-padam",
+      "tanggal": "2026-09-30"
+    },
+    {
+      "jenis": "Personel gabungan",
+      "jumlah": 60000,
+      "wilayah": "6 provinsi prioritas",
+      "keterangan": "Sekitar 60.000 personel (Menlu Arrmanatha Nasir)",
+      "sumber": "https://bernama.com/en/world/news.php?id=2621008",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "jenis": "Personel di Kalteng dan Sumsel",
+      "jumlah": 16971,
+      "wilayah": "Kalteng 4.686; Sumsel 12.285",
+      "keterangan": "Operasi darat diprioritaskan karena jarak pandang batasi heli (BNPB, Berton Panjaitan)",
+      "sumber": "https://bernama.com/en/news.php?id=2620605",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "jenis": "Manggala Agni",
+      "jumlah": 1419,
+      "wilayah": "Nasional",
+      "keterangan": "Plus ~5.000 ASN siaga dan ~2.000 personel BKO lapangan",
+      "sumber": "https://infopublik.id/kategori/bencana/993052/kemenhut-catat-penurunan-titik-panas-karhutla-sumatra-selatan-jadi-fokus-penanganan",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "jenis": "Manggala Agni di Kalimantan",
+      "jumlah": 758,
+      "wilayah": "Kalimantan (208 di Kalteng)",
+      "keterangan": "Plus ~2.200 ASN siaga BKO",
+      "sumber": "https://katadata.co.id/ekonomi-hijau/investasi-hijau/6ace0b459bf1e/relawan-kewalahan-hadapi-karhutla-tn-tanjung-puting-kalteng-apa-kata-kemenhut",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "jenis": "Pasukan darat TN Tanjung Puting",
+      "jumlah": 160,
+      "wilayah": "Kalteng",
+      "keterangan": "Sebagian bermalam ~1 pekan di lapangan; butuh ~30 sumur bor; drone termal",
+      "sumber": "https://rm.id/baca-berita/government-action/330211/karhutla-tanjung-puting-menhut-petakan-4-medan-perang-lawan-api",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "jenis": "Pompa air dan sumur bor (arahan Presiden)",
+      "jumlah": 200,
+      "wilayah": "Kalteng",
+      "keterangan": "200 pompa air kecil; Rp2 miliar untuk 200 titik sumur bor; Presiden minta 70.000 polisi hutan",
+      "sumber": "https://setneg.go.id/baca/index/presiden_prabowo_perintahkan_penanganan_karhutla_di_tanjung_puting_jadi_perhatian_khusus",
+      "tanggal": "2026-10-12"
+    },
+    {
+      "jenis": "Siklus penerbangan water bombing",
+      "jumlah": 5006,
+      "wilayah": "Nasional",
+      "keterangan": "20 Apr-11 Okt 2026; 38 pesawat sipil asing oleh 11 operator (Kemenhub)",
+      "sumber": "https://investortrust.id/national/119237/karhutla-ganggu-ruang-udara-ri-1813-penerbangan-terdampak",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "jenis": "OMC/TMC",
+      "jumlah": 3,
+      "wilayah": "Sumsel (Muba, Banyuasin, OKI, OKU)",
+      "keterangan": "3 sorti, 3.000 kg bahan semai, 9-10 Okt; dari Bandara Depati Amir, Pangkal Pinang hingga 13 Okt",
+      "sumber": "https://www.goodnewsfromindonesia.id/short/hujan-ditunggu-palembang-bnpb-kerahkan-3000-kg-bahan-semai-untuk-atasi-kabut-asap",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "jenis": "OMC/TMC rencana",
+      "jumlah": 6,
+      "wilayah": "Kalteng 4 pesawat; Sumsel 2 pesawat dari Pangkal Pinang",
+      "keterangan": "Disiapkan BNPB",
+      "sumber": "https://infopublik.id/kategori/bencana/993035/bnpb-beberkan-kondisi-karhutla-di-enam-provinsi-tanjung-puting-paling-terdampak",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "jenis": "Uji coba dry ice",
+      "jumlah": "1,5 ton",
+      "wilayah": "Palembang, Sumsel",
+      "keterangan": "Dijadwalkan 15 Okt dari Lanud Sri Mulyono Herlambang; target jarak pandang 1.000 ke 5.000 m; perintah Presiden",
+      "sumber": "https://www.rctiplus.com/news/detail/idxchannel/5494038/dudung-sebut-1-5-ton-dry-ice-siap-disebar-besok-atasi-kabut-asap-karhutla-di-sumsel",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "jenis": "Cairan pemadam dari Brasil",
+      "jumlah": null,
+      "wilayah": "Sumsel dan Kalimantan",
+      "keterangan": "Diuji pemerintah (Menkopolkam Dudung)",
+      "sumber": "https://bernama.com/en/world/news.php?id=2619000",
+      "tanggal": "2026-10-12"
+    },
+    {
+      "jenis": "Bantuan asing",
+      "jumlah": null,
+      "wilayah": "Nasional",
+      "keterangan": "Presiden setujui bantuan negara tetangga (15 Okt), teknis via BNPB. Tawaran Malaysia: 1 Bombardier CL-415MP, 3 heli, 52 personel. Singapura siap bantu. Misi militer Jepang 14 hari berakhir 29 Sep.",
+      "sumber": "https://bernama.com/en/world/news.php?id=2621008",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "jenis": "Pergantian Kepala BNPB",
+      "jumlah": null,
+      "wilayah": "Nasional",
+      "keterangan": "Letjen TNI Kristomei Sianturi dilantik 15 Okt menggantikan Letjen Suharyanto",
+      "sumber": "https://bernama.com/en/world/news.php?id=2621008",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "jenis": "Kendala udara",
+      "jumlah": null,
+      "wilayah": "Kalteng",
+      "keterangan": "Heli water bombing hampir sepekan lebih tidak bisa terbang (visibilitas rendah); operasi udara Sumsel mulai 12 Okt",
+      "sumber": "https://www.fortuneidn.com/news/kabut-asap-pekat-karhutla-lumpuhkan-pemadaman-udara-terutama-di-kalteng-00-my5jv-mwlwd4/amp",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "jenis": "Anggaran BNPB (Dana Siap Pakai)",
+      "jumlah": "Rp5.676.326.378.193 (usulan tambahan)",
+      "wilayah": "Nasional",
+      "keterangan": "Sudah terima DSP Rp4,63 T pada 2026; usulan tambahan ke Kemenkeu",
+      "sumber": "https://katadata.co.id/berita/nasional/6a9ffcfd1ec62/bnpb-ajukan-tambahan-dana-siap-pakai-rp-5-67-triliun-untuk-tangani-bencana",
+      "tanggal": "2026-09-08"
+    },
+    {
+      "jenis": "Anggaran BNPB (realisasi)",
+      "jumlah": "Rp2,6 T",
+      "wilayah": "Nasional",
+      "keterangan": "Menkeu Purbaya: DSP dialokasikan ~Rp950 M; pagu BNPB disebut Rp5 T",
+      "sumber": "https://www.rctiplus.com/news/detail/ekonomi/5468948/realisasi-anggaran-bnpb-sentuh-rp2-6-triliun--purbaya--dana-siap-pakai-rp950-m",
+      "tanggal": "2026-09-08"
+    }
+  ],
+  "dampak_asap": [
+    {
+      "kategori": "ISPU",
+      "wilayah": "Kab. Katingan, Kalteng",
+      "nilai": 3224,
+      "waktu_data": "2026-10-14 07:43 WIB",
+      "keterangan": "Berbahaya; polutan utama PM10 (KLH)",
+      "sumber": "https://katadata.co.id/ekonomi-hijau/ekonomi-sirkular/6acedcb4a3072/asap-kebakaran-hutan-memburuk-ini-5-wilayah-dengan-polusi-udara-berbahaya",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "ISPU",
+      "wilayah": "Kab. Gunung Mas, Kalteng",
+      "nilai": 2938,
+      "waktu_data": "2026-10-14 pagi",
+      "keterangan": "PM10 (KLH)",
+      "sumber": "https://katadata.co.id/ekonomi-hijau/ekonomi-sirkular/6acedcb4a3072/asap-kebakaran-hutan-memburuk-ini-5-wilayah-dengan-polusi-udara-berbahaya",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "ISPU",
+      "wilayah": "Kota Palangka Raya",
+      "nilai": 1300,
+      "waktu_data": "2026-10-14 pagi",
+      "keterangan": "PM10 (KLH)",
+      "sumber": "https://katadata.co.id/ekonomi-hijau/ekonomi-sirkular/6acedcb4a3072/asap-kebakaran-hutan-memburuk-ini-5-wilayah-dengan-polusi-udara-berbahaya",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "ISPU",
+      "wilayah": "Kota Palembang",
+      "nilai": 921,
+      "waktu_data": "2026-10-14 pagi",
+      "keterangan": "PM10 (KLH)",
+      "sumber": "https://katadata.co.id/ekonomi-hijau/ekonomi-sirkular/6acedcb4a3072/asap-kebakaran-hutan-memburuk-ini-5-wilayah-dengan-polusi-udara-berbahaya",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "ISPU",
+      "wilayah": "Kota Banjarmasin",
+      "nilai": 779,
+      "waktu_data": "2026-10-14 pagi",
+      "keterangan": "PM10 (KLH)",
+      "sumber": "https://katadata.co.id/ekonomi-hijau/ekonomi-sirkular/6acedcb4a3072/asap-kebakaran-hutan-memburuk-ini-5-wilayah-dengan-polusi-udara-berbahaya",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "ISPU provinsi (10 terburuk)",
+      "wilayah": "Nasional",
+      "nilai": {
+        "Kalimantan Tengah": 1381,
+        "Kalimantan Selatan": 787,
+        "Sumatera Selatan": 641,
+        "Jambi": 370,
+        "Sumatera Barat": 366,
+        "Riau": 365,
+        "Aceh": 277,
+        "Kalimantan Barat": 223,
+        "Kalimantan Timur": 214,
+        "Sulawesi Tengah": 207
+      },
+      "waktu_data": "2026-10-15 18:00 WIB",
+      "keterangan": ">300 berbahaya; 201-300 sangat tidak sehat",
+      "sumber": "https://databoks.katadata.co.id/layanan-konsumen-kesehatan/statistik/39ba5f63a6fdc46/kualitas-udara-kalimantan-tengah-kamis-malam-1510-terburuk-di-indonesia",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "kategori": "PM2.5/PM10",
+      "wilayah": "Jambi",
+      "nilai": {
+        "Kota Jambi PM2.5": 484,
+        "Muaro Jambi PM2.5": 439,
+        "Muaro Jambi PM10": 642,
+        "Tebo PM2.5": 740,
+        "Tebo PM10": 1922
+      },
+      "waktu_data": "2026-10-09",
+      "keterangan": "ug/m3, ISPU net KLH",
+      "sumber": "https://mongabay.co.id/2026/10/15/gambut-jambi-terus-membara-derita-warga-terpapar-kabut-asap/",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "kategori": "AQI (IQAir)",
+      "wilayah": "Palembang, Pontianak, Jambi, Pekanbaru",
+      "nilai": {
+        "Palembang": 485,
+        "Pontianak puncak": 412,
+        "Jambi PM2.5 ug/m3": 235.3,
+        "Pekanbaru": "152-219"
+      },
+      "waktu_data": "2026-10-05 15:30 WIB",
+      "keterangan": "Data IQAir, bukan ISPU resmi",
+      "sumber": "https://journalarta.com/news/2026/10/05/iqair-kualitas-udara-terbaru-5-oktober-2026-palembang-485-pontianak-berbahaya/",
+      "tanggal": "2026-10-05"
+    },
+    {
+      "kategori": "Jarak pandang",
+      "wilayah": "Palangka Raya",
+      "nilai": "150 m",
+      "waktu_data": "2026-10-07 12:30",
+      "keterangan": "BMKG; Bandara Melalan (Kaltim) 500 m; Sultan Thaha (Jambi) 800 m, sejumlah penerbangan tertunda",
+      "sumber": "https://bernama.com/en/world/news.php?id=2617055",
+      "tanggal": "2026-10-08"
+    },
+    {
+      "kategori": "Penerbangan",
+      "wilayah": "Bandara Tjilik Riwut, Palangka Raya",
+      "nilai": "3 penerbangan batal",
+      "waktu_data": "2026-10-07",
+      "keterangan": "Lion Air, Batik Air, Garuda; jarak pandang <300 m; >70 penerbangan tunda/batal 17 Sep-7 Okt",
+      "sumber": "https://www.rctiplus.com/news/detail/inews/5488866/bandara-tjilik-riwut-palangka-raya-lumpuh-imbas-kabut-asap--3-penerbangan-dibatalkan",
+      "tanggal": "2026-10-07"
+    },
+    {
+      "kategori": "Penerbangan",
+      "wilayah": "Nasional",
+      "nilai": 1813,
+      "waktu_data": "2026-08-11 s/d 2026-10-12",
+      "keterangan": "10-12 Okt: 95 (93 batal, 2 tunda). Terdampak termasuk Pangkalan Bun, Palangka Raya, Pontianak, Ketapang, Palembang, Sorong, Manokwari, Ambon, Ternate (Kemenhub)",
+      "sumber": "https://investortrust.id/national/119237/karhutla-ganggu-ruang-udara-ri-1813-penerbangan-terdampak",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "ISPA",
+      "wilayah": "7 provinsi terdampak karhutla, 63 kab/kota",
+      "nilai": 283270,
+      "waktu_data": "hingga 2026-10-13 13:30 WIB",
+      "keterangan": "Balita 63.711; >5 th 219.559; +3.897/hari; Kalsel 74.636; Sumsel 74.458; 12 daerah berbahaya (Kemenkes)",
+      "sumber": "https://www.rctiplus.com/news/detail/inews/5493534/kemenkes-ungkap-283-270-kasus-ispa-di-wilayah-terdampak-karhutla--kalsel-tertinggi",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "ISPA",
+      "wilayah": "Kota Palangka Raya",
+      "nilai": 10240,
+      "waktu_data": "Jun-awal Okt 2026",
+      "keterangan": "Dinkes Kota; 43 pos layanan oksigen 24 jam",
+      "sumber": "https://health.detik.com/fotohealth/d-8704634/dampak-kabut-asap-puluhan-ribu-warga-terserang-ispa",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "kategori": "ISPA",
+      "wilayah": "Sumatera Selatan",
+      "nilai": {
+        "September": 52483,
+        "1-9 Oktober": 11359
+      },
+      "waktu_data": "Sep-9 Okt 2026",
+      "keterangan": "Dinkes Sumsel; Agustus 47.020",
+      "sumber": "https://health.detik.com/fotohealth/d-8704634/dampak-kabut-asap-puluhan-ribu-warga-terserang-ispa",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "kategori": "ISPA",
+      "wilayah": "Kota Palembang",
+      "nilai": 6296,
+      "waktu_data": "2026-10-01 s/d 2026-10-12",
+      "keterangan": "Dinkes Kota Palembang",
+      "sumber": "https://health.detik.com/fotohealth/d-8706240/kabut-asap-mencekik-palembang-kasus-ispa-tembus-6-000-pasien",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "ISPA",
+      "wilayah": "Provinsi Jambi",
+      "nilai": 26957,
+      "waktu_data": "September 2026",
+      "keterangan": "Dinkes Jambi; terbanyak Kota Jambi",
+      "sumber": "https://mongabay.co.id/2026/10/15/gambut-jambi-terus-membara-derita-warga-terpapar-kabut-asap/",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "kategori": "Sekolah (Indonesia)",
+      "wilayah": "Kota Palangka Raya",
+      "nilai": "PJJ daring sejak 27 Agu",
+      "waktu_data": "2026-10-13",
+      "keterangan": "ISPA >11.000 kasus; asap ~3 bulan",
+      "sumber": "https://www.metrotvnews.com/play/kWDCmL5D-warga-palangka-raya-menderita-karena-karhutla",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "kategori": "Sekolah (Indonesia)",
+      "wilayah": "Kota Jambi",
+      "nilai": "PJJ PAUD-SMP sejak 26 Agu",
+      "waktu_data": "2026-10-15",
+      "keterangan": ">8 surat edaran Wali Kota",
+      "sumber": "https://mongabay.co.id/2026/10/15/gambut-jambi-terus-membara-derita-warga-terpapar-kabut-asap/",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "kategori": "Sekolah (Indonesia)",
+      "wilayah": "7 provinsi terdampak",
+      "nilai": "Rekomendasi PJJ",
+      "waktu_data": "2026-10-14",
+      "keterangan": "Kemenkes kirim rekomendasi PJJ ke Kemendikdasmen dan Kemenag",
+      "sumber": "https://www.rctiplus.com/news/detail/inews/5493534/kemenkes-ungkap-283-270-kasus-ispa-di-wilayah-terdampak-karhutla--kalsel-tertinggi",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "Lintas batas - Singapura",
+      "wilayah": "Singapura",
+      "nilai": {
+        "PSI 24 jam tertinggi 2026 (pusat)": 192,
+        "PM2.5 barat ug/m3 (14 Okt)": 288
+      },
+      "waktu_data": "PSI 9 Okt 17:00-20:00; PM2.5 14 Okt",
+      "keterangan": "Subsidi medis haze aktif sejak 12 Okt (pertama sejak 2015); N95 dibagikan",
+      "sumber": "https://www.thejakartapost.com/world/2026/10/14/indonesia-haze-spikes-singapore-pollution-shuts-timor-leste-schools",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "Lintas batas - Singapura",
+      "wilayah": "Singapura",
+      "nilai": {
+        "Pusat": 142,
+        "Utara": 107,
+        "Selatan": 122,
+        "Timur": 142,
+        "Barat": 145
+      },
+      "waktu_data": "2026-10-14 07:00 (PSI 24 jam)",
+      "keterangan": "Semua wilayah tidak sehat; NEA: asap dari Kalimantan dan Sumatra selatan, angin tenggara",
+      "sumber": "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/10/14/hazy-conditions-persist-as-psi-remains-unhealthy-across-singapore",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "kategori": "Lintas batas - Malaysia",
+      "wilayah": "Johor, Melaka, Negeri Sembilan, Selangor, Kuala Lumpur, Putrajaya, Rompin (Pahang)",
+      "nilai": "Sekolah ditutup 9 Okt",
+      "waktu_data": "2026-10-09",
+      "keterangan": "API Segamat 190 (8 Okt); KL ~170",
+      "sumber": "https://www.outlookindia.com/international/indonesias-wildfire-haze-shuts-malaysian-schools-pushes-singapore-pollution-to-2026-high",
+      "tanggal": "2026-10-09"
+    },
+    {
+      "kategori": "Lintas batas - Malaysia",
+      "wilayah": "Johor Baru",
+      "nilai": "Sekolah ditutup 12-16 Okt",
+      "waktu_data": "2026-10-11",
+      "keterangan": "API 170-180",
+      "sumber": "https://www.rctiplus.com/news/detail/inews/5491556/seluruh-sekolah-di-johor-malaysia-kembali-ditutup-akibat-kiriman-kabut-asap-kalimantan",
+      "tanggal": "2026-10-12"
+    },
+    {
+      "kategori": "Lintas batas - Malaysia",
+      "wilayah": "Malaysia",
+      "nilai": "23 area API tidak sehat",
+      "waktu_data": "2026-10-12 10:00",
+      "keterangan": "Kota Tinggi 170; Pasir Gudang 169; Seremban 166",
+      "sumber": "https://bernama.com/en/world/news.php?id=2619000",
+      "tanggal": "2026-10-12"
+    },
+    {
+      "kategori": "Lintas batas - Malaysia",
+      "wilayah": "Malaysia",
+      "nilai": "Ambang tutup sekolah",
+      "waktu_data": "2026-10-10",
+      "keterangan": "KPM: tutup jika API >180 (sejak 9 Okt) atau >150 tiga hari berturut (sejak 12 Okt)",
+      "sumber": "https://bernama.com/bm/news.php?id=2618393",
+      "tanggal": "2026-10-10"
+    },
+    {
+      "kategori": "Lintas batas - Timor-Leste",
+      "wilayah": "Timor-Leste",
+      "nilai": "Sekolah nasional ditutup 3 hari",
+      "waktu_data": "mulai 2026-10-15",
+      "keterangan": "Langkah pencegahan; asap juga mencapai Filipina",
+      "sumber": "https://www.thejakartapost.com/world/2026/10/14/indonesia-haze-spikes-singapore-pollution-shuts-timor-leste-schools",
+      "tanggal": "2026-10-14"
+    }
+  ],
+  "kebakaran_kota": [
+    {
+      "lokasi": "Jl. Kertajaya IV, Penjaringan",
+      "kota": "Jakarta Utara",
+      "provinsi": "DKI Jakarta",
+      "lat": -6.12,
+      "lon": 106.79,
+      "koordinat": "perkiraan kecamatan",
+      "tanggal_kejadian": "2026-10-13",
+      "objek": "Permukiman, 150 rumah (~80x80 m)",
+      "korban": "2 tewas (anak 6 th, perempuan 40 th); 1 petugas damkar luka",
+      "penyebab": "Dugaan korsleting listrik",
+      "keterangan": "Kerugian ±Rp8,99 M; 200 KK/500 jiwa terselamatkan; 27 unit, 135 personel",
+      "sumber": "https://www.rctiplus.com/news/detail/inews/5492906/kebakaran-di-penjaringan-jakut-hanguskan-150-rumah--kerugian-ditaksir-tembus-rp8-9-miliar",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "lokasi": "Jl. Bangka 11 C, Mampang Prapatan",
+      "kota": "Jakarta Selatan",
+      "provinsi": "DKI Jakarta",
+      "lat": -6.25,
+      "lon": 106.82,
+      "koordinat": "perkiraan kecamatan",
+      "tanggal_kejadian": "2026-10-16",
+      "objek": "13 bangunan (10 kontrakan semipermanen, 3 rumah)",
+      "korban": "Tidak ada korban jiwa",
+      "penyebab": "Dugaan kebocoran tabung gas",
+      "keterangan": "Akses gang sempit",
+      "sumber": "https://tangselxpress.com/2026/10/16/kebakaran-di-mampang-jaksel-13-bangunan-ludes-dilalap-api-diduga-akibat-kebocoran-gas/",
+      "tanggal": "2026-10-16"
+    },
+    {
+      "lokasi": "Los Batiah Blok Timur, Pasar Payakumbuh",
+      "kota": "Payakumbuh",
+      "provinsi": "Sumatera Barat",
+      "lat": -0.22,
+      "lon": 100.63,
+      "koordinat": "perkiraan pusat kota",
+      "tanggal_kejadian": "2026-10-15",
+      "objek": "24 los pedagang",
+      "korban": "Tidak ada korban jiwa",
+      "penyebab": "Belum diketahui (Labfor)",
+      "keterangan": "Laporan 00:58 WIB, terkendali 02:37 WIB; kerugian ratusan juta rupiah",
+      "sumber": "https://sumbar24jam.com/2026/10/16/pasca-kebakaran-los-batiah-walikota-bersama-forkopimda-tinjau-blok-timur-pasar-payakumbuh/",
+      "tanggal": "2026-10-16"
+    },
+    {
+      "lokasi": "Jl. Wolter Monginsidi, Negeri Passo, Kec. Baguala",
+      "kota": "Ambon",
+      "provinsi": "Maluku",
+      "lat": -3.64,
+      "lon": 128.25,
+      "koordinat": "perkiraan Passo",
+      "tanggal_kejadian": "2026-10-15",
+      "objek": "2 warung nasi padang, 1 kios sembako, atap gudang logistik SPN Polda Maluku, ruang Polsek Baguala",
+      "korban": "Tidak ada korban",
+      "penyebab": "Sumber api lantai 2 warung (kompor), diselidiki",
+      "keterangan": "Kerugian ±Rp700 juta; padam 03:00 WIT",
+      "sumber": "https://www.headlinetimur.com/warung-nasi-padang-kios-hingga-ruang-polsek-di-baguala-ludes-terbakar/",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "lokasi": "Gudang kosong di TPA Jatibarang, Kec. Mijen",
+      "kota": "Semarang",
+      "provinsi": "Jawa Tengah",
+      "lat": -7.03,
+      "lon": 110.35,
+      "koordinat": "perkiraan TPA",
+      "tanggal_kejadian": "2026-10-13",
+      "objek": "Bekas gudang perusahaan (kosong)",
+      "korban": "Tidak dilaporkan",
+      "penyebab": "Belum diketahui",
+      "keterangan": "3 unit, 27 personel; terkendali 14:15 WIB",
+      "sumber": "https://www.detik.com/jateng/berita/d-8705457/gudang-di-tpa-jatibarang-semarang-terbakar",
+      "tanggal": "2026-10-13"
+    },
+    {
+      "lokasi": "Toko pakaian, Desa Waturoyo, Kec. Margoyoso",
+      "kota": "Kab. Pati",
+      "provinsi": "Jawa Tengah",
+      "lat": null,
+      "lon": null,
+      "koordinat": null,
+      "tanggal_kejadian": "2026-10-11",
+      "objek": "Toko pakaian",
+      "korban": "Tidak ada korban jiwa",
+      "penyebab": "Korsleting jaringan listrik",
+      "keterangan": "Kerugian Rp250 juta; 4 unit damkar",
+      "sumber": "https://www.detik.com/jateng/berita/d-8702728/toko-pakaian-di-pati-ludes-terbakar-kerugian-capai-ratusan-juta/amp",
+      "tanggal": "2026-10-12"
+    },
+    {
+      "lokasi": "Dusun Serdang, Desa Jelutung II, Kec. Simpang Rimba",
+      "kota": "Kab. Bangka Selatan",
+      "provinsi": "Kepulauan Bangka Belitung",
+      "lat": -2.56,
+      "lon": 106.0,
+      "koordinat": "pusat kecamatan",
+      "tanggal_kejadian": "2026-10-10",
+      "objek": "305 rumah semipermanen dan 50 bangunan walet",
+      "korban": "Tidak ada korban jiwa",
+      "penyebab": "Karhutla gambut 8,3 ha menjalar ke permukiman",
+      "keterangan": "Lihat juga insiden_berita; ~500 mengungsi",
+      "sumber": "https://rm.id/baca-berita/nasional/329885/rumah-hangus-1673-penerbangan-delay-karhutla-makin-melebar",
+      "tanggal": "2026-10-13"
+    }
+  ],
+  "prakiraan": [
+    {
+      "topik": "El Nino dan awal musim hujan",
+      "wilayah": "Nasional",
+      "isi": "El Nino level sangat kuat (Nino 3.4), diperkirakan berakhir akhir caturwulan I 2027. Awal musim hujan mundur di sebagian besar wilayah. Okt: sebagian Sumatra, Jabar, Kalimantan, Sulbar, Malut, Papua. Nov: sebagian Sumatra, Jawa, Kalimantan, Bali, NTB, Sulawesi, Maluku. Des: sebagian Lampung, sebagian besar Jawa, sebagian Kalsel, Bali, NTB, NTT, Sulawesi. Kekeringan berlanjut hingga Okt di Jawa, Bali, NTB, NTT.",
+      "sumber": "https://www.rctiplus.com/news/detail/okezone/5489067/el-nino-capai-level-sangat-kuat--bmkg--awal-musim-hujan-bisa-mundur",
+      "tanggal": "2026-10-08"
+    },
+    {
+      "topik": "El Nino hingga awal 2027",
+      "wilayah": "Sumatra dan Kalimantan",
+      "isi": "Aceh, Sumbar, Sumut sudah musim hujan. Sebagian besar Sumatra dan Kalimantan masuk musim hujan Nov 2026, intensitas menengah-tinggi. Des: sebagian besar Indonesia curah hujan tinggi. Hujan tidak merata (Fachry Ridjab, BMKG).",
+      "sumber": "https://www.rctiplus.com/news/detail/okezone/5493690/bmkg-sebut-el-nino-bertahan-hingga-awal-2027",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "topik": "Indeks ENSO dan IOD",
+      "wilayah": "Nasional",
+      "isi": "Anomali Nino3.4 akhir Agu +2,83; indeks ENSO JAS +2,63 (sangat kuat). IOD Agu +0,376, berpotensi positif akhir tahun. 529 ZOM (61,08%) awal musim hujan mundur. Awal Nov: 185 ZOM (24,66%); Des: 266 ZOM (17,31%). Puncak Des 2026: 155 ZOM (36,94%), mayoritas Sumatra dan Kalimantan. 51,90% ZOM musim hujan lebih pendek.",
+      "sumber": "https://kabar24.bisnis.com/read/20260925/15/2007244/kapan-musim-hujan-mulai-turun-ini-prediksi-bmkg",
+      "tanggal": "2026-09-25"
+    },
+    {
+      "topik": "Awal musim hujan Oktober",
+      "wilayah": "Kalbar, Kalteng, Riau, Jambi, Sumsel",
+      "isi": "Kalbar selatan dan Kalteng selatan sudah awal musim hujan; Kalbar utara hujan lebih lebat dasarian II-III Okt; Riau mulai hujan; Jambi dan Sumsel menyusul Okt.",
+      "sumber": "https://katadata.co.id/ekonomi-hijau/investasi-hijau/6ab22b4b896d0/bmkg-sebagian-ri-masuk-musim-hujan-november-dan-desember-kalimantan-oktober",
+      "tanggal": "2026-09-22"
+    },
+    {
+      "topik": "Awal musim hujan",
+      "wilayah": "Sumatera Selatan",
+      "isi": "Awal musim hujan Nov 2026. Okt: peluang hujan intensitas rendah di utara-tengah (Banyuasin, Muba, Musi Rawas). Nov lebih kering dari biasa tapi >50 mm per 7 hari.",
+      "sumber": "https://www.metrotvnews.com/read/KYVCeOlD-bmkg-prediksi-sumsel-masuk-musim-hujan-november-2026",
+      "tanggal": "2026-09-17"
+    },
+    {
+      "topik": "Awal musim hujan",
+      "wilayah": "Kalimantan Selatan",
+      "isi": "Sebagian Kalsel masuk musim hujan Nov 2026, sebagian besar Des 2026; lebih mundur dari normal; hujan bisa langsung tinggi (risiko banjir, longsor).",
+      "sumber": "https://www.metrotvnews.com/read/KdZCPRXr-bmkg-ingatkan-kalsel-waspada-hujan-lebat-mulai-november",
+      "tanggal": "2026-10-07"
+    },
+    {
+      "topik": "Curah hujan",
+      "wilayah": "Kab. Kapuas, Kalteng",
+      "isi": "BMKG: curah hujan tetap rendah hingga awal Nov 2026.",
+      "sumber": "https://journalarta.com/news/2026/09/30/status-tanggap-darurat-kekeringan-dan-karhutla-di-kapuas-kembali-diperpanjang/",
+      "tanggal": "2026-09-30"
+    },
+    {
+      "topik": "Hujan alami",
+      "wilayah": "Sumsel dan 6 provinsi prioritas",
+      "isi": "Hujan paling cepat dasarian III Okt, paling lambat dasarian III Nov (BMKG via BNPB). BNPB: hujan alami mid-Okt hingga Nov.",
+      "sumber": "https://www.goodnewsfromindonesia.id/short/hujan-ditunggu-palembang-bnpb-kerahkan-3000-kg-bahan-semai-untuk-atasi-kabut-asap",
+      "tanggal": "2026-10-14"
+    },
+    {
+      "topik": "Arah angin dan asap",
+      "wilayah": "Kalimantan",
+      "isi": "8-15 Okt angin dari selatan lalu tenggara, rata-rata 13,1 km/jam; asap terdorong ke barat laut.",
+      "sumber": "https://databoks.katadata.co.id/demografi/statistik/c41d1243366cd51/arah-angin-asap-karhutla-sepekan-titik-api-terpanas-843-mw-di-kalimantan",
+      "tanggal": "2026-10-15"
+    },
+    {
+      "topik": "Prakiraan asap regional (NEA)",
+      "wilayah": "Singapura dan sekitar",
+      "isi": "PSI diperkirakan tetap tidak sehat 24 jam; kondisi kering bertahan di Sumatra selatan dan Kalimantan; angin tenggara membawa asap.",
+      "sumber": "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/10/14/hazy-conditions-persist-as-psi-remains-unhealthy-across-singapore",
+      "tanggal": "2026-10-14"
+    }
+  ],
+  "kontak_darurat": [
+    {
+      "nomor": "112",
+      "layanan": "Layanan panggilan darurat nasional (terintegrasi)",
+      "sumber": "https://kabar24.bisnis.com/read/20240604/243/1770659/daftar-nomor-panggilan-darurat-di-indonesia-112",
+      "tanggal": "2024-06-04",
+      "catatan": "Referensi umum, bukan berita Sep-Okt 2026"
+    },
+    {
+      "nomor": "113",
+      "layanan": "Pemadam Kebakaran",
+      "sumber": "https://news.detik.com/berita/d-8234991/daftar-nomor-darurat-bencana-di-aceh-sumut-hingga-sumbar-resmi-dari-bnpb",
+      "tanggal": "2025-11-29",
+      "catatan": "Daftar resmi BNPB via detik"
+    },
+    {
+      "nomor": "117",
+      "layanan": "BNPB",
+      "sumber": "https://news.detik.com/berita/d-8234991/daftar-nomor-darurat-bencana-di-aceh-sumut-hingga-sumbar-resmi-dari-bnpb",
+      "tanggal": "2025-11-29",
+      "catatan": null
+    },
+    {
+      "nomor": "115",
+      "layanan": "Basarnas",
+      "sumber": "https://news.detik.com/berita/d-8234991/daftar-nomor-darurat-bencana-di-aceh-sumut-hingga-sumbar-resmi-dari-bnpb",
+      "tanggal": "2025-11-29",
+      "catatan": null
+    },
+    {
+      "nomor": "110",
+      "layanan": "Kepolisian RI",
+      "sumber": "https://news.detik.com/berita/d-8234991/daftar-nomor-darurat-bencana-di-aceh-sumut-hingga-sumbar-resmi-dari-bnpb",
+      "tanggal": "2025-11-29",
+      "catatan": null
+    },
+    {
+      "nomor": "118 / 119",
+      "layanan": "Ambulans (118 Kemenkes; 119 juga dipakai)",
+      "sumber": "https://kabar24.bisnis.com/read/20240604/243/1770659/daftar-nomor-panggilan-darurat-di-indonesia-112",
+      "tanggal": "2024-06-04",
+      "catatan": "Kemenkes sebut layanan darurat 119 disiagakan di 7 provinsi karhutla (14 Okt 2026)"
+    },
+    {
+      "nomor": "129",
+      "layanan": "Posko Bencana Alam",
+      "sumber": "https://kabar24.bisnis.com/read/20240604/243/1770659/daftar-nomor-panggilan-darurat-di-indonesia-112",
+      "tanggal": "2024-06-04",
+      "catatan": null
+    },
+    {
+      "nomor": "123",
+      "layanan": "PLN (gangguan listrik)",
+      "sumber": "https://news.detik.com/berita/d-8234991/daftar-nomor-darurat-bencana-di-aceh-sumut-hingga-sumbar-resmi-dari-bnpb",
+      "tanggal": "2025-11-29",
+      "catatan": null
+    },
+    {
+      "nomor": "0811 577 6767",
+      "layanan": "BKSDA Kalimantan Barat, laporan satwa terdampak karhutla 24 jam",
+      "sumber": "https://rm.id/baca-berita/government-action/324814/karhutla-ancam-orangutan-kemenhut-siagakan-call-center-24-jam",
+      "tanggal": "2026-09-05",
+      "catatan": null
+    },
+    {
+      "nomor": "0811 5218 500",
+      "layanan": "BKSDA Kalimantan Tengah, laporan satwa terdampak karhutla 24 jam",
+      "sumber": "https://rm.id/baca-berita/government-action/324814/karhutla-ancam-orangutan-kemenhut-siagakan-call-center-24-jam",
+      "tanggal": "2026-09-05",
+      "catatan": null
+    },
+    {
+      "nomor": "0821 1333 8181",
+      "layanan": "BKSDA Kalimantan Timur, laporan satwa terdampak karhutla 24 jam",
+      "sumber": "https://rm.id/baca-berita/government-action/324814/karhutla-ancam-orangutan-kemenhut-siagakan-call-center-24-jam",
+      "tanggal": "2026-09-05",
+      "catatan": "Nomor call center khusus Manggala Agni/Kemenhut untuk lapor api tidak ditemukan dari sumber terverifikasi"
+    }
+  ],
+  "daops": [
+    {
+      "nama": "Daops Sibolangit",
+      "provinsi": "Sumatera Utara",
+      "lokasi_basis": "Kec. Sibolangit, Kab. Deli Serdang",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Pematang Siantar",
+      "provinsi": "Sumatera Utara",
+      "lokasi_basis": "Kota Pematang Siantar",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Labuhanbatu",
+      "provinsi": "Sumatera Utara",
+      "lokasi_basis": "Kab. Labuhanbatu",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Batam",
+      "provinsi": "Kepulauan Riau",
+      "lokasi_basis": "Kota Batam",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Pekanbaru",
+      "provinsi": "Riau",
+      "lokasi_basis": "Kota Pekanbaru",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Siak",
+      "provinsi": "Riau",
+      "lokasi_basis": "Kab. Siak",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Rengat",
+      "provinsi": "Riau",
+      "lokasi_basis": "Rengat, Kab. Indragiri Hulu",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Dumai",
+      "provinsi": "Riau",
+      "lokasi_basis": "Kota Dumai",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Kota Jambi",
+      "provinsi": "Jambi",
+      "lokasi_basis": "Kota Jambi",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Muara Bulian",
+      "provinsi": "Jambi",
+      "lokasi_basis": "Muara Bulian, Kab. Batanghari",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Bukit Tempurung",
+      "provinsi": "Jambi",
+      "lokasi_basis": null,
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Muara Tebo",
+      "provinsi": "Jambi",
+      "lokasi_basis": "Muara Tebo, Kab. Tebo",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Sarolangun",
+      "provinsi": "Jambi",
+      "lokasi_basis": "Kab. Sarolangun",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Banyuasin",
+      "provinsi": "Sumatera Selatan",
+      "lokasi_basis": "Kab. Banyuasin",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Musi Banyuasin",
+      "provinsi": "Sumatera Selatan",
+      "lokasi_basis": "Kab. Musi Banyuasin",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Lahat",
+      "provinsi": "Sumatera Selatan",
+      "lokasi_basis": "Kab. Lahat",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Ogan Komering Ilir",
+      "provinsi": "Sumatera Selatan",
+      "lokasi_basis": "Kab. Ogan Komering Ilir",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Ketapang",
+      "provinsi": "Kalimantan Barat",
+      "lokasi_basis": "Kab. Ketapang",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Pontianak",
+      "provinsi": "Kalimantan Barat",
+      "lokasi_basis": "Pontianak",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Singkawang",
+      "provinsi": "Kalimantan Barat",
+      "lokasi_basis": "Kota Singkawang",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Sintang",
+      "provinsi": "Kalimantan Barat",
+      "lokasi_basis": "Kab. Sintang",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Palangkaraya",
+      "provinsi": "Kalimantan Tengah",
+      "lokasi_basis": "Kota Palangka Raya",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Kapuas",
+      "provinsi": "Kalimantan Tengah",
+      "lokasi_basis": "Kab. Kapuas",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Pangkalan Bun",
+      "provinsi": "Kalimantan Tengah",
+      "lokasi_basis": "Pangkalan Bun, Kab. Kotawaringin Barat",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Muara Teweh",
+      "provinsi": "Kalimantan Tengah",
+      "lokasi_basis": "Muara Teweh, Kab. Barito Utara",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Banjar",
+      "provinsi": "Kalimantan Selatan",
+      "lokasi_basis": "Kab. Banjar",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Tanah Laut",
+      "provinsi": "Kalimantan Selatan",
+      "lokasi_basis": "Kab. Tanah Laut",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Tanah Bumbu",
+      "provinsi": "Kalimantan Selatan",
+      "lokasi_basis": "Kab. Tanah Bumbu",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Paser",
+      "provinsi": "Kalimantan Timur",
+      "lokasi_basis": "Kab. Paser",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Sangkima Kutai",
+      "provinsi": "Kalimantan Timur",
+      "lokasi_basis": "Sangkima, Kab. Kutai Timur (TN Kutai)",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Gowa",
+      "provinsi": "Sulawesi Selatan",
+      "lokasi_basis": "Kab. Gowa",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Malili",
+      "provinsi": "Sulawesi Selatan",
+      "lokasi_basis": "Malili, Kab. Luwu Timur",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Tinanggea Rawa Aopa",
+      "provinsi": "Sulawesi Tenggara",
+      "lokasi_basis": "Kec. Tinanggea, Kab. Konawe Selatan",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    },
+    {
+      "nama": "Daops Bitung",
+      "provinsi": "Sulawesi Utara",
+      "lokasi_basis": "Kota Bitung",
+      "catatan": "Daftar 34 Daops tahun 2020 (Wikipedia). Lokasi basis disimpulkan dari nama Daops, bukan dari dokumen Kemenhut; struktur 2026 belum diverifikasi.",
+      "sumber": "https://id.wikipedia.org/wiki/Manggala_Agni",
+      "tanggal": "2026-10-17"
+    }
+  ]
+}
