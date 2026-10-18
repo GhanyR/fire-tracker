@@ -1,0 +1,3 @@
+aiohttp>=3.9
+# opsional, untuk MAVLink (ArduPilot/PX4/QGroundControl forwarding)
+pymavlink>=2.4
