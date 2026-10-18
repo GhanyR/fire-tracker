@@ -1,0 +1,211 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "incident.schema.json",
+ "title": "Insiden karhutla (satu elemen incidents.json)",
+ "type": "object",
+ "required": [
+  "id",
+  "name",
+  "lat",
+  "lon",
+  "kab",
+  "prov",
+  "score",
+  "cls",
+  "status",
+  "n24",
+  "n",
+  "t0",
+  "t1"
+ ],
+ "properties": {
+  "id": {
+   "type": "string",
+   "description": "ID stabil, contoh KRH-SB9Z"
+  },
+  "name": {
+   "type": "string",
+   "description": "Nama tampilan: kabupaten + nomor urut"
+  },
+  "lat": {
+   "type": "number"
+  },
+  "lon": {
+   "type": "number"
+  },
+  "kab": {
+   "type": "string"
+  },
+  "prov": {
+   "type": "string"
+  },
+  "desa": {
+   "type": "string"
+  },
+  "kec": {
+   "type": "string"
+  },
+  "score": {
+   "type": "integer",
+   "minimum": 0,
+   "maximum": 100
+  },
+  "cls": {
+   "enum": [
+    "kritis",
+    "tinggi",
+    "sedang",
+    "rendah"
+   ]
+  },
+  "status": {
+   "enum": [
+    "aktif",
+    "aktif24",
+    "mereda",
+    "padam3"
+   ],
+   "description": "aktif ≤12 jam, aktif24 ≤24 jam, mereda ≤72 jam, padam3 >72 jam sejak deteksi terakhir"
+  },
+  "parts": {
+   "type": "object",
+   "description": "Komponen skor: aktivitas, intensitas, pertumbuhan, gambut, kedekatan, cuaca"
+  },
+  "n": {
+   "type": "integer",
+   "description": "Deteksi 7 hari"
+  },
+  "n24": {
+   "type": "integer"
+  },
+  "n48": {
+   "type": "integer",
+   "description": "Deteksi 24–48 jam lalu"
+  },
+  "npix": {
+   "type": "integer"
+  },
+  "npix24": {
+   "type": "integer"
+  },
+  "ha": {
+   "type": "number",
+   "description": "Jejak piksel VIIRS × 14,06 ha"
+  },
+  "ha24": {
+   "type": "number"
+  },
+  "frpS": {
+   "type": "number"
+  },
+  "frpM": {
+   "type": "number",
+   "description": "FRP maksimum (MW)"
+  },
+  "frp24": {
+   "type": "number"
+  },
+  "t0": {
+   "type": "number",
+   "description": "Deteksi pertama, jam sejak meta.t0"
+  },
+  "t1": {
+   "type": "number",
+   "description": "Deteksi terakhir, jam sejak meta.t0"
+  },
+  "age": {
+   "type": "number",
+   "description": "Jam sejak deteksi terakhir"
+  },
+  "days": {
+   "type": "array",
+   "items": {
+    "type": "integer"
+   },
+   "description": "Deteksi per hari WIB"
+  },
+  "night": {
+   "type": "integer"
+  },
+  "hi": {
+   "type": "integer",
+   "description": "Deteksi keyakinan tinggi"
+  },
+  "dist": {
+   "type": "number",
+   "description": "Pergeseran pusat api (km)"
+  },
+  "brg": {
+   "type": "number",
+   "description": "Arah pergeseran (derajat dari utara)"
+  },
+  "rate": {
+   "type": "number",
+   "description": "km per hari"
+  },
+  "hull": {
+   "type": "array",
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "number"
+    },
+    "minItems": 2,
+    "maxItems": 2
+   },
+   "description": "Batas cembung 7 hari [lon,lat]"
+  },
+  "hull24": {
+   "type": "array",
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "number"
+    }
+   }
+  },
+  "bbox": {
+   "type": "array",
+   "items": {
+    "type": "number"
+   },
+   "minItems": 4,
+   "maxItems": 4
+  },
+  "peat": {
+   "type": "boolean"
+  },
+  "town": {
+   "type": "object",
+   "properties": {
+    "name": {
+     "type": "string"
+    },
+    "km": {
+     "type": "number"
+    },
+    "brg": {
+     "type": "number"
+    },
+    "pop": {
+     "type": "number"
+    }
+   }
+  },
+  "near": {
+   "type": "array",
+   "description": "[indeks resources.items, km] tiga pos darat terdekat"
+  },
+  "airport": {
+   "type": "array"
+  },
+  "wk": {
+   "type": "integer",
+   "description": "Indeks baris weather.json"
+  },
+  "has3d": {
+   "type": "boolean",
+   "description": "Ada paket 3D di inc3d/<id>/"
+  }
+ }
+}

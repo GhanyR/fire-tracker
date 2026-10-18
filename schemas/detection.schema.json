@@ -1,0 +1,47 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "detection.schema.json",
+ "title": "Temuan drone/sensor (bridge: POST /detection)",
+ "type": "object",
+ "required": [
+  "lat",
+  "lon"
+ ],
+ "properties": {
+  "type": {
+   "const": "detection"
+  },
+  "lat": {
+   "type": "number"
+  },
+  "lon": {
+   "type": "number"
+  },
+  "temp_c": {
+   "type": "number",
+   "description": "Suhu terukur kamera termal (°C)"
+  },
+  "source": {
+   "type": "string"
+  },
+  "note": {
+   "type": "string"
+  },
+  "conf": {
+   "type": "number",
+   "minimum": 0,
+   "maximum": 1
+  },
+  "photo": {
+   "type": "string",
+   "description": "URL foto"
+  },
+  "drone": {
+   "type": "string"
+  },
+  "t": {
+   "type": "string",
+   "format": "date-time"
+  }
+ }
+}

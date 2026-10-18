@@ -1,0 +1,68 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "telemetry.schema.json",
+ "title": "Telemetri drone (bridge: POST /telemetry atau pesan WebSocket)",
+ "type": "object",
+ "required": [
+  "lat",
+  "lon"
+ ],
+ "properties": {
+  "type": {
+   "const": "telemetry"
+  },
+  "id": {
+   "type": "string",
+   "description": "Nama/callsign unik drone"
+  },
+  "lat": {
+   "type": "number",
+   "minimum": -90,
+   "maximum": 90
+  },
+  "lon": {
+   "type": "number",
+   "minimum": -180,
+   "maximum": 180
+  },
+  "alt": {
+   "type": "number",
+   "description": "Ketinggian relatif titik lepas landas (m)"
+  },
+  "alt_msl": {
+   "type": "number",
+   "description": "Ketinggian di atas permukaan laut (m)"
+  },
+  "hdg": {
+   "type": "number",
+   "description": "Arah hadap (derajat)"
+  },
+  "spd": {
+   "type": "number",
+   "description": "Kecepatan darat (m/s)"
+  },
+  "bat": {
+   "type": "number",
+   "minimum": 0,
+   "maximum": 100,
+   "description": "Baterai (%)"
+  },
+  "mode": {
+   "type": "string"
+  },
+  "armed": {
+   "type": "boolean"
+  },
+  "model": {
+   "type": "string"
+  },
+  "link": {
+   "type": "string",
+   "description": "mavlink | http | ws | sim"
+  },
+  "t": {
+   "type": "string",
+   "format": "date-time"
+  }
+ }
+}
