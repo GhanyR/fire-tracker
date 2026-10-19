@@ -64,10 +64,26 @@ jobs:
           key: ubin-dasar-v1-${{ github.run_id }}
           restore-keys: ubin-dasar-v1-
       - name: Ambil & olah data terbaru
-        run: python -m pipeline.build --out site/data
+        id: data
+        run: |
+          set +e
+          python -m pipeline.build --out site/data
+          rc=$?
+          set -e
+          if [ "$rc" = "3" ]; then
+            # NASA FIRMS tidak menjawab: pakai data run sebelumnya, situs tetap dipasang
+            echo "::warning::NASA FIRMS tidak bisa diakses. Memakai data run sebelumnya."
+            rm -rf site/data /tmp/prev
+            git clone -q --depth 1 -b data "https://github.com/${{ github.repository }}.git" /tmp/prev
+            mkdir -p site && cp -r /tmp/prev/data site/data
+            echo "lama=1" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          exit $rc
       - name: Susun situs
         run: python web/build_site.py --out site
       - name: Simpan data ke cabang 'data' (URL tetap untuk alat lain)
+        if: steps.data.outputs.lama != '1'
         run: |
           cd site
           git init -q -b data
