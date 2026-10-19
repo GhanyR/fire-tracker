@@ -1617,7 +1617,7 @@ function updateLayers(){if(!deckgl)return;setAttrib();
       getColor:i=>{const a=pxAge(i,T);const c=ageCol(zoom<8?Math.max(a,7):a);const f=a<12?0.8+0.2*Math.sin(fl*0.9+hash01(i)*40):1;return [c[0],c[1],c[2],Math.round((a<6?235:a<18?170:100)*f*Ly.px.op*(zoom<8?0.55:1))]},
       parameters:lightBase||zoom<8?SOFT:ADD,alphaCutoff:0.01,updateTriggers:{getColor:[T,fl,Ly.px.op,zoom<8],getPosition:is3d,getSize:zoom>=9.5}}));
     // diperbesar: api baru tampil sebagai nyala beranimasi, bukan titik
-    const flameZ=!is3d&&zoom>=10.3;let dots=list;
+    const flameZ=!is3d&&zoom>=9.2;let dots=list;
     if(flameZ){const live=list.filter(i=>pxAge(i,T)<12);dots=list.filter(i=>pxAge(i,T)>=12);const tt=performance.now()/1000;
       out.push(new deck.IconLayer({id:'px-f',data:live,iconAtlas:softSprite(),iconMapping:SOFT_MAP,getIcon:()=>'s',sizeUnits:'meters',billboard:false,getPosition:i=>[P.lon[i],P.lat[i]],
         getSize:i=>(560+Math.min(260,Math.sqrt(P.frp[i])*22))*(1-pxAge(i,T)/30),getColor:i=>{const f=0.72+0.28*Math.sin(tt*6+hash01(i)*40)*Math.sin(tt*2.3+hash01(i+5)*20);const a=pxAge(i,T);return [255,Math.round(150+60*f-a*4),Math.round(50+40*f),Math.round(235*f*Ly.px.op)]},
