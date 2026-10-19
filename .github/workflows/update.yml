@@ -54,6 +54,8 @@ jobs:
             -d '{"name":"laporan-lapangan","color":"d9501c","description":"Laporan dari tim lapangan (tampil di peta)"}'
       - name: Pasang dependensi
         run: pip install -r pipeline/requirements.txt
+      - name: Uji penyimpanan offline
+        run: node --test web/tests/*.test.mjs
       - name: Uji cepat pipeline (data tiruan)
         run: |
           python pipeline/tests/make_fixtures.py

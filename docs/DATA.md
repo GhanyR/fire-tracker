@@ -53,17 +53,19 @@ Open-Meteo per titik grid 0,25° yang berisi insiden: kondisi saat ini, riwayat 
 
 ## Animasi 3D
 
+Animasi di bagian ini adalah ilustrasi berdasarkan waktu deteksi satelit. Warna gelap menunjukkan jejak deteksi, bukan hasil pemetaan bekas terbakar. Tinggi api tidak diukur oleh FIRMS. Status antarmuka menyatakan usia deteksi; ketiadaan deteksi tidak memastikan api padam.
+
 Setiap piksel VIIRS punya waktu deteksi pertama `tf` dan terakhir `tl`. Pada waktu putar ulang T:
 
-- T < tf: belum terbakar.
-- Dekat tf atau tl (± beberapa jam): **menyala**: nyala api beranimasi (8 bingkai), cahaya di tanah, percikan bara naik. Tinggi nyala mengikuti kekuatan FRP.
-- tf < T < tl dengan banyak deteksi: dianggap terus menyala/membara.
-- Setelah tl: **membara** lalu memudar ke merah tua dalam ±1–2 hari.
-- Setelah tf: **bekas terbakar**: dua lapis (tanah gosong, inti arang) yang digambar menyatu lalu dihaluskan kuat, jadi tidak tampak seperti kotak piksel.
+- T < tf: belum ada deteksi yang tercatat pada piksel tersebut.
+- Dekat tf atau tl (± beberapa jam): simbol panas beranimasi (8 bingkai), cahaya di tanah, dan percikan bara. Ukuran grafis mengikuti FRP; bukan pengukuran tinggi nyala.
+- tf < T < tl dengan banyak deteksi: simbol panas dipertahankan sebagai asumsi visual di antara pengamatan.
+- Setelah tl: simbol memudar ke merah tua dalam ±1–2 hari. Ini perubahan grafis, bukan bukti api membara atau padam.
+- Setelah tf: **jejak deteksi** digambar dengan dua lapis gelap yang dihaluskan. Bentuk ini berasal dari piksel satelit; bukan peta bekas terbakar yang telah diukur.
 
 Medan: bila ubin citra dan relief bisa diakses, tanah digambar dengan TerrainLayer (relief AWS Terrarium + citra yang sama dengan peta 2D) sampai cakrawala, dengan pemuat relief sendiri (grid 33 atau 65 titik per ubin, tanpa pekerja dari CDN). Bila tidak, dipakai paket offline `inc3d/<ID>` dengan tepi gelap tipis. Kabut jauh mengikuti sudut kamera.
 
-Pohon 3D (model kerucut) mati secara bawaan karena citra sudah memperlihatkan tajuk asli; bisa dinyalakan di Tampilan. Nyala api hanya tampil saat kamera dekat, dengan ukuran sesuai skala nyata.
+Pohon 3D (model kerucut) mati secara bawaan karena citra sudah memperlihatkan tajuk asli; bisa dinyalakan di Tampilan. Simbol nyala hanya tampil saat kamera dekat; ukurannya diatur terhadap zoom dan FRP untuk keterbacaan.
 
 Siang-malam: langit, cahaya, dan warna tanah mengikuti jam WIB pada waktu putar ulang (gelap sekitar 19.00–05.00), sehingga deteksi malam terlihat sebagai cahaya api di kegelapan.
 

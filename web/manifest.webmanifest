@@ -1,6 +1,6 @@
 {
-  "name": "HotSpot",
-  "short_name": "HotSpot",
+  "name": "Siaga Api",
+  "short_name": "Siaga Api",
   "description": "Peta kebakaran hutan dan lahan Indonesia dari satelit, untuk regu pemadam, penyelamat, dan warga.",
   "lang": "id",
   "start_url": "./",

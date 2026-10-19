@@ -1,4 +1,4 @@
-"""Pengaturan pipeline data HotSpot.
+"""Pengaturan pipeline data Siaga Api.
 
 Semua nilai bisa ditimpa lewat variabel lingkungan (environment variable)
 supaya mudah disesuaikan tanpa mengubah kode.
@@ -20,7 +20,7 @@ def env(name, default):
 REPO_URL = env("PAN_REPO_URL", "https://github.com/OWNER/pantau-api-nusantara")
 PAGES_URL = env("PAN_PAGES_URL", "")  # contoh: https://OWNER.github.io/pantau-api-nusantara
 PREV_DATA_URL = env("PAN_PREV_DATA_URL", "")  # raw URL folder data run sebelumnya (cabang 'data')
-USER_AGENT = env("PAN_USER_AGENT", "HotSpot/1.0 (+" + REPO_URL + ")")
+USER_AGENT = env("PAN_USER_AGENT", "Siaga Api/1.0 (+" + REPO_URL + ")")
 
 # Wilayah kerja (bujur barat, lintang selatan, bujur timur, lintang utara)
 BBOX = (94.5, -11.5, 141.5, 6.5)

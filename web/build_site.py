@@ -12,7 +12,7 @@ HEAD = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Dashboard terbuka kebakaran hutan dan lahan Indonesia: titik api satelit NASA FIRMS, insiden berprioritas, 3D citra satelit, cuaca, asap, drone, dan integrasi alat lapangan.">
-<meta property="og:title" content="HotSpot · Titik api Indonesia">
+<meta property="og:title" content="Siaga Api · Titik api Indonesia">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <meta name="theme-color" content="#1C1C1E">

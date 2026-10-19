@@ -1,4 +1,4 @@
-# HotSpot
+# Siaga Api
 
 Peta titik api (hotspot) dan dasbor terbuka kebakaran hutan dan lahan (karhutla) Indonesia untuk regu pemadam, BPBD, Manggala Agni, relawan, jurnalis, dan siapa pun yang terlibat.
 
@@ -9,7 +9,7 @@ Peta titik api (hotspot) dan dasbor terbuka kebakaran hutan dan lahan (karhutla)
 - **Titik api satelit terbaru** dari NASA FIRMS (VIIRS 375 m dan MODIS), diperbarui otomatis tiap 3 jam.
 - **Insiden berprioritas**: titik api dikelompokkan menjadi insiden, diberi skor 0–100, status, nama desa, dan kalimat ringkas yang mudah dipahami.
 - **Citra satelit tajam ala Google Earth**: ubin Esri World Imagery (sub-meter di banyak tempat) dari zoom dunia sampai level desa, dengan cadangan Sentinel-2 (EOX) dan Blue Marble bila server citra tidak bisa diakses. Pelacakan titik api fokus ke Indonesia.
-- **3D citra satelit**: medan 3D yang menyambung sampai cakrawala (citra Esri di atas relief AWS) dengan kabut jauh, cahaya api, bekas terbakar, siang-malam sesuai jam WIB, asap mengikuti angin, jalan, sungai, kanal, dan nama desa. Paket offline per insiden prioritas tetap tersedia.
+- **3D citra satelit**: medan 3D yang menyambung sampai cakrawala (citra Esri di atas relief AWS) dengan kabut jauh, cahaya api dan jejak deteksi (ilustrasi), siang-malam sesuai jam WIB, asap mengikuti angin, jalan, sungai, kanal, dan nama desa. Paket offline per insiden prioritas tetap tersedia.
 - **Untuk regu lapangan**: koordinat pusat api dalam desimal, DMS, dan UTM; tombol arahkan ke akses jalan dan sumber air terdekat dari tepi api; desa terdekat dengan tanda arah asap; risiko operasi 72 jam (angin dan kelembapan per 3 jam, angin berbalik, hujan); pengingat keselamatan regu; peta lapangan PNG dengan grid UTM untuk dicetak.
 - **Perkiraan arah sebaran 12 jam**: kerucut di peta dan 3D dari angin prakiraan dan laju 7 hari. Perkiraan kasar, bukan model resmi.
 - **Bisa dipakai tanpa sinyal**: situs GitHub Pages menyimpan aplikasi dan data terakhir (service worker). Tombol "Simpan area untuk offline" mengunduh citra satelit sekitar insiden sebelum regu berangkat. Bisa dipasang di layar utama ponsel.
@@ -17,6 +17,8 @@ Peta titik api (hotspot) dan dasbor terbuka kebakaran hutan dan lahan (karhutla)
 - **Cuaca & asap**: angin, kelembapan, hari tanpa hujan, prakiraan 72 jam, indeks cuaca api, kualitas udara (PM2.5) 40 kota.
 - **Drone**: buat rute misi (cek titik panas, pindai area, keliling, orbit) yang mengikuti relief, lalu ekspor ke QGroundControl, Mission Planner, Litchi (DJI), KML, GeoJSON, GPX. Pantau posisi drone langsung lewat jembatan MAVLink/HTTP.
 - **Terhubung ke banyak alat**: umpan GeoJSON, CSV, KML NetworkLink (Google Earth, ATAK), CoT (TAK Server), SITREP teks, notifikasi Telegram/Slack/Discord/webhook, laporan lapangan dari Google Form, KoboToolbox, ODK, atau GitHub Issues.
+
+Nama aplikasi: **Siaga Api**. Alamat repositori, situs, dan umpan data tetap memakai `pantau-api-nusantara` agar tautan integrasi yang sudah digunakan tetap berfungsi.
 
 ## Cara pakai
 
@@ -147,7 +149,7 @@ Bila kuota habis atau kunci salah, 3D otomatis kembali ke citra Esri.
 - Satelit lewat beberapa kali sehari; "aktif" berarti terdeteksi pada lintasan terakhir.
 - "Jejak" = jumlah piksel VIIRS × 14 ha, bukan luas terbakar resmi.
 - Peta gambut adalah perkiraan, bukan peta resmi KLHK.
-- Asap di 3D adalah ilustrasi arah angin, bukan model sebaran asap.
+- Api, jejak gelap, dan asap di 3D adalah ilustrasi deteksi satelit dan arah angin. Bukan rekaman api, peta luas terbakar, atau model sebaran asap.
 - Saran taktis dibuat otomatis. Keputusan tetap di komandan lapangan.
 
 ## Berkontribusi
@@ -158,4 +160,4 @@ Laporan masalah, ide, dan perbaikan sangat diterima. Lihat [CONTRIBUTING.md](CON
 
 ## English summary
 
-HotSpot is an open-source, auto-updating wildfire map for Indonesia. A GitHub Actions pipeline pulls NASA FIRMS hotspots every 3 hours, clusters them into prioritised incidents, adds weather (Open-Meteo), air quality and OpenStreetMap context, and prepares offline 3D packages for the top incidents. The single-file web app (deck.gl, dark by default) shows sharp Esri World Imagery from world zoom down to village level, a 7-day replay, and a 3D view where terrain runs to the horizon with fire glow, burn scars, day-night by local time and wind-driven smoke. With a free Cesium ion token (or a Google Map Tiles key) the 3D view uses Google Photorealistic 3D Tiles and falls back to Esri automatically. Field teams get fire-centre coordinates (decimal, DMS, UTM), nearest road and water access, a 72-hour operations risk strip, a 12-hour spread estimate, printable UTM field maps and offline mode. There is also a "near me" panel with Telegram location alerts, field reports, a drone mission planner (QGroundControl, Mission Planner, Litchi, KML, GeoJSON, GPX), open feeds (GeoJSON, CSV, KML, CoT for TAK, SITREP) and a read-only MAVLink/HTTP drone bridge. Code is MIT; data keep their own licences (see table above).
+Siaga Api is an open-source, auto-updating wildfire map for Indonesia. A GitHub Actions pipeline pulls NASA FIRMS hotspots every 3 hours, clusters them into prioritised incidents, adds weather (Open-Meteo), air quality and OpenStreetMap context, and prepares offline 3D packages for the top incidents. The single-file web app (deck.gl, dark by default) shows sharp Esri World Imagery from world zoom down to village level, a 7-day replay, and a 3D view where terrain runs to the horizon with illustrative fire glow and detection footprints, day-night by local time and wind-driven smoke. With a free Cesium ion token (or a Google Map Tiles key) the 3D view uses Google Photorealistic 3D Tiles and falls back to Esri automatically. Field teams get fire-centre coordinates (decimal, DMS, UTM), nearest road and water access, a 72-hour operations risk strip, a 12-hour spread estimate, printable UTM field maps and offline mode. There is also a "near me" panel with Telegram location alerts, field reports, a drone mission planner (QGroundControl, Mission Planner, Litchi, KML, GeoJSON, GPX), open feeds (GeoJSON, CSV, KML, CoT for TAK, SITREP) and a read-only MAVLink/HTTP drone bridge. Code is MIT; data keep their own licences (see table above).
