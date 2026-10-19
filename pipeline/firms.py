@@ -11,6 +11,7 @@ def fetch_all():
     w, s, e, n = config.BBOX
     rows = {k: [] for k in ("lat", "lon", "ts", "sat", "conf", "frp", "night", "bright")}
     meta = {}
+    gagal = 0
     for key, path in config.FIRMS_FILES.items():
         url = config.FIRMS_BASE + path
         try:
@@ -18,9 +19,11 @@ def fetch_all():
                 import os
                 text = open(os.path.join(net.FIXTURE_DIR, f"firms_{key}.csv")).read()
             else:
-                text = net.get(url, timeout=120).text
+                # sambung maks 20 dt; bila satelit sebelumnya sudah gagal, cukup 1 percobaan
+                text = net.get(url, timeout=(20, 120), retries=1 if gagal else 3).text
         except Exception as ex:  # satu satelit gagal tidak menghentikan semuanya
             meta[key] = {"error": str(ex)[:200]}
+            gagal += 1
             continue
         rd = csv.DictReader(io.StringIO(text))
         cnt = 0

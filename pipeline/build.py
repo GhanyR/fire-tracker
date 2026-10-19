@@ -63,8 +63,12 @@ def main():
     now = dt.datetime.now(dt.timezone.utc)
     print("== FIRMS")
     det, fmeta = firms.fetch_all()
+    for k, v in fmeta.items():
+        print(" ", k, v.get("rows_bbox", "GAGAL: " + v.get("error", "")))
     if len(det["lat"]) == 0:
-        print("Tidak ada data FIRMS, berhenti."); sys.exit(1)
+        # kode 3: server FIRMS tidak menjawab. Alur kerja lalu memakai data run sebelumnya
+        # supaya situs tetap tampil dan kode terbaru tetap terpasang.
+        print("Tidak ada data FIRMS, berhenti."); sys.exit(3)
     admin = geo.Admin()
     kab = admin.assign(det["lon"], det["lat"])
     m = kab >= 0
