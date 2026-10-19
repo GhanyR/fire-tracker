@@ -2,6 +2,8 @@
 
 Peta titik api (hotspot) dan dasbor terbuka kebakaran hutan dan lahan (karhutla) Indonesia untuk regu pemadam, BPBD, Manggala Agni, relawan, jurnalis, dan siapa pun yang terlibat.
 
+**Buka situsnya: https://ghanyr.github.io/pantau-api-nusantara/** (gratis, tanpa login, bisa dipasang di layar utama ponsel)
+
 *Open dashboard for forest and land fires in Indonesia. English summary at the bottom.*
 
 - **Titik api satelit terbaru** dari NASA FIRMS (VIIRS 375 m dan MODIS), diperbarui otomatis tiap 3 jam.
