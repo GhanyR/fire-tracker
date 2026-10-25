@@ -1,24 +1,38 @@
-# Siaga Api
+# Fire Tracker
 
 Peta titik api (hotspot) dan dasbor terbuka kebakaran hutan dan lahan (karhutla) Indonesia untuk regu pemadam, BPBD, Manggala Agni, relawan, jurnalis, dan siapa pun yang terlibat.
 
 **Buka situsnya: https://ghanyr.github.io/pantau-api-nusantara/** (gratis, tanpa login, bisa dipasang di layar utama ponsel)
 
-*Open dashboard for forest and land fires in Indonesia. English summary at the bottom.*
+**Fire Tracker** memakai peta medan 3D MapLibre, citra Esri dan elevasi AWS/Mapzen. Titik dan animasi kamera tetap terlihat, sedangkan keterangan dan daftar dipindahkan ke panel.
 
-- **Titik api satelit terbaru** dari NASA FIRMS (VIIRS 375 m dan MODIS), diperbarui otomatis tiap 3 jam.
-- **Insiden berprioritas**: titik api dikelompokkan menjadi insiden, diberi skor 0–100, status, nama desa, dan kalimat ringkas yang mudah dipahami.
-- **Citra satelit tajam ala Google Earth**: ubin Esri World Imagery (sub-meter di banyak tempat) dari zoom dunia sampai level desa, dengan cadangan Sentinel-2 (EOX) dan Blue Marble bila server citra tidak bisa diakses. Pelacakan titik api fokus ke Indonesia.
-- **3D citra satelit**: medan 3D yang menyambung sampai cakrawala (citra Esri di atas relief AWS) dengan kabut jauh, cahaya api dan jejak deteksi (ilustrasi), siang-malam sesuai jam WIB, asap mengikuti angin, jalan, sungai, kanal, dan nama desa. Paket offline per insiden prioritas tetap tersedia.
-- **Untuk regu lapangan**: koordinat pusat api dalam desimal, DMS, dan UTM; tombol arahkan ke akses jalan dan sumber air terdekat dari tepi api; desa terdekat dengan tanda arah asap; risiko operasi 72 jam (angin dan kelembapan per 3 jam, angin berbalik, hujan); pengingat keselamatan regu; peta lapangan PNG dengan grid UTM untuk dicetak.
-- **Perkiraan arah sebaran 12 jam**: kerucut di peta dan 3D dari angin prakiraan dan laju 7 hari. Perkiraan kasar, bukan model resmi.
-- **Bisa dipakai tanpa sinyal**: situs GitHub Pages menyimpan aplikasi dan data terakhir (service worker). Tombol "Simpan area untuk offline" mengunduh citra satelit sekitar insiden sebelum regu berangkat. Bisa dipasang di layar utama ponsel.
-- **Dekat saya & peringatan**: warga memasukkan lokasi (GPS, ketuk peta, atau cari nama tempat) untuk melihat api dan asap di sekitar, lalu menerima peringatan lewat bot Telegram bila ada api baru dalam radius mereka.
-- **Cuaca & asap**: angin, kelembapan, hari tanpa hujan, prakiraan 72 jam, indeks cuaca api, kualitas udara (PM2.5) 40 kota.
-- **Drone**: buat rute misi (cek titik panas, pindai area, keliling, orbit) yang mengikuti relief, lalu ekspor ke QGroundControl, Mission Planner, Litchi (DJI), KML, GeoJSON, GPX. Pantau posisi drone langsung lewat jembatan MAVLink/HTTP.
-- **Terhubung ke banyak alat**: umpan GeoJSON, CSV, KML NetworkLink (Google Earth, ATAK), CoT (TAK Server), SITREP teks, notifikasi Telegram/Slack/Discord/webhook, laporan lapangan dari Google Form, KoboToolbox, ODK, atau GitHub Issues.
+- Cari kabupaten, provinsi, atau koordinat. Pencarian nama mencakup seluruh Indonesia.
+- Daftar **Terbaru** diurutkan menurut waktu akuisisi satelit; pilih per wilayah atau per titik.
+- Jendela 24 jam, 48 jam, dan 7 hari dihitung dari waktu sekarang, bukan umur berkas.
+- Klik titik untuk waktu UTC/WIB, sensor, kepercayaan, FRP bila tersedia, koordinat desimal/DMS, salin brief, tautan langsung dan ekspor CSV/GeoJSON.
+- Data asli NASA FIRMS dari empat sensor diperbarui terjadwal tiap 3 jam. Aplikasi memeriksa snapshot setiap 15 menit. Gangguan sumber mempertahankan salinan terakhir beserta tanggalnya.
+- Kode frontend di [`tracker/`](tracker/), pipeline di [`pipeline/`](pipeline/), lisensi MIT. Tidak perlu akun untuk membaca situs dan umpan GIS.
 
-Nama aplikasi: **Siaga Api**. Alamat repositori, situs, dan umpan data tetap memakai `pantau-api-nusantara` agar tautan integrasi yang sudah digunakan tetap berfungsi.
+**Deteksi panas bukan konfirmasi kebakaran, jumlah kejadian, luas terbakar atau status pemadaman.** Citra dasar bukan foto kejadian saat ini. Penetapan kabupaten menggunakan geoBoundaries ADM2 dengan toleransi pesisir sekitar 3 km; batas provinsi tampilan berasal dari BMKG. Waktu laporan lapangan selalu ditampilkan; data laporan versi GitHub Pages adalah snapshot bertanggal, bukan status langsung.
+
+Alat lapangan versi sebelumnya tetap dapat dibuka di [**/legacy/**](https://ghanyr.github.io/pantau-api-nusantara/legacy/): paket offline per area, integrasi GIS/TAK, laporan dan alat drone. Pengelompokan, skor, ilustrasi asap dan perkiraan rambatan versi tersebut adalah hasil pengolahan dan perkiraan aplikasi, bukan bukti lapangan. Panduan di bawah bagian ini merujuk ke alat lanjutan tersebut.
+
+Penyimpanan offline di GitHub Pages mencakup aplikasi, data terakhir dan ubin peta yang telah dilihat; area yang belum diunduh tetap memerlukan koneksi. Tautan repositori dan umpan lama dipertahankan agar integrasi tetap berfungsi.
+
+## Menjalankan antarmuka Fire Tracker
+
+Memerlukan Node 22.13+ dan Python 3.12+ untuk pipeline.
+
+```sh
+cd tracker
+npm ci
+curl --fail -L https://ghanyr.github.io/pantau-api-nusantara/data/observations.json -o public/data/observations.json
+npm run dev
+```
+
+`npm test` menguji jendela waktu, pengelompokan, parsing, ekspor dan tautan titik. `npm run build` menghasilkan `tracker/dist/`. Untuk publikasi statis lengkap, jalankan pipeline seperti alur GitHub Actions, lalu `python web/build_site.py --out site` dan `node tracker/scripts/install-pages.mjs site`. Publikasikan direktori `site/`; URL data mengikuti lokasi instalasi sehingga fork dapat memperbarui datanya sendiri. Versi Sites memakai komponen yang sama dan API cuaca/laporan; identitas hosting, kredensial dan kode akun Sites tidak disertakan di repo publik.
+
+Snapshot nasional mentah untuk aplikasi lain: [`data/observations.json`](https://ghanyr.github.io/pantau-api-nusantara/data/observations.json). `rows` tidak digabung per piksel; urutan kolom ada pada `columns`, waktu Unix milidetik UTC, FRP hilang bernilai `null`, `sources`/`provinces`/`municipalities` memberi arti indeks. Umpan 24 jam lama di `data/feeds/` berisi piksel yang dikelompokkan dan tidak setara dengan jumlah observasi mentah.
 
 ## Cara pakai
 

@@ -32,7 +32,7 @@ def create_observation_snapshot(det, kab, admin, fmeta, generated_at):
     sensor_index = {code: index for index, (_, code, _, _) in enumerate(SENSORS)}
     latest_by_sensor = [None] * len(SENSORS)
     rows = []
-    frp_values = det.get("frp")
+    frp_values = det.get("frp_observed", det.get("frp"))
     for index, admin_index in enumerate(kab):
         try:
             lon, lat, timestamp, confidence, source, municipality = (

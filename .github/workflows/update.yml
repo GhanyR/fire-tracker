@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["web/**", "pipeline/**", "inputs/**", ".github/workflows/update.yml"]
+    paths: ["tracker/**", "web/**", "pipeline/**", "inputs/**", ".github/workflows/update.yml"]
 
 permissions:
   contents: write
@@ -41,6 +41,17 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: tracker/package-lock.json
+      - name: Siapkan Fire Tracker
+        run: npm ci --prefix tracker
+      - name: Uji & susun Fire Tracker
+        run: |
+          npm test --prefix tracker
+          npm run build --prefix tracker
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -56,6 +67,8 @@ jobs:
         run: pip install -r pipeline/requirements.txt
       - name: Uji penyimpanan offline
         run: node --test web/tests/*.test.mjs
+      - name: Uji kontrak feed satelit
+        run: python -m unittest discover -s pipeline/tests -v
       - name: Uji cepat pipeline (data tiruan)
         run: |
           python pipeline/tests/make_fixtures.py
@@ -84,7 +97,9 @@ jobs:
           fi
           exit $rc
       - name: Susun situs
-        run: python web/build_site.py --out site
+        run: |
+          python web/build_site.py --out site
+          node tracker/scripts/install-pages.mjs site
       - name: Simpan data ke cabang 'data' (URL tetap untuk alat lain)
         if: steps.data.outputs.lama != '1'
         run: |

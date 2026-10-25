@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {filterRows} from '../lib/fire-data.mjs';
+import {latestRows,groupHotspots,parseCoordinateSearch,coordinateDMS,observationBrief,validateSnapshot} from '../lib/discovery.mjs';
+const meta={provinces:['KALIMANTAN TENGAH','SUMATERA SELATAN'],municipalities:['Kab. Kapuas','Kab. Pulang Pisau'],sources:[{name:'VIIRS S-NPP'}]};
+const rows=[['a',114,-2,1000,null,1,0,0,0],['b',114.1,-2.1,3000,0,2,0,0,0],['c',114.2,-2.2,2000,5,0,0,0,1],['d',105,-3,4000,7,2,0,1,-1]];
+test('newest sorts acquisition time without mutating original or treating null FRP as intensity',()=>{assert.deepEqual(latestRows(rows).map(r=>r[0]),['d','b','c','a']);assert.equal(rows[0][0],'a');});
+test('area discovery uses municipality and province, keeps raw counts and latest acquisition',()=>{const groups=groupHotspots(rows,meta);assert.equal(groups[0].name,'SUMATERA SELATAN');assert.equal(groups[1].name,'Kab. Kapuas');assert.equal(groups[1].count,2);assert.equal(groups[1].latest,3000);assert.deepEqual(groups[1].bounds,[[114,-2.1],[114.1,-2]]);assert.equal(groups[1].maxFRP,0);});
+test('coordinate search accepts latitude longitude only inside Indonesia and rejects impossible values',()=>{assert.deepEqual(parseCoordinateSearch('-2.75, 114.1'),[114.1,-2.75]);assert.deepEqual(parseCoordinateSearch('114.1 -2.75'),[114.1,-2.75]);for(const q of ['Kapuas','0, 0','999,-2','-2.2','114.2, -2.1, 9'])assert.equal(parseCoordinateSearch(q),null);});
+test('DMS and brief keep coordinates, original UTC acquisition, source and verification status',()=>{assert.equal(coordinateDMS([114.1,-2.75]),'2°45′00.0″S 114°06′00.0″E');const brief=observationBrief(rows[0],meta,'https://example.org/#a');assert.match(brief,/1970-01-01T00:00:01.000Z/);assert.match(brief,/-2.000000, 114.000000/);assert.match(brief,/FRP: tidak tersedia/);assert.match(brief,/belum terkonfirmasi/);});
+test('snapshot validation rejects malformed metadata and out of range admin or sensor indices',()=>{const s={...meta,retrievedAt:'2026-10-25T00:00:00Z',rows};assert.equal(validateSnapshot(s),s);assert.throws(()=>validateSnapshot({...s,rows:[['bad',114,-2,3,1,2,5,0,0]]}));assert.throws(()=>validateSnapshot({...s,provinces:undefined}));});
+
+test('selecting one municipality excludes similarly named neighbours from counts and export rows',()=>{const data={provinces:['JAWA BARAT'],municipalities:['Kab. Bandung','Kab. Bandung Barat']};const rows=[['a',107.5,-7,1000,1,1,0,0,0],['b',107.4,-6.9,1000,1,1,0,0,1]];assert.deepEqual(filterRows(rows,{now:1000,municipality:0,...data}).map(r=>r[0]),['a']);});

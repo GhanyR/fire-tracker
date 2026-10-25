@@ -1,0 +1,15 @@
+# Fire Tracker
+
+User intent: retain the existing Sites MapLibre terrain, movable 3D camera, animated orbit and actual satellite point appearance. Reduce overlapping text. Rename to Fire Tracker with a plain wordmark. Merge useful work from the public MIT repository into this experience, make current hotspots easy to find, and keep both hosting URLs publicly usable.
+
+Chosen approach: retain the React/MapLibre frontend and the Python/GitHub data pipeline. Publish the same frontend source in `tracker/` inside the existing public repository. Keep its prior field-tools dashboard available under `legacy/`, preserve all fixed data-feed URLs, and use the new frontend at the Pages root and current Sites URL. This avoids rebuilding terrain or maintaining diverging interfaces. Replacing the liked interface with the legacy dashboard was rejected because it conflicts with the user's visual direction. A redirect-only integration was rejected because it would not merge useful data into the liked interface.
+
+Map: remove the large title/subtitle/evidence block and preset chips from over the terrain. Keep one area selector, search, small camera/terrain controls and a compact expandable timeline. Details/layers/sources belong in the side panel. Wordmark is plain type plus a small geometric target, no decorative flame graphic.
+
+Discovery: start with nationwide data while retaining an attractive real-terrain initial camera. Provide Terbaru view with latest point and municipality summaries, 24h/48h/7d windows, province/municipality/coordinate search, and automatic camera focus when choosing a result. Search must search all Indonesia instead of silently remaining locked to a scene. Clearly show actual latest observation time, source failure/stale status and number of filtered observations. Never label detections as confirmed fires or pixels as burned area.
+
+Data: new public `data/observations.json` contains raw detections, all four sensors and confidence from pipeline raw data, rather than reconstructed merged pixels. Strict rolling windows use actual UTC acquisition time against now; generated time stays separate. Prefer refreshed public pipeline snapshots, retain last valid data on failure, and keep server NASA refresh as a fallback for Sites. Preserve source attribution, exact values, official/citizen evidence classes and privacy exclusions. Never copy subscriber location state or secrets into source or a public feed.
+
+Useful field tools: preserve CSV/GeoJSON and sharing/printing, add clear point summary copy and DMS coordinates. Existing advanced drone/TAK/offline tools remain available via legacy dashboard; do not invent ready crews, safe routes or predictions.
+
+Verification: raw-feed unit tests, frontend search/group/time-window tests, existing tests, pipeline fixture smoke, production builds, desktop/mobile browser checks of search/camera/timeline/export, public HTTP/source freshness checks, independent final review, then both hosting deployments. Keep current public access and MIT licensing. No paid provider setup is needed.
