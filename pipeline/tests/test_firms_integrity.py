@@ -26,5 +26,9 @@ class FirmsIntegrityTests(unittest.TestCase):
         data = self.fetch('-2,114,invalid,2500,n,4,310\n-2,114,2026-10-25,,n,4,310\n-2,114,2026-10-25,0300,n,4,310')
         self.assertEqual(len(data['lat']),1)
 
+    def test_viirs_accepts_both_letter_and_full_nasa_confidence_labels(self):
+        data = self.fetch('\n'.join('-2,114,2026-10-25,0300,'+label+',4,310' for label in ['low','nominal','HIGH','l','n','h']))
+        self.assertEqual(data['conf'].tolist(),[0,1,2,0,1,2])
+
 
 if __name__=='__main__': unittest.main()

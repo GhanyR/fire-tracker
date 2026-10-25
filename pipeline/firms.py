@@ -49,9 +49,10 @@ def fetch_all():
                         continue
                     conf = 2 if c >= 80 else (1 if c >= 30 else 0)
                 else:
-                    if confidence not in ("h", "n", "l"):
+                    labels = {"h": 2, "high": 2, "n": 1, "nominal": 1, "l": 0, "low": 0}
+                    if confidence not in labels:
                         continue
-                    conf = {"h": 2, "n": 1, "l": 0}[confidence]
+                    conf = labels[confidence]
             except (ValueError, TypeError, KeyError):
                 continue
             def optional_float(value):

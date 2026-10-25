@@ -89,6 +89,13 @@ def build(det, kab):
         incidents.append(inc)
     # tabel piksel VIIRS unik 7 hari (untuk replay sebaran dan peta)
     vi = np.flatnonzero(viirs)
+    stats = dict(t0=t0, tmax=tmax, ndays=ndays, det_day=day, t=t)
+    if not len(vi):
+        # A partial source outage can leave MODIS alone. Keep its incidents and
+        # raw observations; do not create a VIIRS pixel or crash the release.
+        px = {key: np.array([], dtype=np.int32 if key in ("n", "sat", "inc") else float)
+              for key in ("lat", "lon", "tf", "tl", "frp", "n", "sat", "inc")}
+        return incidents, px, stats
     keys = pkey[vi]
     o = np.lexsort((t[vi], keys))
     ks = keys[o]
@@ -102,5 +109,4 @@ def build(det, kab):
     pinc = np.maximum.reduceat(det_inc[rows], st)
     plat = s + (ks[st] // 20000 + 0.5) * Q; plon = w + (ks[st] % 20000 + 0.5) * Q
     px = dict(lat=plat, lon=plon, tf=tf, tl=tl, frp=fmax, n=cnt, sat=smask, inc=pinc)
-    stats = dict(t0=t0, tmax=tmax, ndays=ndays, det_day=day, t=t)
     return incidents, px, stats
