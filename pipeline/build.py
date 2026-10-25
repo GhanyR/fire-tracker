@@ -7,6 +7,7 @@ dan umpan data terbuka untuk alat lain.
 import argparse, datetime as dt, json, math, os, shutil, sys, time
 import numpy as np
 from . import config, net, firms, geo, cluster, weather, resources, geocode, tiles, feeds, notify, reports
+from .tracker_feed import create_observation_snapshot
 
 WIB = dt.timezone(dt.timedelta(hours=7))
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -230,6 +231,8 @@ def main():
     new = [i for i in incs if i["id"] not in old] if prev_inc else []
     sent = notify.alert(new, config.PAGES_URL)
     meta["runtime_s"] = round(time.time() - t_start, 1); meta["alerts_sent"] = sent
+    jdump(create_observation_snapshot(det, kab, admin, fmeta, dt.datetime.now(dt.timezone.utc)),
+          os.path.join(OUT, "observations.json"))
     jdump(meta, os.path.join(OUT, "meta.json"), compact=False)
     print("selesai:", len(incs), "insiden,", len(px["lat"]), "piksel,", meta["runtime_s"], "detik")
 
