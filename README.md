@@ -19,6 +19,8 @@ Alat lapangan versi sebelumnya tetap dapat dibuka di [**/legacy/**](https://ghan
 
 Penyimpanan offline di GitHub Pages mencakup aplikasi, data terakhir dan ubin peta yang telah dilihat; area yang belum diunduh tetap memerlukan koneksi. Tautan repositori dan umpan lama dipertahankan agar integrasi tetap berfungsi.
 
+Tekan **Play** untuk menelusuri waktu pengamatan satelit. Kamera mengikuti titik terbaru pada setiap interval, dengan penanda fokus dan nama wilayah; jeda tanpa deteksi dilewati. Geser peta untuk melepas kamera, lalu aktifkan **Ikuti titik** untuk melanjutkan. Pemutaran mengikuti filter dan jendela waktu; ini riwayat deteksi, bukan prediksi rambatan api. Halaman perbandingan memakai urutan yang sama pada kedua peta.
+
 ## Bandingkan desain
 
 Dashboard tersedia dalam **Atlas (terang)** dan **Vector (gelap)**. Ganti mode lewat ikon matahari/bulan di header; pilihan tersimpan di browser. Pergantian tema mempertahankan posisi peta, pencarian, filter waktu, titik terpilih dan sesi UAV. Logo api dan medan memakai SVG yang sama pada dashboard, favicon dan ekspor video.
