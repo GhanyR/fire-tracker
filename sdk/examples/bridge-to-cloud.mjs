@@ -2,9 +2,10 @@
 import { pathToFileURL } from 'node:url';
 import { FireTrackerClient, OperationsClient } from '../fire-tracker.mjs';
 
-export async function relayBridgeToOperations({ bridgeUrl, bridgeToken, operationsUrl, sessionId, publisherToken, onError = () => {} }) {
+export async function relayBridgeToOperations({ bridgeUrl, bridgeToken, operationsUrl, sessionId, publisherToken, requestTimeoutMs = 15000, onError = () => {} }) {
   if (!bridgeToken || !publisherToken || !sessionId) throw new TypeError('bridge read token, operations publisher token and sessionId are required');
-  const operations = new OperationsClient({ url: operationsUrl, sessionId, token: publisherToken });
+  const operations = new OperationsClient({ url: operationsUrl, sessionId, token: publisherToken, requestTimeoutMs });
+  const controller = new AbortController();
   const bridge = new FireTrackerClient({ url: bridgeUrl, token: bridgeToken, onError });
   // Keep the latest pending observation per unit, bounded independently of network speed.
   const pending = new Map();
@@ -13,8 +14,8 @@ export async function relayBridgeToOperations({ bridgeUrl, bridgeToken, operatio
     while (!closed && pending.size) {
       const [id, observation] = pending.entries().next().value;
       pending.delete(id);
-      try { await operations.publishUnit({ ...observation, kind: 'drone' }); }
-      catch (error) { onError(error); }
+      try { await operations.publishUnit({ ...observation, kind: 'drone' }, { signal: controller.signal }); }
+      catch (error) { if (!closed) onError(error); }
     }
   }
   const unsubscribe = bridge.subscribe(observation => {
@@ -27,7 +28,7 @@ export async function relayBridgeToOperations({ bridgeUrl, bridgeToken, operatio
   try { await bridge.connect(); }
   catch (error) { unsubscribe(); bridge.close(); throw error; }
   return {
-    async close() { closed = true; pending.clear(); unsubscribe(); bridge.close(); await worker; },
+    async close() { closed = true; controller.abort(); pending.clear(); unsubscribe(); bridge.close(); await worker; },
   };
 }
 

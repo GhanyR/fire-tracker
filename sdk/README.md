@@ -107,3 +107,6 @@ npm test
 ```
 
 If aiohttp is installed in the local venv, run the SDK tests with that Python on `PATH`: `PATH="$PWD/../.venv/bin:$PATH" npm test` from `sdk/`.
+
+
+Operations HTTP requests have a 15-second deadline, including response parsing. Override with `requestTimeoutMs` (1–120000 ms) in `OperationsClient`; `state({signal})` and `publishUnit(unit, {signal})` also accept caller cancellation. The bridge-to-cloud relay aborts pending publication when closed and resumes draining newer queued observations after a request timeout. UTC source strings and microseconds are retained rather than replaced with reception time.

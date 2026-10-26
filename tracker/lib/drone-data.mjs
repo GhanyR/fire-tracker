@@ -15,13 +15,14 @@ export function normalizeDrone(p,now=Date.now()){
  const canonical=match?match[1]+'.'+(match[2]||'').padEnd(3,'0').slice(0,3)+'Z':null;const time=canonical?Date.parse(canonical):NaN;
  if(!Number.isFinite(time)||new Date(time).toISOString()!==canonical)return null;
  if(!id||lat===null||lon===null||!Number.isFinite(time)||time>now+10000)return null;
- return {id,lat,lon,time,t:new Date(time).toISOString(),alt:finite(p.alt,-1000,25000),alt_msl:finite(p.alt_msl,-1000,30000),hdg:finite(p.hdg,0,360),spd:finite(p.spd,0,500),bat:finite(p.bat,0,100),armed:typeof p.armed==='boolean'?p.armed:null,mode:text(p.mode,32),model:text(p.model),link:text(p.link,32),simulated:p.simulated===true||p.link==='sim',name:text(p.name,80),mission:text(p.mission,160),airframe:['multirotor','fixed-wing'].includes(p.airframe)?p.airframe:'unknown',flightStatus:['airborne','landed'].includes(p.flightStatus)?p.flightStatus:'unknown',linkQuality:finite(p.linkQuality,0,100),streams:cameraStreams(p.streams)};
+ return {id,lat,lon,time,t:p.t,alt:finite(p.alt,-1000,25000),alt_msl:finite(p.alt_msl,-1000,30000),hdg:finite(p.hdg,0,360),spd:finite(p.spd,0,500),bat:finite(p.bat,0,100),armed:typeof p.armed==='boolean'?p.armed:null,mode:text(p.mode,32),model:text(p.model),link:text(p.link,32),simulated:p.simulated===true||p.link==='sim',name:text(p.name,80),mission:text(p.mission,160),airframe:['multirotor','fixed-wing'].includes(p.airframe)?p.airframe:'unknown',flightStatus:['airborne','landed'].includes(p.flightStatus)?p.flightStatus:'unknown',linkQuality:finite(p.linkQuality,0,100),streams:cameraStreams(p.streams)};
 }
+const sourceOrder=d=>{const m=typeof d.t==='string'&&/^(.*T\d{2}:\d{2}:\d{2})(?:\.(\d{1,6}))?(?:Z|\+00:00)$/.exec(d.t);return m?Date.parse(m[1]+'Z')*1000+Number((m[2]||'').padEnd(6,'0')):d.time*1000;};
 export function mergeDroneFrame(previous,frame,now=Date.now()){
  const incoming=Array.isArray(frame)?frame:Array.isArray(frame?.drones)?frame.drones:frame?.type==='telemetry'?[frame]:[];
  const map=new Map(previous.map(d=>[d.id,d]));
- for(const p of incoming.slice(-1000)){const d=normalizeDrone(p,now);if(!d)continue;const old=map.get(d.id);if(old&&d.time<old.time)continue;if(old&&d.time===old.time){d.lat=old.lat;d.lon=old.lon;}
-  const trail=old?.trail||[];const changed=!old||d.time>old.time;
+ for(const p of incoming.slice(-1000)){const d=normalizeDrone(p,now);if(!d)continue;const old=map.get(d.id);if(old&&sourceOrder(d)<sourceOrder(old))continue;if(old&&sourceOrder(d)===sourceOrder(old)){d.lat=old.lat;d.lon=old.lon;}
+  const trail=old?.trail||[];const changed=!old||sourceOrder(d)>sourceOrder(old);
   map.set(d.id,{...d,trail:changed?[...trail,[d.lon,d.lat,d.time]].slice(-80):trail});
  }
  return [...map.values()].sort((a,b)=>b.time-a.time||a.id.localeCompare(b.id)).slice(0,100);
@@ -40,3 +41,11 @@ export function demoDrones(elapsedMs,now=Date.now()){
 }
 
 export function shareCamera({selectedCoordinates,camera,demo=false,hasLiveSession=false}){return selectedCoordinates||(demo?[112.955,-8.015]:hasLiveSession?null:[camera.lon,camera.lat]);}
+
+export function fleetTelemetryStatus(drone,feed={}){
+ const now=feed.now??Date.now(),age=Math.max(0,Math.floor((now-drone.time)/1000));
+ if(drone.simulated)return {state:'demo',label:'SIMULASI ARMADA',age};
+ if(feed.status!=='connected')return {state:feed.status||'idle',label:feed.status==='reconnecting'?'KONEKSI TERPUTUS':feed.status==='connecting'?'MENGHUBUNGKAN':'TELEMETRI TERPUTUS',age};
+ const state=droneFreshness(drone,now);
+ return {state,label:state==='stale'?'GPS LAMA':state==='delayed'?'GPS TERTUNDA':'GPS TERKINI',age};
+}
