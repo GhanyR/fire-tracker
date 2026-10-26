@@ -1,8 +1,10 @@
+import { FIRE_BRAND } from '../lib/fire-brand.mjs';
+
 export default function FireLogo() {
  return (
-  <svg className="fire-logo" viewBox="0 0 40 56" fill="none" aria-hidden="true">
-   <path d="M23 3C22 13 11 20 11 30C8 27 8 24 8 22C4 27 2 33 3 39C4 48 11 53 20 53C30 53 37 46 37 37C37 27 30 20 27 14C27 21 25 25 22 28C25 17 25 10 23 3Z" fill="currentColor" />
-   <path d="M20 33C21 38 15 40 15 45C15 49 17 51 21 51C25 51 28 48 28 44C28 40 25 37 24 35C24 39 22 41 21 42C23 38 21 36 20 33Z" fill="#fff4dc" />
+  <svg className="fire-logo" viewBox={FIRE_BRAND.viewBox} fill="none" aria-hidden="true" focusable="false">
+   <path d={FIRE_BRAND.flamePath} fill={`var(--fire-logo-flame, ${FIRE_BRAND.flame})`} />
+   <path d={FIRE_BRAND.terrainPath} fill={`var(--fire-logo-terrain, ${FIRE_BRAND.terrain})`} />
   </svg>
  );
 }
