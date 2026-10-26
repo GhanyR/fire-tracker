@@ -8,7 +8,7 @@ Peta titik api (hotspot) dan dasbor terbuka kebakaran hutan dan lahan (karhutla)
 
 - Cari kabupaten, provinsi, atau koordinat. Pencarian nama mencakup seluruh Indonesia.
 - Daftar **Terbaru** diurutkan menurut waktu akuisisi satelit; pilih per wilayah atau per titik.
-- Jendela 24 jam, 48 jam, dan 7 hari dihitung dari waktu sekarang, bukan umur berkas.
+- Pantauan terkini memakai jendela 24 jam, 48 jam, atau 7 hari dari waktu sekarang. Pemutaran dan tautan riwayat mempertahankan jam acuannya, bukan umur berkas.
 - Klik titik untuk waktu UTC/WIB, sensor, kepercayaan, FRP bila tersedia, koordinat desimal/DMS, salin brief, tautan langsung dan ekspor CSV/GeoJSON.
 - Data asli NASA FIRMS dari empat sensor diperbarui terjadwal tiap 3 jam. Aplikasi memeriksa snapshot setiap 15 menit. Gangguan sumber mempertahankan salinan terakhir beserta tanggalnya.
 - Kode frontend di [`tracker/`](tracker/), pipeline di [`pipeline/`](pipeline/), lisensi MIT. Tidak perlu akun untuk membaca situs dan umpan GIS.
@@ -189,3 +189,11 @@ Laporan masalah, ide, dan perbaikan sangat diterima. Lihat [CONTRIBUTING.md](CON
 Siaga Api is an open-source, auto-updating wildfire map for Indonesia. A GitHub Actions pipeline pulls NASA FIRMS hotspots every 3 hours, clusters them into prioritised incidents, adds weather (Open-Meteo), air quality and OpenStreetMap context, and prepares offline 3D packages for the top incidents. The single-file web app (deck.gl, dark by default) shows sharp Esri World Imagery from world zoom down to village level, a 7-day replay, and a 3D view where terrain runs to the horizon with illustrative fire glow and detection footprints, day-night by local time and wind-driven smoke. With a free Cesium ion token (or a Google Map Tiles key) the 3D view uses Google Photorealistic 3D Tiles and falls back to Esri automatically. Field teams get fire-centre coordinates (decimal, DMS, UTM), nearest road and water access, a 72-hour operations risk strip, a 12-hour spread estimate, printable UTM field maps and offline mode. There is also a "near me" panel with Telegram location alerts, field reports, a drone mission planner (QGroundControl, Mission Planner, Litchi, KML, GeoJSON, GPX), open feeds (GeoJSON, CSV, KML, CoT for TAK, SITREP) and a read-only MAVLink/HTTP drone bridge. Code is MIT; data keep their own licences (see table above).
 
 Rilis tampilan memakai snapshot publik terakhir agar tidak menunggu layanan data eksternal. Pengambilan data tetap berjalan setiap 3 jam dan dapat dijalankan manual dari Actions. Waktu pengamatan asli tetap ditampilkan.
+
+## Waktu pengamatan & laporan situasi
+
+Warna titik menunjukkan usia sejak pengamatan satelit: **0–3 jam**, **3–12 jam**, dan **lebih dari 12 jam**. Waktu pada kelompok mengikuti pengamatan terbaru di dalam kelompok; klik untuk memeriksa titiknya. Warna bukan tingkat bahaya atau status api.
+
+Tekan **Putar 24 jam** untuk mengikuti urutan pengamatan, menjeda atau menggeser waktu, mengubah kecepatan, dan mengikuti wilayah. Jam, hitungan, daftar wilayah, narasi, dan laporan memakai rentang yang sama. Tautan riwayat menyimpan jendela waktu agar bisa dibuka kembali.
+
+**Laporan situasi** merangkum cakupan, usia deteksi, wilayah untuk verifikasi, kualitas bukti, waktu sumber, dan catatan lapangan bertanggal. Brief dapat disalin, diunduh sebagai teks, atau dicetak/PDF melalui browser. Pemutaran bukan video langsung atau prediksi rambatan; satu lokasi dapat terdeteksi berulang.
