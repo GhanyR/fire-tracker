@@ -3,8 +3,8 @@ import {SCENES,filterSceneRows} from './terrain-scenes.mjs';
 import {filterRows} from './fire-data.mjs';
 import {temporalRange,summarizeSituation} from './observation-time.mjs';
 export const DESIGN_CONCEPTS=Object.freeze([
- {id:'atlas',letter:'A',name:'Atlas',label:'Terang. Tenang. Terbaca.',description:'Peta sebagai pusat. Tipografi editorial dan panel ringan untuk membaca situasi dengan tenang.',strength:'Seimbang untuk publik dan tim pemantau',tradeoff:'Nuansa sinematik lebih halus',color:'#536e51'},
- {id:'vector',letter:'B',name:'Vector',label:'Pusat pantau, fokus penuh.',description:'Kanvas gelap dengan aksen es, kronologi jelas, dan status UAV yang selalu dekat.',strength:'Pemantauan lama dan konteks drone',tradeoff:'Informasi lebih padat',color:'#72e5dc'},
+ {id:'atlas',letter:'A',name:'Atlas',label:'Mode terang',description:'Panel data di kiri, peta 3D dengan kendali waktu dan preview UAV.',strength:'Seimbang untuk publik dan tim pemantau',tradeoff:'Nuansa sinematik lebih halus',color:'#536e51'},
+ {id:'vector',letter:'B',name:'Vector',label:'Mode gelap',description:'Tampilan gelap dengan daftar pengamatan, kendali waktu dan status UAV.',strength:'Pemantauan lama dan konteks drone',tradeoff:'Informasi lebih padat',color:'#72e5dc'},
  {id:'ember',letter:'C',name:'Ember',label:'Medan yang bercerita.',description:'Peta memenuhi layar. Kontras hangat, gerak kamera, dan satu tombol putar yang menonjol.',strength:'Presentasi, video dan berbagi',tradeoff:'Daftar observasi lebih ringkas',color:'#ed845c'},
  {id:'field',letter:'D',name:'Field',label:'Jelas saat dibutuhkan.',description:'Ruang kerja bersih dengan kendali besar, daftar yang terbaca, dan detail satu ketukan.',strength:'Pemakaian lapangan dan ponsel',tradeoff:'Ekspresi visual lebih fungsional',color:'#3e70c8'},
 ]);
