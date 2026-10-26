@@ -21,7 +21,9 @@ Penyimpanan offline di GitHub Pages mencakup aplikasi, data terakhir dan ubin pe
 
 ## Bandingkan desain
 
-[**Buka empat desain berdampingan**](https://fire-tracker.fiveprayerapp.chatgpt.site/#designs=1): **Atlas**, **Vector**, **Ember** dan **Field**. Pilih **Fokus 2** untuk membesarkan dua kandidat, atau buka setiap konsep untuk mencoba peta, wilayah, usia observasi, pemutaran, UAV contoh dan laporan TXT/CSV. Semua memakai scope, jendela waktu dan sumber NASA yang sama; UAV selalu simulasi. Favorit tersimpan hanya di browser dan tidak mengubah dashboard utama.
+Dashboard tersedia dalam **Atlas (terang)** dan **Vector (gelap)**. Ganti mode lewat ikon matahari/bulan di header; pilihan tersimpan di browser. Pergantian tema mempertahankan posisi peta, pencarian, filter waktu, titik terpilih dan sesi UAV. Logo api dan medan memakai SVG yang sama pada dashboard, favicon dan ekspor video.
+
+[**Bandingkan tampilan**](https://fire-tracker.fiveprayerapp.chatgpt.site/#designs=1): Atlas dan Vector tampil berdampingan secara bawaan. **Gunakan mode terang/gelap** membuka dashboard operasional dengan wilayah dan jendela waktu yang dipilih. **Semua 4** menampilkan arsip konsep Ember dan Field. Semua konsep memakai cakupan dan sumber NASA yang sama; UAV di halaman perbandingan selalu simulasi. Favorit tersimpan hanya di browser.
 
 Branch eksplorasi: [`codex/design-atlas`](https://github.com/GhanyR/pantau-api-nusantara/tree/codex/design-atlas), [`codex/design-vector`](https://github.com/GhanyR/pantau-api-nusantara/tree/codex/design-vector), [`codex/design-ember`](https://github.com/GhanyR/pantau-api-nusantara/tree/codex/design-ember), [`codex/design-field`](https://github.com/GhanyR/pantau-api-nusantara/tree/codex/design-field). Masing-masing memakai mesin yang sama dan membuka konsep pilihannya saat dijalankan; default branch ditentukan oleh `tracker/lib/design-branch.mjs`. Dashboard utama tetap tersedia lewat tombol kembali.
 

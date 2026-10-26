@@ -1,3 +1,5 @@
+import { FIRE_BRAND } from './fire-brand.mjs';
+
 const DESIGN_WIDTH = 1080;
 const DESIGN_HEIGHT = 1920;
 const CYAN = '#7ef9ec';
@@ -204,19 +206,16 @@ function reticle(ctx, x, y, size, color = CYAN) {
   ctx.stroke();
   ctx.restore();
 }
+let brandPaths;
 function flame(ctx, x, y) {
+  brandPaths ||= [new Path2D(FIRE_BRAND.flamePath), new Path2D(FIRE_BRAND.terrainPath)];
   ctx.save();
-  ctx.translate(x, y);
-  ctx.fillStyle = CYAN;
-  ctx.beginPath();
-  ctx.moveTo(19, -24);
-  ctx.bezierCurveTo(26, -6, 8, -5, 21, 7);
-  ctx.bezierCurveTo(31, 0, 28, -9, 28, -9);
-  ctx.bezierCurveTo(48, 8, 40, 30, 20, 31);
-  ctx.bezierCurveTo(-5, 30, -8, 6, 6, -6);
-  ctx.bezierCurveTo(5, 10, 16, 10, 12, -4);
-  ctx.bezierCurveTo(10, -12, 17, -19, 19, -24);
-  ctx.fill();
+  ctx.translate(x, y - 25);
+  ctx.scale(0.55, 0.55);
+  ctx.fillStyle = FIRE_BRAND.flame;
+  ctx.fill(brandPaths[0]);
+  ctx.fillStyle = FIRE_BRAND.terrainDark;
+  ctx.fill(brandPaths[1]);
   ctx.restore();
 }
 function droneIcon(ctx, x, y, heading, selected) {
