@@ -29,12 +29,12 @@ const regionChoices=['KALIMANTAN TENGAH','SUMATERA SELATAN','PAPUA SELATAN'];
 function recordTime(r){return r.reportedAt||r.date||r.sourceTime;}
 function opLabel(r){return r.village||r.location||r.regency||r.title||'Kegiatan pemadaman';}
 function getBounds(feature){const points=[];const collect=c=>{if(typeof c[0]==='number')points.push(c);else c.forEach(collect);};collect(feature.geometry.coordinates);return [[Math.min(...points.map(c=>c[0])),Math.min(...points.map(c=>c[1]))],[Math.max(...points.map(c=>c[0])),Math.max(...points.map(c=>c[1]))]];}
-export default function FireDashboard(){
+export default function FireDashboard({initialNow}={}){
  const drone=useDroneFeed();const [selectedDroneId,setSelectedDroneId]=useState(null),[followDrone,setFollowDrone]=useState(false);const activeDrone=drone.vehicles.find(d=>d.id===selectedDroneId)||drone.vehicles[0];
  const [scene,setScene]=useState(null),[exaggeration,setExaggeration]=useState(1.5),[orbit,setOrbit]=useState(false);
  const [data,setData]=useState(null),[context,setContext]=useState(null),[boundaries,setBoundaries]=useState(null),[bmkg,setBmkg]=useState(null);
  const [loading,setLoading]=useState(true),[loadError,setLoadError]=useState(''),[refreshing,setRefreshing]=useState(false),[sourceStatuses,setSourceStatuses]=useState([]),[contextStatuses,setContextStatuses]=useState([]),[lastChecked,setLastChecked]=useState(null);
- const [now,setNow]=useState(Date.now()),[province,setProvince]=useState(-1),[municipality,setMunicipality]=useState(-1),[hours,setHours]=useState(24),[confidence,setConfidence]=useState(0),[sensor,setSensor]=useState(-1),[query,setQuery]=useState('');const deferredQuery=useDeferredValue(query);
+ const [now,setNow]=useState(()=>Number.isFinite(initialNow)?initialNow:Date.now()),[province,setProvince]=useState(-1),[municipality,setMunicipality]=useState(-1),[hours,setHours]=useState(24),[confidence,setConfidence]=useState(0),[sensor,setSensor]=useState(-1),[query,setQuery]=useState('');const deferredQuery=useDeferredValue(query);
  const [tab,setTab]=useState('ringkasan'),[modal,setModal]=useState(null),[selected,setSelected]=useState(null),[layers,setLayers]=useState(initialLayers),[terrain,setTerrain]=useState(true),[basemap,setBasemap]=useState('satellite'),[camera,setCamera]=useState(null),[mapCenter,setMapCenter]=useState({lon:112.955,lat:-8.015,zoom:11.35});
  const [hashRevision,setHashRevision]=useState(0);
  const [designLab,setDesignLab]=useState(false);
