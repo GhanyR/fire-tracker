@@ -11,7 +11,7 @@
 - [x] Add concise DronePanel and map markers/trails, demo, follow selection, accessible statuses, motion preference, flame logo and usable share action on mobile. Preserve source fidelity and current terrain UI.
 - [x] Bounded worker owns sdk/**, bridge/**, docs/UAV.md and telemetry schema, with tests for protocol/auth/optional values and adapters. Parent reviews integration and publishes.
 - [x] Mirror frontend into tracker, add meaningful CI checks, README integration entry, verify real WebSocket traffic from local bridge into both frontend variants.
-- [ ] Change hosted slug after app is ready, package exact Sites source, publish public, push GitHub, wait for successful Pages deployment, verify both URLs, sharing and demo in the user's tab.
+- [x] Change hosted slug after app is ready, package exact Sites source, publish public, push GitHub, wait for successful Pages deployment, verify both URLs, sharing and demo in the user's tab.
 
 ## Review focus
 - Stale/future/out-of-order packets cannot look live or move vehicle backwards.
@@ -21,3 +21,10 @@
 - Unknown optional altitude/speed/battery stay unknown; relative-home altitude is never labelled terrain AGL.
 
 Prior user authorization permits direct ordinary implementation and production deployment. Parent handles hosting credentials, all commits/pushes and native tool calls.
+
+## Verified release
+
+- Public Sites v6 and GitHub Pages deployed successfully on 26 October 2026.
+- 30 hosted-app tests, 32 static-app tests, 12 Python bridge tests, 8 SDK tests, pipeline tests and offline-storage checks passed.
+- Desktop/mobile demo, follow/pause/share, real local WebSocket traffic and exclusion of live coordinates after disconnect verified.
+- Hardware aircraft connection remains untested.
