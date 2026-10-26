@@ -2,6 +2,7 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import DroneLayer from './DroneLayer';
+import TeamLayer from './TeamLayer';
 import {assetUrl} from '../lib/data-client.mjs';
 import {validCoordinates} from '../lib/fire-data.mjs';
 import {HOUR} from '../lib/observation-time.mjs';
@@ -10,7 +11,7 @@ const timeColor=(at,key='observed')=>['case',['>=',['get',key],at-3*HOUR],'#ff66
 const empty={type:'FeatureCollection',features:[]};
 const fc=features=>({type:'FeatureCollection',features});
 const point=(coordinates,properties)=>({type:'Feature',geometry:{type:'Point',coordinates},properties});
-export default function FireMap({playbackTarget=null,colorMode='light',rows,metadata,referenceTime=Date.now(),replaying=false,context,bmkg,layers,terrain,basemap,camera,selected,onSelect,onReady,onMove,exaggeration=1.5,orbit=false,onOrbitStop,vehicles=[],selectedDroneId=null,droneNow=Date.now(),onSelectDrone}){
+export default function FireMap({playbackTarget=null,colorMode='light',rows,metadata,referenceTime=Date.now(),replaying=false,context,bmkg,layers,terrain,basemap,camera,selected,onSelect,onReady,onMove,exaggeration=1.5,orbit=false,onOrbitStop,vehicles=[],selectedDroneId=null,droneNow=Date.now(),onSelectDrone,teams=[],selectedTeamId=null,onSelectTeam}){
  const el=useRef(null),mapRef=useRef(null),dataRef=useRef({}),callbacks=useRef({}),selectionMarker=useRef(null);const [ready,setReady]=useState(false),[error,setError]=useState('');
  const hasRecent=useMemo(()=>rows.some(r=>r[3]>=referenceTime-HOUR),[rows,referenceTime]);
  const rowLookup=useMemo(()=>new Map(rows.map(r=>[r[0],r])),[rows]);
@@ -62,5 +63,5 @@ export default function FireMap({playbackTarget=null,colorMode='light',rows,meta
  useEffect(()=>{const m=mapRef.current;if(!ready||!m)return;const dark=colorMode==='dark';m.setPaintProperty('satellite','raster-saturation',dark?-.5:-.12);m.setPaintProperty('satellite','raster-brightness-max',dark?.8:1);m.setPaintProperty('labels','raster-opacity',.14);},[colorMode,ready]);
  useEffect(()=>{const m=mapRef.current;if(!ready||!camera||!m)return;if(camera.follow){m.easeTo({center:camera.center,duration:window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:450});return;}if(camera.bounds)m.fitBounds(camera.bounds,{padding:camera.playback?{top:35,bottom:Math.min(el.current.clientHeight*.45,camera.timelineExpanded?285:150),left:40,right:40}:55,maxZoom:camera.maxZoom??12,duration:window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:(camera.duration??1200),pitch:terrain?(camera.pitch??52):0});else m.flyTo({center:camera.center,zoom:camera.zoom||11,pitch:terrain?(camera.pitch||66):0,bearing:camera.bearing??m.getBearing(),duration:window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:1400,essential:false});},[camera,ready]);
  useEffect(()=>{const m=mapRef.current;if(!ready||!m)return;selectionMarker.current?.remove();if(!selected?.coordinates)return;import('maplibre-gl').then(({default:ml})=>{const e=document.createElement('div');e.className='selected-map-marker';selectionMarker.current=new ml.Marker({element:e}).setLngLat(selected.coordinates).addTo(m);});},[selected,ready]);
- return <div className="map-wrap"><DroneLayer map={ready?mapRef.current:null} vehicles={vehicles} selectedId={selectedDroneId} now={droneNow} onSelect={onSelectDrone}/><div ref={el} className="map-canvas" aria-label="Peta interaktif titik panas dan laporan kebakaran Indonesia"/>{!ready&&!error&&<div className="map-loading"><span className="loader"/>Menyiapkan peta Indonesia…</div>}{error&&<div className="map-error">{error}</div>}</div>;
+ return <div className="map-wrap"><TeamLayer map={ready?mapRef.current:null} units={teams} selectedId={selectedTeamId} now={droneNow} onSelect={onSelectTeam}/><DroneLayer map={ready?mapRef.current:null} vehicles={vehicles} selectedId={selectedDroneId} now={droneNow} onSelect={onSelectDrone}/><div ref={el} className="map-canvas" aria-label="Peta interaktif titik panas dan laporan kebakaran Indonesia"/>{!ready&&!error&&<div className="map-loading"><span className="loader"/>Menyiapkan peta Indonesia…</div>}{error&&<div className="map-error">{error}</div>}</div>;
 }

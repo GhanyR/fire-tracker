@@ -71,6 +71,8 @@ jobs:
         run: |
           python -m unittest discover -s bridge/tests -v
           npm test --prefix sdk
+      - name: Uji API operasi privat
+        run: node --test server/tests/*.test.mjs
       - name: Uji penyimpanan offline
         run: node --test web/tests/*.test.mjs
       - name: Uji kontrak feed satelit

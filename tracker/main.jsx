@@ -11,6 +11,8 @@ import './styles/drone-cinema.css';
 import './styles/design-lab.css';
 import './styles/operational-themes.css';
 import './styles/playback-follow.css';
+import './styles/drone-video.css';
+import './styles/fleet-operations.css';
 window.__FIRE_TRACKER_STATIC__=true;
 const legacy=legacyDestination(location.hash,document.baseURI);
 if(legacy)location.replace(legacy);

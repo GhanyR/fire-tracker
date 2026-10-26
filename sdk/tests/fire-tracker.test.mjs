@@ -107,3 +107,18 @@ test('explicit null coordinates cannot fall through to legacy aliases', () => {
 });
 
 test('future UTC observations are rejected before they can poison ordering',()=>{assert.throws(()=>normalizeTelemetry({id:'uav',lat:-8,lon:113,t:'2099-01-01T00:00:00Z'}),/future/);});
+
+test('fleet metadata and supplied EO/IR streams survive real authenticated HTTP and WS',async()=>{
+ const viewer=new FireTrackerClient({url,token:'read-test'}),publisher=new FireTrackerClient({url,token:'pub-test'});
+ const stream={id:'thermal',label:'IR camera',kind:'ir',protocol:'mjpeg',url:'https://camera.example/thermal'};
+ try{await viewer.connect();const next=nextTelemetry(viewer,d=>d.id==='fleet-metadata');await publisher.publishTelemetry({id:'fleet-metadata',lat:0,lon:0,t:'2026-10-26T08:00:00Z',name:'Alpha',mission:'Fire edge survey',airframe:'multirotor',flightStatus:'landed',linkQuality:0,streams:[stream],simulated:true});const d=await next;
+ assert.deepEqual([d.name,d.mission,d.airframe,d.flightStatus,d.linkQuality,d.streams],['Alpha','Fire edge survey','multirotor','landed',0,[stream]]);assert.equal(d.t,'2026-10-26T08:00:00.000Z');assert.equal(d.bat,null);
+ }finally{viewer.close();publisher.close();}
+});
+
+test('fleet validation rejects invalid enum, quality and unsafe or excessive stream inputs',()=>{
+ const base={lat:0,lon:0};const stream={id:'eo',label:'EO',kind:'eo',protocol:'hls',url:'https://camera.example/live.m3u8'};
+ assert.deepEqual([normalizeTelemetry(base).airframe,normalizeTelemetry(base).flightStatus,normalizeTelemetry(base).linkQuality,normalizeTelemetry(base).streams],['unknown','unknown',null,[]]);
+ for(const patch of [{airframe:'jet'},{flightStatus:'armed'},{linkQuality:101},{linkQuality:false},{streams:[{...stream,url:'https://name:password@camera.example'}]},{streams:[{...stream,url:'file:///secret'}]},{streams:[{...stream,protocol:'rtsp'}]},{streams:[{...stream,kind:'temperature'}]},{streams:Array(5).fill(stream)}])assert.throws(()=>normalizeTelemetry({...base,...patch}));
+ for(const url of ['https://camera.example/arm','https://camera.example/%63ommand','https://camera.example/live?token=secret','https://camera.example/live?action=land','https://camera.example/%ZZ','https://camera.example/live#secret'])assert.throws(()=>normalizeTelemetry({...base,streams:[{...stream,url}]}));
+});

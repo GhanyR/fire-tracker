@@ -5,7 +5,7 @@
   "description": "Canonical output from the bridge/SDK. HTTP input may omit optional measurements; normalization fills them with null. t is the GPS observation time, not a heartbeat time.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["type", "id", "lat", "lon", "alt", "alt_msl", "hdg", "spd", "bat", "mode", "armed", "model", "link", "t", "simulated"],
+  "required": ["type", "id", "lat", "lon", "alt", "alt_msl", "hdg", "spd", "bat", "mode", "armed", "model", "link", "t", "simulated", "name", "mission", "airframe", "flightStatus", "linkQuality", "streams"],
   "properties": {
     "type": {"const": "telemetry"},
     "id": {"type": "string", "minLength": 1, "maxLength": 40, "description": "Unique aircraft ID/callsign"},
@@ -21,6 +21,25 @@
     "model": {"type": "string", "maxLength": 40},
     "link": {"type": "string", "maxLength": 24, "description": "e.g. mavlink, dji, http, ws, sim"},
     "t": {"type": "string", "format": "date-time", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$", "description": "UTC GPS observation/reception time, normalized to milliseconds"},
-    "simulated": {"type": "boolean", "description": "True for training data; link=sim forces true"}
+    "simulated": {"type": "boolean", "description": "True for training data; link=sim forces true"},
+    "name": {"type": "string", "maxLength": 80},
+    "mission": {"type": "string", "maxLength": 160, "description": "Supplied task description; never a flight command"},
+    "airframe": {"enum": ["multirotor", "fixed-wing", "unknown"]},
+    "flightStatus": {"enum": ["airborne", "landed", "unknown"], "description": "Explicit source status; arming alone does not imply airborne"},
+    "linkQuality": {"type": ["number", "null"], "minimum": 0, "maximum": 100, "description": "Supplied gateway quality percent; null when unknown"},
+    "streams": {"type": "array", "maxItems": 4, "items": {"$ref": "#/$defs/stream"}}
+  },
+  "$defs": {
+    "stream": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "label", "kind", "protocol", "url"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1, "maxLength": 40},
+        "label": {"type": "string", "maxLength": 80},
+        "kind": {"enum": ["eo", "ir"]},
+        "protocol": {"enum": ["hls", "mjpeg", "whep", "mp4"]},
+        "url": {"type": "string", "format": "uri", "maxLength": 2048, "pattern": "^https?://[^/?#@]+(?:[/?][^#]*)?$", "description": "Supplied media endpoint. Runtime also rejects credential/secret query keys, command paths, fragments and invalid escapes. Stream IDs must be unique."}
+      }
+    }
   }
 }
