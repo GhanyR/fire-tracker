@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["bridge/**", "sdk/**", "schemas/**", "tracker/**", "web/**", "pipeline/**", "inputs/**", ".github/workflows/update.yml"]
+    paths: ["bridge/**", "sdk/**", "server/**", "schemas/**", "tracker/**", "web/**", "pipeline/**", "inputs/**", ".github/workflows/update.yml"]
 
 permissions:
   contents: write
