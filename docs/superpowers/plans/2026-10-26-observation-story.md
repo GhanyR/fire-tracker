@@ -19,8 +19,10 @@
 - [x] Map age colors, cluster newest-time aggregation, honest hover timestamps and bounded pulse animation.
 - [x] Visible replay bar with frozen clock, play/pause/speed/scrub/Now, optional camera follow and per-frame narration; same-scope histogram.
 - [x] Freshness-first discovery plus situation report with copy/download/print and dated field evidence.
-- [ ] Mirror, full relevant tests, fresh code review, browser desktop/mobile/real-data QA; build and publish Sites and Pages; verify existing user tab and final artifact.
+- [x] Mirror, full relevant tests, fresh code review, browser desktop/mobile/real-data QA; build and publish Sites and Pages; verify existing user tab and final artifact.
 
 Review fixes: narration now uses the interval ending at the cursor and ranks its leader by count. User-originated pan/rotate/pitch stops camera follow. Selecting a point or UAV panel pauses story playback.
 
 Verified locally: 50 hosted-app tests, 52 static-app tests, both builds; real snapshot, responsive replay/report, keyboard slider endpoint, narration with real detections, keyboard camera release, and downloaded text brief retaining frozen URL/source clocks.
+
+Published: public Sites v8 succeeded (26 October 2026); GitHub Pages head0d3a31f build/deploy succeeded. Production playback shows a populated hourly narration and reports current dated SiPongi/BPBD notes. Frozen Merauke URL restored1,258 detections, matching independent model calculation. Report download verified with public frozen link, source timestamps and age buckets.
