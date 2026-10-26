@@ -34,7 +34,7 @@ test('normalization rejects missing/false/string coordinates and keeps unknown s
   const data = normalizeTelemetry({ lat: 0, lon: 0, link: 'sim', t: '2026-10-26T08:00:00Z' });
   assert.deepEqual([data.alt, data.alt_msl, data.hdg, data.spd, data.bat, data.armed], [null, null, null, null, null, null]);
   assert.equal(data.simulated, true);
-  assert.equal(data.t, '2026-10-26T08:00:00.000Z');
+  assert.equal(data.t, '2026-10-26T08:00:00Z');
   assert.throws(() => normalizeTelemetry({ lat: 1, lon: 2, t: '2026-02-30T12:00:00Z' }), /t /);
   assert.throws(() => normalizeTelemetry({ lat: 1, lon: 2, t: '2026-10-26T08:00:00+07:00' }), /UTC/);
 });

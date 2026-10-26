@@ -46,8 +46,10 @@ function utcTime(value) {
   const parsed = new Date(canonical);
   if (!Number.isFinite(parsed.getTime()) || parsed.toISOString() !== canonical) throw new TypeError('t must be a valid UTC date and time');
   if (parsed.getTime() > Date.now() + 10000) throw new RangeError("t cannot be more than 10 seconds in the future");
-  return canonical;
+  return value;
 }
+
+const utcOrder=value=>{const m=UTC.exec(value);return Date.parse(m[1]+'Z')*1000+Number((m[2]||'').padEnd(6,'0'));};
 
 /** Validate normalized JSON; zero stays zero and absent measurements stay null. */
 export function normalizeTelemetry(data, { source = 'http' } = {}) {
@@ -151,7 +153,7 @@ export class FireTrackerClient {
       if (item?.t == null) throw new TypeError('incoming telemetry requires t');
       const telemetry = normalizeTelemetry(item, { source: 'ws' });
       const previous = this._latest.get(telemetry.id);
-      if (previous && previous.t > telemetry.t) continue;
+      if (previous && utcOrder(previous.t) > utcOrder(telemetry.t)) continue;
       this._latest.delete(telemetry.id);
       this._latest.set(telemetry.id, telemetry);
       while (this._latest.size > this.maxVehicles) this._latest.delete(this._latest.keys().next().value);
@@ -233,7 +235,7 @@ export class FireTrackerClient {
  * Create/join return secrets to the caller; they never silently select a role.
  */
 export class OperationsClient {
-  constructor({ url, sessionId = '', token = '', fetch: fetchImpl = globalThis.fetch } = {}) {
+  constructor({ url, sessionId = '', token = '', requestTimeoutMs = 15000, fetch: fetchImpl = globalThis.fetch } = {}) {
     const endpoint = new URL(url);
     if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password || endpoint.search || endpoint.hash) {
       throw new TypeError('operations url must use HTTP(S) without credentials, query or fragment');
@@ -242,12 +244,14 @@ export class OperationsClient {
     if (typeof token !== 'string' || /[\r\n]/.test(token)) throw new TypeError('token must be a string without line breaks');
     if (typeof fetchImpl !== 'function') throw new TypeError('fetch is unavailable in this runtime');
     this.url = endpoint.href.replace(/\/$/, '');
+    if (!Number.isFinite(requestTimeoutMs) || requestTimeoutMs < 1 || requestTimeoutMs > 120000) throw new RangeError('requestTimeoutMs must be between 1 and 120000');
+    this.requestTimeoutMs = requestTimeoutMs;
     this.sessionId = sessionId;
     this.token = token;
     this.fetch = fetchImpl;
   }
 
-  async _request(path, method, body, privateRequest = true) {
+  async _request(path, method, body, privateRequest = true, { signal } = {}) {
     const headers = {};
     if (privateRequest) {
       if (!this.sessionId) throw new TypeError('sessionId is required for private operations');
@@ -256,14 +260,31 @@ export class OperationsClient {
       headers.Authorization = `Bearer ${this.token}`;
     }
     if (body !== undefined) headers['Content-Type'] = 'application/json';
-    const response = await this.fetch(`${this.url}/api/operations/${path}`, {
-      method, headers, cache: 'no-store', credentials: 'omit', redirect: 'error', referrerPolicy: 'no-referrer',
-      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-    });
-    let result;
-    try { result = await response.json(); } catch { throw new Error(`Operations HTTP ${response.status}: invalid JSON response`); }
-    if (!response.ok || !result?.ok) throw new Error(`Operations HTTP ${response.status}: ${result?.error || 'request failed'}`);
-    return result;
+    const controller = new AbortController();
+    const abort = () => controller.abort(signal?.reason);
+    if (signal?.aborted) abort();
+    else signal?.addEventListener('abort', abort, { once: true });
+    const timer = setTimeout(() => controller.abort(new DOMException('Operations request timed out', 'TimeoutError')), this.requestTimeoutMs);
+    let rejectAbort;
+    const aborted = new Promise((_resolve, reject) => { rejectAbort = () => reject(controller.signal.reason); });
+    controller.signal.addEventListener('abort', rejectAbort, { once: true });
+    try {
+      if (controller.signal.aborted) throw controller.signal.reason;
+      return await Promise.race([aborted, (async () => {
+        const response = await this.fetch(`${this.url}/api/operations/${path}`, {
+          method, headers, cache: 'no-store', credentials: 'omit', redirect: 'error', referrerPolicy: 'no-referrer', signal: controller.signal,
+          ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+        });
+        let result;
+        try { result = await response.json(); } catch { throw new Error(`Operations HTTP ${response.status}: invalid JSON response`); }
+        if (!response.ok || !result?.ok) throw new Error(`Operations HTTP ${response.status}: ${result?.error || 'request failed'}`);
+        return result;
+      })()]);
+    } finally {
+      clearTimeout(timer);
+      signal?.removeEventListener('abort', abort);
+      controller.signal.removeEventListener('abort', rejectAbort);
+    }
   }
 
   create({ label } = {}) {
@@ -277,16 +298,16 @@ export class OperationsClient {
       kind: choice(kind, 'kind', ['team', 'vehicle'], null) }, false);
   }
 
-  state() { return this._request('state', 'GET'); }
+  state(options) { return this._request('state', 'GET', undefined, true, options); }
 
-  async publishUnit(unit) {
+  async publishUnit(unit, options) {
     if (!unit || unit.t == null) throw new TypeError('unit requires source UTC t');
     const { type: _type, link: _link, ...telemetry } = normalizeTelemetry(unit);
     // Validation must not replace the gateway's observation string or sub-millisecond precision.
     return this._request('unit', 'POST', { unit: { ...telemetry, t: unit.t,
       kind: choice(unit.kind ?? 'drone', 'kind', ['drone', 'team', 'vehicle'], null),
       status: string(unit.status, 'status', 40), accuracy: number(unit.accuracy, 'accuracy', 0, 100000),
-    } });
+    } }, true, options);
   }
 
   async publishPosition(position) {
