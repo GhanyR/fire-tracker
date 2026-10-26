@@ -58,3 +58,46 @@ test('relay forwards real authenticated bridge telemetry to private HTTP API wit
   const forwarded=received.slice(count).find(x=>x.body?.unit?.id==='relay-aircraft');assert.ok(forwarded);assert.equal(forwarded.body.unit.t,'2026-10-26T08:00:00.000Z');assert.equal(forwarded.body.unit.kind,'drone');assert.equal(forwarded.body.unit.simulated,true);assert.equal(forwarded.body.unit.name,'Relay Alpha');assert.equal(forwarded.headers.authorization,'Bearer cloud-pub-test');assert.equal(forwarded.headers['x-operation-id'],'relay-session');assert.equal(forwarded.path,'/api/operations/unit');assert.deepEqual(errors,[]);
  }finally{await relay.close();}
 });
+
+
+test('operations HTTP deadline aborts a stalled request and caller cancellation propagates',{timeout:500},async()=>{
+ const stalled=(_url,{signal})=>new Promise((_resolve,reject)=>{if(signal.aborted)reject(signal.reason);else signal.addEventListener('abort',()=>reject(signal.reason),{once:true});});
+ const client=new sdk.OperationsClient({url,sessionId:'test',token:'test',fetch:stalled,requestTimeoutMs:25});
+ await assert.rejects(client.state(),error=>error.name==='TimeoutError');
+ const parent=new AbortController();const request=client.state({signal:parent.signal});parent.abort();
+ await assert.rejects(request,error=>error.name==='AbortError');
+});
+test('bridge observation precision survives the SDK and same-millisecond ordering',()=>{
+ const client=new sdk.FireTrackerClient({url});
+ const first={id:'precise',lat:0,lon:0,t:'2026-10-26T07:59:59.123456+00:00'};
+ client.acceptEnvelope({...first,type:'telemetry'});assert.equal(client.drones[0].t,first.t);
+ client.acceptEnvelope({...first,type:'telemetry',lon:1,t:'2026-10-26T07:59:59.123457Z'});
+ assert.equal(client.drones[0].lon,1);
+ client.acceptEnvelope({...first,type:'telemetry'});assert.equal(client.drones[0].lon,1);
+});
+
+
+test('relay progresses after a stalled upstream request and closes during another stalled POST',async()=>{
+ const attempts=[];let relay;const errors=[];
+ const upstream=createServer(async(req,res)=>{
+  let raw='';for await(const chunk of req)raw+=chunk;
+  const unit=JSON.parse(raw).unit;attempts.push(unit);
+  if(unit.lon===2){res.setHeader('Content-Type','application/json');res.end(JSON.stringify({ok:true}));}
+ });
+ upstream.listen(0,'127.0.0.1');await once(upstream,'listening');
+ const until=async predicate=>{const deadline=Date.now()+2000;while(!predicate()&&Date.now()<deadline)await new Promise(resolve=>setTimeout(resolve,10));assert.ok(predicate());};
+ try{
+  const {relayBridgeToOperations}=await import('../examples/bridge-to-cloud.mjs');
+  relay=await relayBridgeToOperations({bridgeUrl,bridgeToken:'read-test',operationsUrl:`http://127.0.0.1:${upstream.address().port}`,sessionId:'timeout-test',publisherToken:'test',requestTimeoutMs:150,onError:e=>errors.push(e)});
+  const publisher=new sdk.FireTrackerClient({url:bridgeUrl,token:'pub-test'});
+  await publisher.publishTelemetry({id:'deadline-first',lat:0,lon:1,t:'2026-10-26T08:00:01Z',simulated:true});
+  await until(()=>attempts.some(u=>u.id==='deadline-first'));
+  await publisher.publishTelemetry({id:'deadline-next',lat:0,lon:2,t:'2026-10-26T08:00:02Z',simulated:true});
+  await until(()=>attempts.some(u=>u.id==='deadline-next'));
+  assert.ok(errors.some(e=>e.name==='TimeoutError'));
+  await publisher.publishTelemetry({id:'deadline-close',lat:0,lon:3,t:'2026-10-26T08:00:03Z',simulated:true});
+  await until(()=>attempts.some(u=>u.id==='deadline-close'));
+  await Promise.race([relay.close(),new Promise((_resolve,reject)=>setTimeout(()=>reject(new Error('relay close stalled')),500))]);
+  relay=null;
+ }finally{await relay?.close();upstream.closeAllConnections();upstream.close();await once(upstream,'close');}
+});

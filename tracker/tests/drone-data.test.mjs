@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normalizeDrone,mergeDroneFrame,droneFreshness,validateBridgeUrl,demoDrones,shareCamera} from '../lib/drone-data.mjs';
+import {normalizeDrone,mergeDroneFrame,droneFreshness,validateBridgeUrl,demoDrones,shareCamera,fleetTelemetryStatus} from '../lib/drone-data.mjs';
 const now=Date.parse('2026-10-26T08:00:00Z');
 const packet={type:'telemetry',id:'UAV-1',lat:-8.015,lon:112.97,t:'2026-10-26T07:59:59Z'};
 test('telemetry retains UTC position time and unknown metrics; malformed and future positions are rejected',()=>{
@@ -40,3 +40,21 @@ test('fleet metadata survives normalization while unsafe streams and unknown sta
 });
 
 test('sharing after disconnect still excludes the last real drone camera location',()=>{const camera={lon:114.123456,lat:-2.123456};assert.equal(shareCamera({camera,hasLiveSession:true}),null);assert.deepEqual(shareCamera({camera,hasLiveSession:true,demo:true}),[112.955,-8.015]);assert.deepEqual(shareCamera({camera,hasLiveSession:true,selectedCoordinates:[105,-3]}),[105,-3]);});
+
+
+test('fleet HUD distinguishes transport state and observation age',()=>{
+ const d=normalizeDrone(packet,now);
+ assert.equal(fleetTelemetryStatus(d,{status:'reconnecting',now}).state,'reconnecting');
+ assert.equal(fleetTelemetryStatus({...d,time:now-61000},{status:'connected',now}).state,'stale');
+ assert.equal(fleetTelemetryStatus({...d,time:now-16000},{status:'connected',now}).state,'delayed');
+ assert.equal(fleetTelemetryStatus(d,{status:'connected',now}).state,'fresh');
+ assert.equal(fleetTelemetryStatus({...d,simulated:true},{status:'connected',now}).state,'demo');
+});
+test('microsecond observation order is preserved without changing the original UTC string',()=>{
+ const a={...packet,t:'2026-10-26T07:59:59.123456+00:00'};
+ const original=mergeDroneFrame([],a,now);
+ assert.equal(original[0].t,a.t);
+ const newer=mergeDroneFrame(original,{...a,t:'2026-10-26T07:59:59.123457Z',lon:113},now);
+ assert.equal(newer[0].lon,113);assert.equal(newer[0].trail.length,2);
+ assert.equal(mergeDroneFrame(newer,a,now)[0].lon,113);
+});
