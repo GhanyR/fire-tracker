@@ -19,4 +19,12 @@
 - [x] Canvas compositor and bounded recording helper; codec/validation tests.
 - [x] Inline preview toggle, map footprints/targets, public cinematic mode and responsive controls.
 - [x] Browser QA, real20s export, fresh code review, source mirror and checks.
-- [ ] Publish public Sites/Pages, verify actual user tab, supply a checked portrait MP4 artifact.
+- [x] Publish public Sites/Pages, verify actual user tab, supply a checked portrait MP4 artifact.
+
+## Release evidence
+- Sites version10: public production succeeded, source49dc10c.
+- GitHub Pages: code7edc6f9, Actions run40353261156 succeeded.
+- 63 Sites tests and65 static tests passed; both production builds passed.
+- Actual production canvas export: H264 MP4,1080×1920,19.980s; four captions and simulation labels inspected.
+- Phone390×844 layout, playback pause, recording cancellation and Drone panel preview shutdown checked.
+- Fresh release review cleared both findings; no real telemetry or credentials enter showcase/export.
