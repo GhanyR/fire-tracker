@@ -85,7 +85,14 @@ jobs:
           path: cache/tiles
           key: ubin-dasar-v1-${{ github.run_id }}
           restore-keys: ubin-dasar-v1-
+      - name: Gunakan data terbit untuk rilis kode
+        if: github.event_name == 'push'
+        run: |
+          git clone -q --depth 1 -b data "https://github.com/${{ github.repository }}.git" /tmp/published-data
+          mkdir -p site
+          cp -r /tmp/published-data/data site/data
       - name: Ambil & olah data terbaru
+        if: github.event_name != 'push'
         id: data
         run: |
           set +e

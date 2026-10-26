@@ -7,10 +7,10 @@
 **Spec:** ../specs/2026-10-26-fire-tracker-uav-design.md
 
 ## Tasks
-- [ ] Test telemetry normalization, timestamp/order/staleness, caps, demo and URL boundaries before implementing lib/drone-data.mjs and useDroneFeed hook.
-- [ ] Add concise DronePanel and map markers/trails, demo, follow selection, accessible statuses, motion preference, flame logo and usable share action on mobile. Preserve source fidelity and current terrain UI.
-- [ ] Bounded worker owns sdk/**, bridge/**, docs/UAV.md and telemetry schema, with tests for protocol/auth/optional values and adapters. Parent reviews integration and publishes.
-- [ ] Mirror frontend into tracker, add meaningful CI checks, README integration entry, verify real WebSocket traffic from local bridge into both frontend variants.
+- [x] Test telemetry normalization, timestamp/order/staleness, caps, demo and URL boundaries before implementing lib/drone-data.mjs and useDroneFeed hook.
+- [x] Add concise DronePanel and map markers/trails, demo, follow selection, accessible statuses, motion preference, flame logo and usable share action on mobile. Preserve source fidelity and current terrain UI.
+- [x] Bounded worker owns sdk/**, bridge/**, docs/UAV.md and telemetry schema, with tests for protocol/auth/optional values and adapters. Parent reviews integration and publishes.
+- [x] Mirror frontend into tracker, add meaningful CI checks, README integration entry, verify real WebSocket traffic from local bridge into both frontend variants.
 - [ ] Change hosted slug after app is ready, package exact Sites source, publish public, push GitHub, wait for successful Pages deployment, verify both URLs, sharing and demo in the user's tab.
 
 ## Review focus
