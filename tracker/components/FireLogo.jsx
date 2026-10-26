@@ -1,1 +1,8 @@
-export default function FireLogo(){return <svg className="fire-logo" viewBox="0 0 40 44" fill="none" aria-hidden="true"><path d="M22 3c2 9-5 11-4 18 3-1 5-4 6-8 6 6 10 12 8 18-2 6-7 10-13 10S6 36 6 29c0-6 4-10 8-15 0 5 1 7 3 8-2-8 6-11 5-19Z" fill="currentColor"/><path d="M21 25c0 4-5 6-5 10a5 5 0 0 0 10 0c0-3-2-6-3-8 0 3-1 4-2 5 1-3 0-5 0-7Z" fill="#fff4dc"/><path d="M5 40h6m18 0h6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>;}
+export default function FireLogo() {
+ return (
+  <svg className="fire-logo" viewBox="0 0 40 56" fill="none" aria-hidden="true">
+   <path d="M23 3C22 13 11 20 11 30C8 27 8 24 8 22C4 27 2 33 3 39C4 48 11 53 20 53C30 53 37 46 37 37C37 27 30 20 27 14C27 21 25 25 22 28C25 17 25 10 23 3Z" fill="currentColor" />
+   <path d="M20 33C21 38 15 40 15 45C15 49 17 51 21 51C25 51 28 48 28 44C28 40 25 37 24 35C24 39 22 41 21 42C23 38 21 36 20 33Z" fill="#fff4dc" />
+  </svg>
+ );
+}
