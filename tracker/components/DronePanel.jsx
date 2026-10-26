@@ -7,11 +7,11 @@ import {number,time} from './format.mjs';
 const statusText={idle:'Belum tersambung',connecting:'Menghubungkan…',connected:'Bridge tersambung',reconnecting:'Menyambung ulang…',error:'Koneksi perlu diperiksa',demo:'Contoh interaktif'};
 const signalText={fresh:'Posisi terkini',delayed:'Pembaruan terlambat',stale:'Posisi lama',demo:'Demo'};
 const metric=(n,unit='')=>n===null||n===undefined?'—':number(Math.round(n*10)/10)+unit;
-export default function DronePanel({feed,selectedId,onSelect,onFocus,follow,onFollow,onDemo,onShare,notify}){
+export default function DronePanel({onCinema,feed,selectedId,onSelect,onFocus,follow,onFollow,onDemo,onShare,notify}){
  const [address,setAddress]=useState(''),[token,setToken]=useState(''),[setup,setSetup]=useState(false);
  const selected=feed.vehicles.find(d=>d.id===selectedId)||feed.vehicles[0];const allDemo=feed.vehicles.length>0&&feed.vehicles.every(d=>d.simulated);
  const connect=e=>{e.preventDefault();if(feed.connect(address,token))setSetup(false);};
- return <div className="uav-panel"><div className="section-eyebrow">PANTAUAN UDARA <Drone size={14}/></div><h2>Drone & UAV</h2><p className="uav-intro">Lihat posisi dan jejak penerbangan di peta.</p>
+ return <div className="uav-panel"><div className="section-eyebrow">PANTAUAN UDARA <Drone size={14}/></div><h2>Drone & UAV</h2><button className="uav-cinema-entry" onClick={onCinema}><Play size={13}/>Demo sinematik · video9:16<ArrowUpRight size={12}/></button><p className="uav-intro">Lihat posisi dan jejak penerbangan di peta.</p>
  {feed.mode==='none'?<><div className="uav-welcome"><div className="uav-illustration"><i/><span><Drone size={39} strokeWidth={1.35}/></span><b/></div><h3>Mulai dari contoh</h3><p>Dua UAV bergerak di atas medan 3D. Anda bisa memilih, mengikuti, dan menjeda.</p><button className="button primary" onClick={onDemo}><Play size={13}/>Coba contoh di peta</button><button className="uav-connect-link" onClick={()=>setSetup(x=>!x)}><Link2 size={13}/>Hubungkan drone saya<ArrowUpRight size={12}/></button></div></>:<>
  <div className={`uav-session-card ${feed.mode==='demo'||allDemo?'demo':''}`}><span className="uav-status-dot"/><div><strong>{feed.mode==='demo'||allDemo?'DEMO · bukan drone sungguhan':statusText[feed.status]}</strong><small>{feed.mode==='demo'?(feed.paused?'Gerakan dijeda':'Contoh bergerak · data simulasi'):'Posisi disimpan hanya selama sesi browser ini.'}</small></div><button aria-label="Akhiri sesi drone" onClick={feed.disconnect}><X size={15}/></button></div>
  {feed.mode==='demo'&&<div className="uav-demo-controls"><button onClick={feed.togglePause}>{feed.paused?<Play size={13}/>:<Pause size={13}/>} {feed.paused?'Lanjutkan':'Jeda'}</button><button onClick={onShare}><Share2 size={13}/>Bagikan contoh</button></div>}

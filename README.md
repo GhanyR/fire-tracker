@@ -21,6 +21,10 @@ Penyimpanan offline di GitHub Pages mencakup aplikasi, data terakhir dan ubin pe
 
 ## Drone & UAV
 
+[**Buka demo sinematik 9:16**](https://fire-tracker.fiveprayerapp.chatgpt.site/#showcase=1): dua UAV simulasi bergerak, jalur dan kerucut arah pandang di medan Bromo. Tekan **Rekam video 20 detik** untuk mengunduh video 1080 × 1920 (MP4 jika didukung browser; WebM sebagai cadangan), tanpa audio. Rekaman hanya menangkap kanvas aplikasi; posisi UAV asli dan kredensial tidak masuk ke mode ini. Inset adalah ilustrasi citra peta, bukan kamera langsung. Tetap buka tab selama merekam; pindah tab membatalkan rekaman.
+
+Tombol **Preview UAV** pada pemutaran pengamatan juga menampilkan dua UAV contoh yang mengikuti waktu pemutaran dan wilayah. Kerucutnya ilustrasi, bukan pengukuran sensor atau batas kebakaran.
+
 Buka panel **Drone** untuk [contoh dua UAV bergerak di peta 3D](https://fire-tracker.fiveprayerapp.chatgpt.site/#demo=1). Contoh selalu berlabel DEMO dan tidak menambah jumlah hotspot satelit. Pilih UAV untuk melihat arah hadap, baterai, ketinggian relatif titik lepas landas, jejak dan waktu posisi; tombol **Ikuti** mengaktifkan kamera, geser peta untuk melepasnya.
 
 Hubungkan PX4/ArduPilot dengan bridge MAVLink, atau kirim telemetri dari gateway lain lewat SDK JSON. DJI yang kompatibel membutuhkan aplikasi/gateway SDK vendor; ini bukan koneksi otomatis ke semua model DJI. Situs publik menerima WSS; bridge lokal dapat menyajikan dashboard dan WS pada alamat yang sama. Token dan koneksi drone tidak disimpan atau disertakan dalam tautan berbagi.
