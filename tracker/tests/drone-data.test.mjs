@@ -25,7 +25,18 @@ test('public HTTPS view requires WSS, disallows embedded credentials and permits
  for(const url of ['ws://127.0.0.1:8787/ws','https://example.org/state','wss://user:pass@example.org/ws','wss://example.org/ws?token=secret'])assert.throws(()=>validateBridgeUrl(url,'https:'));
 });
 test('demo is deterministic, moving and explicitly simulated without borrowing satellite data',()=>{
- const a=demoDrones(0,now),b=demoDrones(2000,now+2000);assert.equal(a.length,2);assert.ok(a.every(x=>x.simulated&&x.link==='sim'));assert.notEqual(a[0].lon,b[0].lon);assert.equal(a[0].t,new Date(now).toISOString());
+ const a=demoDrones(0,now),b=demoDrones(2000,now+2000);assert.equal(a.length,6);assert.ok(a.every(x=>x.simulated&&x.link==='sim'));assert.notEqual(a[0].lon,b[0].lon);assert.equal(a[0].t,new Date(now).toISOString());
+ assert.deepEqual(a.map(x=>x.id),['DEMO-01','DEMO-02','DEMO-03','DEMO-04','DEMO-05','DEMO-06']);assert.equal(new Set(a.map(x=>x.name)).size,6);assert.equal(new Set(a.map(x=>x.mission)).size,6);assert.deepEqual(new Set(a.map(x=>x.airframe)),new Set(['multirotor','fixed-wing']));assert.equal(new Set(a.map(x=>x.bat)).size,6);assert.ok(a.every(x=>normalizeDrone(x,now)?.simulated));
+});
+
+test('fleet metadata survives normalization while unsafe streams and unknown statuses stay honest',()=>{
+ const stream={id:'eo-1',label:'Front EO',kind:'eo',protocol:'hls',url:'https://camera.example/live.m3u8'};
+ const d=normalizeDrone({...packet,name:'Alpha',mission:'Perimeter survey',airframe:'fixed-wing',flightStatus:'airborne',linkQuality:0,streams:[stream]},now);
+ assert.deepEqual([d.name,d.mission,d.airframe,d.flightStatus,d.linkQuality],['Alpha','Perimeter survey','fixed-wing','airborne',0]);assert.deepEqual(d.streams,[stream]);
+ const unknown=normalizeDrone({...packet,airframe:'jet',flightStatus:'armed',linkQuality:101,streams:[{...stream,url:'https://user:secret@camera.example/live'},{...stream,kind:'temperature'},{...stream,url:'javascript:alert(1)'}]},now);
+ assert.deepEqual([unknown.airframe,unknown.flightStatus,unknown.linkQuality,unknown.streams],['unknown','unknown',null,[]]);assert.equal(normalizeDrone(packet,now).name,'');assert.equal(normalizeDrone(packet,now).streams.length,0);
+ assert.equal(normalizeDrone({...packet,streams:Array.from({length:9},(_,i)=>({...stream,id:'s'+i}))},now).streams.length,4);
+ for(const url of ['https://camera.example/arm','https://camera.example/%63ommand','https://camera.example/live?token=secret','https://camera.example/live?action=land','https://camera.example/%ZZ','https://camera.example/live#secret'])assert.deepEqual(normalizeDrone({...packet,streams:[{...stream,url}]},now).streams,[]);
 });
 
 test('sharing after disconnect still excludes the last real drone camera location',()=>{const camera={lon:114.123456,lat:-2.123456};assert.equal(shareCamera({camera,hasLiveSession:true}),null);assert.deepEqual(shareCamera({camera,hasLiveSession:true,demo:true}),[112.955,-8.015]);assert.deepEqual(shareCamera({camera,hasLiveSession:true,selectedCoordinates:[105,-3]}),[105,-3]);});

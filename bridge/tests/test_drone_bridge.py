@@ -12,6 +12,20 @@ from aiohttp.test_utils import TestClient, TestServer
 
 
 class NormalizationTests(unittest.TestCase):
+    def test_fleet_metadata_and_stream_validation(self):
+        stream = {'id': 'ir', 'label': 'Thermal camera', 'kind': 'ir', 'protocol': 'mjpeg', 'url': 'https://camera.example/ir'}
+        sample = {'lat': 0, 'lon': 0, 'name': 'Alpha', 'mission': 'Perimeter survey', 'airframe': 'fixed-wing', 'flightStatus': 'airborne', 'linkQuality': 0, 'streams': [stream]}
+        data = bridge.norm_telemetry(sample)
+        self.assertEqual([data['name'], data['mission'], data['airframe'], data['flightStatus'], data['linkQuality'], data['streams']], ['Alpha', 'Perimeter survey', 'fixed-wing', 'airborne', 0, [stream]])
+        unknown = bridge.norm_telemetry({'lat': 0, 'lon': 0})
+        self.assertEqual([unknown['airframe'], unknown['flightStatus'], unknown['linkQuality'], unknown['streams']], ['unknown', 'unknown', None, []])
+        for patch in ({'airframe': 'jet'}, {'flightStatus': 'armed'}, {'linkQuality': 101}, {'linkQuality': False}, {'streams': [dict(stream, url='https://user:secret@camera.example/ir')]}, {'streams': [dict(stream, url='file:///secret')]}, {'streams': [dict(stream, kind='temperature')]}, {'streams': [dict(stream, protocol='rtsp')]}, {'streams': [stream] * 5}):
+            with self.subTest(patch=patch), self.assertRaises(ValueError):
+                bridge.norm_telemetry(dict(sample, **patch))
+        for url in ('https://camera.example/arm', 'https://camera.example/%63ommand', 'https://camera.example/ir?token=secret', 'https://camera.example/ir?action=land', 'https://camera.example/%ZZ', 'https://camera.example/ir#secret'):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                bridge.norm_telemetry(dict(sample, streams=[dict(stream, url=url)]))
+
     def test_coordinates_reject_nonfinite_boolean_and_numeric_strings(self):
         for bad in (float('inf'), float('-inf'), float('nan'), 10**400, True, '', '12.3', None):
             with self.subTest(bad=bad), self.assertRaises(ValueError):
@@ -72,6 +86,30 @@ class NormalizationTests(unittest.TestCase):
         older = message('GLOBAL_POSITION_INT', lat=-10000000, lon=1100000000,
                         relative_alt=1, alt=1, hdg=0, time_boot_ms=900)
         self.assertIsNone(feed.ingest(older, received_at='2026-10-26T08:02:00Z'))
+
+    def test_encoded_mavlink_position_battery_and_explicit_landed_state(self):
+        try:
+            from pymavlink.dialects.v20 import common as mavlink
+        except ImportError:
+            self.skipTest('optional pymavlink is not installed')
+        encoder = mavlink.MAVLink(None, srcSystem=7, srcComponent=1)
+        decoder = mavlink.MAVLink(None)
+        feed = bridge.MavlinkTelemetry()
+        def ingest(message, at):
+            decoded = decoder.parse_char(message.pack(encoder))
+            self.assertIsNotNone(decoded)
+            return feed.ingest(decoded, received_at=at)
+        ingest(encoder.heartbeat_encode(1, 3, 128, 0, 4), '2026-10-26T08:00:00Z')
+        point = ingest(encoder.global_position_int_encode(1000, -27634000, 1141032000, 120000, 80000, 0, 0, 0, 9000), '2026-10-26T08:00:00Z')
+        self.assertEqual([point['id'], point['lat'], point['lon'], point['alt'], point['alt_msl'], point['airframe']], ['mav-7', -2.7634, 114.1032, 80, 120, 'fixed-wing'])
+        battery = ingest(encoder.battery_status_encode(0, 0, 0, 32767, [65535]*10, -1, -1, -1, 63), '2026-10-26T08:01:00Z')
+        self.assertEqual(battery['bat'], 63)
+        self.assertEqual(battery['t'], '2026-10-26T08:00:00.000Z')
+        airborne = ingest(encoder.extended_sys_state_encode(0, 2), '2026-10-26T08:02:00Z')
+        self.assertEqual(airborne['flightStatus'], 'airborne')
+        self.assertEqual(airborne['t'], battery['t'])
+        landed = ingest(encoder.extended_sys_state_encode(0, 1), '2026-10-26T08:03:00Z')
+        self.assertEqual(landed['flightStatus'], 'landed')
 
 
 class BridgeIntegrationTests(unittest.IsolatedAsyncioTestCase):
