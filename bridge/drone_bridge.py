@@ -18,6 +18,7 @@ import socket
 import threading
 from collections import OrderedDict
 from datetime import datetime, timedelta, timezone
+from urllib.parse import urlsplit, parse_qs, unquote
 from xml.sax.saxutils import escape, quoteattr
 
 try:
@@ -86,6 +87,46 @@ def text_field(value, limit, name):
     return value[:limit]
 
 
+def choice(value, name, allowed, default="unknown"):
+    if value is None:
+        return default
+    if not isinstance(value, str) or value not in allowed:
+        raise ValueError(f"{name} is invalid")
+    return value
+
+
+def clean_streams(value):
+    if value is None:
+        return []
+    if not isinstance(value, list) or len(value) > 4:
+        raise ValueError("streams must be an array of at most four cameras")
+    result, ids = [], set()
+    for item in value:
+        object_input(item)
+        ident = text_field(item.get("id"), 40, "stream id")
+        if not ident or ident in ids:
+            raise ValueError("stream id must be nonempty and unique")
+        ids.add(ident)
+        url = item.get("url")
+        if not isinstance(url, str) or len(url) > 2048 or re.search(r"[\x00-\x20]", url):
+            raise ValueError("stream URL is invalid")
+        parsed = urlsplit(url)
+        if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username or parsed.password or parsed.fragment:
+            raise ValueError("stream URL must use HTTP(S) without embedded credentials")
+        if re.search(r"%(?![a-fA-F0-9]{2})", parsed.path):
+            raise ValueError("stream URL has invalid escaping")
+        path = unquote(parsed.path, errors="strict")
+        if re.search(r"(?:^|/)(?:commands?|arm|disarm|takeoff|land|reboot|control)(?:/|$)", path, re.I) or any(re.search(r"token|secret|key|auth|password|^(?:cmd|command|action|control)$", key, re.I) for key in parse_qs(parsed.query, keep_blank_values=True)):
+            raise ValueError("stream URL must not contain secrets or commands")
+        kind = choice(item.get("kind"), "stream kind", ("eo", "ir"), None)
+        protocol = choice(item.get("protocol"), "stream protocol", ("hls", "mjpeg", "whep", "mp4"), None)
+        if kind is None or protocol is None:
+            raise ValueError("stream kind and protocol are required")
+        result.append({"id": ident, "label": text_field(item.get("label"), 80, "stream label"),
+                       "kind": kind, "protocol": protocol, "url": url})
+    return result
+
+
 def norm_telemetry(data, source="http"):
     lat, lon = clean_point(data)
     armed = data.get("armed")
@@ -106,6 +147,10 @@ def norm_telemetry(data, source="http"):
         "mode": text_field(data.get("mode"), 24, "mode"), "armed": armed,
         "link": link, "model": text_field(data.get("model"), 40, "model"),
         "t": utc_time(data.get("t")), "simulated": simulated or link.lower() == "sim",
+        "name": text_field(data.get("name"), 80, "name"), "mission": text_field(data.get("mission"), 160, "mission"),
+        "airframe": choice(data.get("airframe"), "airframe", ("multirotor", "fixed-wing", "unknown")),
+        "flightStatus": choice(data.get("flightStatus"), "flightStatus", ("airborne", "landed", "unknown")),
+        "linkQuality": num(data.get("linkQuality"), 0, 100, name="linkQuality"), "streams": clean_streams(data.get("streams")),
     }
 
 
@@ -353,7 +398,7 @@ class MavlinkTelemetry:
         if sysid in (0, 254, 255):
             return None
         kind = message.get_type()
-        if kind not in ("HEARTBEAT", "GLOBAL_POSITION_INT", "VFR_HUD", "SYS_STATUS", "BATTERY_STATUS"):
+        if kind not in ("HEARTBEAT", "GLOBAL_POSITION_INT", "VFR_HUD", "SYS_STATUS", "BATTERY_STATUS", "EXTENDED_SYS_STATE"):
             return None
         if kind == "HEARTBEAT" and message.type in (6, 27):
             self.vehicles.pop(sysid, None)
@@ -375,8 +420,14 @@ class MavlinkTelemetry:
                          t=utc_time(received_at), _boot_ms=boot_ms)
         elif kind == "HEARTBEAT":
             state["armed"] = bool(message.base_mode & 128)
+            # MAV_TYPE_FIXED_WING / QUADROTOR, HEXAROTOR, OCTOROTOR, TRICOPTER,
+            # DODECAROTOR, DECAROTOR. Other types (including transitioning VTOL) stay unknown.
+            state["airframe"] = "fixed-wing" if message.type == 1 else "multirotor" if message.type in (2, 13, 14, 15, 29, 35) else "unknown"
             if self.mode_string:
                 state["mode"] = self.mode_string(message)
+        elif kind == "EXTENDED_SYS_STATE":
+            # Arming alone says nothing about whether an aircraft is flying.
+            state["flightStatus"] = {1: "landed", 2: "airborne"}.get(message.landed_state, "unknown")
         elif kind == "VFR_HUD":
             state["spd"] = message.groundspeed if message.groundspeed >= 0 else None
         elif kind in ("SYS_STATUS", "BATTERY_STATUS"):

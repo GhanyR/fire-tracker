@@ -21,6 +21,17 @@ Penyimpanan offline di GitHub Pages mencakup aplikasi, data terakhir dan ubin pe
 
 Tekan **Play** untuk menelusuri waktu pengamatan satelit. Kamera mengikuti titik terbaru pada setiap interval, dengan penanda fokus dan nama wilayah; jeda tanpa deteksi dilewati. Geser peta untuk melepas kamera, lalu aktifkan **Ikuti titik** untuk melanjutkan. Pemutaran mengikuti filter dan jendela waktu; ini riwayat deteksi, bukan prediksi rambatan api. Halaman perbandingan memakai urutan yang sama pada kedua peta.
 
+## Armada, kamera, dan tim lapangan
+
+[**Buka contoh operasi: enam UAV dan tiga unit darat**](https://fire-tracker.fiveprayerapp.chatgpt.site/#fleet=1&demo=1). Seluruh contoh diberi label simulasi. Tab **Drone** menampilkan tugas, tipe pesawat, status terbang/darat, baterai, waktu GPS, jejak dan fokus kamera. Peta 3D tetap terpisah dari video kamera.
+
+- **Perangkat:** hubungkan bridge WSS untuk PX4/ArduPilot lewat MAVLink, atau gateway DJI/JSON yang kompatibel. [Panduan koneksi](docs/UAV.md), [SDK](sdk/README.md), dan [relay bridge ke sesi privat](sdk/examples/bridge-to-cloud.mjs). Integrasi protokol diuji dengan paket dan server sungguhan menggunakan data sintetis; perangkat fisik tetap perlu diuji.
+- **Kamera:** metadata unit dapat menyediakan EO/IR melalui HLS, MJPEG, MP4 atau WHEP. Pengguna memilih sumber lalu menghubungkan. IR harus berasal dari kamera IR; aplikasi tidak mengubah peta menjadi pengukuran termal. Endpoint, TLS, autentikasi media dan CORS perlu sesuai dengan gateway.
+- **Tim:** buka **Tim → Buat sesi**, simpan ID/kunci, lalu salin undangan anggota. Anggota membuka tautan di ponsel, memakai tanda panggil, dan menyetujui berbagi GPS. Halaman perlu tetap terbuka di depan; penghentian, perpindahan ke latar belakang, atau berakhirnya sesi menghentikan GPS. Integrasi GPS latar belakang dapat mengirim data lewat SDK/gateway sendiri.
+- **Privasi:** sesi enam jam, kunci penonton/gateway/anggota terpisah, tanpa akun. Lokasi tidak masuk ke feed publik, ekspor satelit atau tautan peta biasa. Posisi lama tidak ditampilkan setelah 15 menit, termasuk saat penonton offline. [Kontrak API dan batas retensi](docs/OPERATIONS.md).
+
+Kode server dan migrasi D1 juga terbuka di [server](server/README.md). GitHub Pages memakai API operasi Sites secara bawaan; untuk host sendiri, ubah `OPERATIONS_ORIGIN` di `tracker/lib/operations-client.mjs` ke origin API Anda dan sesuaikan daftar CORS server.
+
 ## Bandingkan desain
 
 Dashboard tersedia dalam **Atlas (terang)** dan **Vector (gelap)**. Ganti mode lewat ikon matahari/bulan di header; pilihan tersimpan di browser. Pergantian tema mempertahankan posisi peta, pencarian, filter waktu, titik terpilih dan sesi UAV. Logo api dan medan memakai SVG yang sama pada dashboard, favicon dan ekspor video.

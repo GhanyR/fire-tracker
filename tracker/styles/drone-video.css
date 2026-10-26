@@ -1,0 +1,108 @@
+.drone-video-overlay {
+ position:absolute;inset:0;z-index:85;display:flex;align-items:center;justify-content:center;padding:24px;
+ background:#07171085;backdrop-filter:blur(5px);color:var(--op-text,#2c4232);
+}
+.drone-video {
+ width:min(1140px,100%);max-height:100%;display:flex;flex-direction:column;overflow:hidden;
+ background:var(--op-panel,#f8faf2);border:1px solid var(--op-line,#d8dfcf);border-radius:10px;
+ box-shadow:0 24px 100px #06151166;text-align:left;
+}
+.drone-video button,.drone-video input {font:inherit;}
+.drone-video button {cursor:pointer;}
+.drone-video button:focus-visible,.drone-video input:focus-visible,.drone-video video:focus-visible {
+ outline:2px solid var(--op-accent,#536f4e);outline-offset:3px;
+}
+.drone-video button:disabled {opacity:.55;cursor:default;}
+.drone-video-header {display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 22px;border-bottom:1px solid var(--op-line,#d8dfcf);flex-shrink:0;}
+.drone-video-title {display:flex;align-items:center;flex-wrap:wrap;gap:7px 13px;min-width:0;}
+.drone-video-title>span {display:flex;align-items:center;gap:7px;width:100%;font-size:9px;font-weight:650;letter-spacing:1.6px;color:var(--op-muted,#73816c);}
+.drone-video-title h2 {margin:0;font-size:21px;font-weight:600;letter-spacing:-.5px;color:var(--op-text,#2c4232);overflow-wrap:anywhere;}
+.drone-video-title>small {font-size:10px;color:var(--op-muted,#73816c);}
+.drone-video-close {display:grid;place-items:center;flex-shrink:0;width:34px;height:34px;border:1px solid var(--op-line,#d8dfcf);border-radius:5px;color:var(--op-muted,#73816c);background:transparent;}
+.drone-video-close:hover {color:var(--op-text,#2c4232);background:var(--op-soft,#e9eee2);}
+.drone-video-body {display:grid;grid-template-columns:minmax(0,1fr) 246px;min-height:0;overflow:auto;}
+.drone-video-stage {position:relative;isolation:isolate;aspect-ratio:16/10;min-height:330px;overflow:hidden;background:#08120f;color:#f2f7ed;}
+.drone-video-stage>video,.drone-video-stage>img {position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#08120f;visibility:hidden;}
+.drone-video-stage.has-image>video,.drone-video-stage.has-image>img {visibility:visible;}
+.drone-video-stage>.drone-video-hidden {display:none;}
+.drone-video-source-hud {position:absolute;top:18px;left:20px;right:20px;display:flex;align-items:center;gap:10px;pointer-events:none;z-index:2;font-size:11px;text-shadow:0 1px 3px #000;}
+.drone-video-source-hud>span {display:flex;align-items:center;gap:7px;padding:6px 8px;border:1px solid #dceadd40;border-radius:4px;background:#071610c9;letter-spacing:1px;font-size:10px;}
+.drone-video-source-hud>strong {font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.drone-video-unavailable {position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;text-align:center;padding:60px 36px;background:radial-gradient(ellipse at 50% 20%,#20362a70,transparent 65%),#08120f;}
+.drone-video-unavailable>span {display:grid;place-items:center;width:68px;height:68px;border:1px solid #c0d1bb30;border-radius:50%;color:#9aaf98;background:#b7cfb306;}
+.drone-video-unavailable h3 {margin:0;font-size:23px;letter-spacing:-.6px;font-weight:500;color:#e4eddf;}
+.drone-video-unavailable p {max-width:320px;margin:0;color:#b4c1ae;font-size:12px;line-height:1.65;}
+.drone-video .drone-video-primary {display:flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:10px 14px;border:1px solid var(--op-accent,#536f4e);border-radius:5px;background:var(--op-accent,#536f4e);color:var(--op-on-accent,#f8fff3);font-size:11px;font-weight:550;}
+.drone-video .drone-video-primary:hover {filter:brightness(1.08);}
+.drone-video-unavailable>.drone-video-primary {margin-top:4px;}
+.drone-video-sidebar {display:flex;flex-direction:column;min-width:0;padding:22px 18px;background:var(--op-panel,#f8faf2);border-left:1px solid var(--op-line,#d8dfcf);}
+.drone-video-sidebar-heading {display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:15px;}
+.drone-video-sidebar-heading>span,.drone-video-position>span {font-size:8px;letter-spacing:1.2px;font-weight:650;color:var(--op-muted,#73816c);}
+.drone-video-sidebar-heading>small {color:var(--op-muted,#73816c);font-size:9px;}
+.drone-video-choices {display:flex;flex-direction:column;gap:6px;}
+.drone-video-choices>button {display:flex;align-items:center;gap:9px;min-width:0;width:100%;padding:11px 9px;border:1px solid var(--op-line,#d8dfcf);border-radius:5px;color:var(--op-text,#2c4232);background:var(--op-raised,#fcfdf7);text-align:left;}
+.drone-video-choices>button[aria-checked=true] {border-color:var(--op-accent,#536f4e);background:var(--op-selection,#dce7d5);}
+.drone-video-kind {display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--op-line,#d8dfcf);border-radius:4px;flex-shrink:0;font-size:10px;font-weight:650;letter-spacing:.5px;color:var(--op-accent,#536f4e);}
+.drone-video-choices>button>span:nth-child(2) {display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;}
+.drone-video-choices strong {font-size:11px;font-weight:550;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.drone-video-choices small {font-size:8px;letter-spacing:.7px;color:var(--op-muted,#73816c);}
+.drone-video-choices svg {color:var(--op-muted,#73816c);flex-shrink:0;}
+.drone-video-connect {display:flex;flex-direction:column;gap:12px;margin-top:18px;}
+.drone-video-connect>label {display:flex;flex-direction:column;gap:6px;font-size:10px;color:var(--op-text,#2c4232);}
+.drone-video-connect label>small {font-size:9px;color:var(--op-muted,#73816c);}
+.drone-video-connect input {width:100%;min-width:0;height:33px;padding:6px 9px;background:var(--op-raised,#fcfdf7);color:var(--op-text,#2c4232);border:1px solid var(--op-line,#d8dfcf);border-radius:4px;}
+.drone-video-disconnect {display:flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:10px 12px;border:1px solid var(--op-line,#d8dfcf);border-radius:5px;background:var(--op-soft,#e9eee2);color:var(--op-text,#2c4232);font-size:11px;}
+.drone-video-status {display:flex;align-items:flex-start;gap:8px;margin-top:18px;padding-top:17px;border-top:1px solid var(--op-line,#d8dfcf);color:var(--op-muted,#73816c);}
+.drone-video-status>svg {flex-shrink:0;margin-top:1px;}
+.drone-video-status strong {display:block;font-size:10px;line-height:1.45;color:var(--op-text,#2c4232);font-weight:550;}
+.drone-video-status p {margin:5px 0 0;font-size:10px;line-height:1.6;overflow-wrap:anywhere;}
+.drone-video-status.status-error,.drone-video-status.status-ended,.drone-video-status.status-buffering {color:var(--op-warning,#7f6036);}
+.drone-video-status.status-playing,.drone-video-status.status-receiving {color:var(--op-accent,#536f4e);}
+.drone-video-position {display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:24px;}
+.drone-video-position>code {font-size:10px;color:var(--op-text,#2c4232);}
+.drone-video-position p {font-size:9px;line-height:1.7;margin:0;color:var(--op-muted,#73816c);}
+.drone-video-position p>strong {font-weight:500;color:var(--op-text,#2c4232);font-size:10px;}
+.drone-video-position>small {font-size:9px;line-height:1.6;color:var(--op-muted,#73816c);}
+.drone-video-telemetry {position:absolute;bottom:55px;left:20px;right:20px;display:flex;gap:24px;justify-content:flex-start;flex-wrap:wrap;z-index:2;margin:0;padding:12px 14px;background:#071610d1;border:1px solid #e1efdb25;border-radius:5px;pointer-events:none;}
+.drone-video-telemetry dt {font-size:8px;letter-spacing:.3px;color:#bacab2;margin-bottom:5px;}
+.drone-video-telemetry dd {font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:18px;line-height:1.2;font-weight:500;margin:0;color:#f0f6e9;}
+.drone-video-telemetry dd>small {margin-left:5px;font-size:10px;color:#c3d1bc;}
+.drone-video-frame-note {position:absolute;right:20px;top:21px;max-width:45%;font-size:8px;line-height:1.5;padding:4px 7px;color:#d7e2d0;background:#071610cf;border-radius:3px;text-align:right;pointer-events:none;}
+.drone-video-footer {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 21px;flex-shrink:0;border-top:1px solid var(--op-line,#d8dfcf);color:var(--op-muted,#73816c);font-size:9px;line-height:1.5;}
+.drone-video-empty-source {margin:0;color:var(--op-muted,#73816c);font-size:11px;line-height:1.7;}
+.camera-is-connecting {animation:camera-connect-pulse 1.5s ease-in-out infinite;}
+@keyframes camera-connect-pulse {50%{opacity:.45;}}
+@media (max-width:1050px) {
+ .drone-video-overlay {padding:16px;}
+ .drone-video-body {grid-template-columns:minmax(0,1fr) 220px;}
+ .drone-video-stage {min-height:300px;}
+ .drone-video-sidebar {padding:18px 14px;}
+ .drone-video-unavailable h3 {font-size:20px;}
+ .drone-video-frame-note {top:auto;bottom:38px;right:12px;max-width:70%;}
+ .drone-video-telemetry {bottom:66px;left:12px;right:12px;gap:16px;}
+ .drone-video-telemetry dd {font-size:16px;}
+}
+@media (max-width:700px) {
+ .drone-video-overlay {padding:10px;align-items:center;}
+ .drone-video {max-height:100%;border-radius:7px;}
+ .drone-video-header {padding:13px 15px;}
+ .drone-video-title h2 {font-size:18px;}
+ .drone-video-body {display:flex;flex-direction:column;}
+ .drone-video-stage {width:100%;min-height:255px;aspect-ratio:16/10;flex-shrink:0;}
+ .drone-video-source-hud {top:12px;left:13px;right:13px;}
+ .drone-video-unavailable {padding:52px 26px 24px;gap:10px;}
+ .drone-video-unavailable>span {width:48px;height:48px;}
+ .drone-video-unavailable>span>svg {width:24px;}
+ .drone-video-unavailable h3 {font-size:19px;}
+ .drone-video-unavailable p {font-size:11px;max-width:300px;}
+ .drone-video-sidebar {border-left:0;border-top:1px solid var(--op-line,#d8dfcf);padding:17px 15px;}
+ .drone-video-choices {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;}
+ .drone-video-connect {margin-top:13px;}
+ .drone-video-status {margin-top:13px;padding-top:13px;}
+ .drone-video-position {padding-top:17px;gap:7px;}
+ .drone-video-footer {flex-direction:column;align-items:flex-start;gap:3px;padding:10px 15px;font-size:8px;}
+ .drone-video-telemetry {gap:14px;bottom:60px;padding:9px 11px;}
+ .drone-video-telemetry dt {font-size:7px;}
+ .drone-video-telemetry dd {font-size:14px;}
+}
+@media (prefers-reduced-motion:reduce) {.camera-is-connecting {animation:none;}}
