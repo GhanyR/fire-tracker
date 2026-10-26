@@ -1,0 +1,26 @@
+import {SOURCE_FEEDS,parseFirmsCSV,pointInGeometry,normalizeCitizen,normalizeKobar,normalizeSuppression,extractAssignedJSON,validCoordinates,numeric,localDate,dedupeRecords,parseBMKG} from './fire-data.mjs';
+const cache=new Map();
+export async function cached(key,fn,ttl=900000){const hit=cache.get(key);if(hit&&Date.now()-hit.at<ttl)return hit.promise;const promise=Promise.resolve().then(fn);if(cache.size>=24)cache.delete(cache.keys().next().value);cache.set(key,{at:Date.now(),promise});try{return await promise;}catch(e){cache.delete(key);throw e;}}
+export async function fetchPublic(url,type='json'){const response=await fetch(url,{signal:AbortSignal.timeout(22000),headers:{'User-Agent':'SiagaApiIndonesia/1.0 (public fire monitoring; cached 15 minutes)','Accept':type==='json'?'application/json':'text/plain,text/html'}});if(!response.ok)throw new Error(`HTTP ${response.status}`);const data=type==='json'?await response.json():await response.text();if(data?.error)throw new Error('Sumber mengembalikan kesalahan');return data;}
+export async function refreshObservations(boundaries,provinces,onlySensor=0){return cached('observations-7d-'+onlySensor,async()=>{
+ const rows=[],statuses=[];const start=Date.now()-168*3600000;
+ // Sequential feeds keep peak memory bounded on Cloudflare Workers.
+ for(const sensor of [onlySensor]){const src=SOURCE_FEEDS[sensor],url=src.url.replace('_24h.csv','_7d.csv');try{const text=await fetchPublic(url,'text');const parsed=parseFirmsCSV(text,sensor);let count=0,latest=null;
+ for(const r of parsed){if(r[3]<start||r[3]>Date.now())continue;const feature=boundaries.features.find(f=>{const b=f.bbox;return (!b||(r[1]>=b[0]&&r[1]<=b[2]&&r[2]>=b[1]&&r[2]<=b[3]))&&pointInGeometry([r[1],r[2]],f.geometry);});if(!feature)continue;r[7]=provinces.indexOf(feature.properties.provinsi);rows.push(r);count++;latest=Math.max(latest||0,r[3]);}statuses.push({id:src.id,name:src.name,url,ok:true,count,latestObservedAt:latest?new Date(latest).toISOString():null,fetchedAt:new Date().toISOString()});
+ }catch(e){statuses.push({id:src.id,name:src.name,url,ok:false,error:e.message,fetchedAt:new Date().toISOString()});}}
+ return {rows,statuses,fetchedAt:new Date().toISOString(),windowHours:168};
+ });}
+export async function refreshContext(){return cached('context',async()=>{
+ const to=localDate(),from=localDate(Date.now()-7*86400000),base='https://opsroom.sipongidata.my.id';
+ const tasks=[
+ ['bmkg-geohotspot','https://inderaja.bmkg.go.id/IMAGE/GEOHOTSPOT/H08_GH_Indonesia.txt','text',d=>({bmkgRows:parseBMKG(d)})],
+ ['sipongi-operations',`${base}/api/daops/pemadaman?from=${from}&to=${to}`,'json',d=>{const fs=d.data?.features||d.features;if(!Array.isArray(fs))throw new Error('Format operasi tidak dikenali');return {operations:dedupeRecords(fs.map(f=>normalizeSuppression(f,from,to)).filter(Boolean))};}],
+ ['kobar-operations',`https://bpbd.kotawaringinbaratkab.go.id/website/infografis_karhutla.php?start_date=${from}&end_date=${to}`,'text',d=>({operations:extractAssignedJSON(d,'penangananData').map(p=>normalizeKobar(p,from,to)).filter(Boolean)})],
+ ['community-fire','https://api.petabencana.id/reports?disaster=fire&geoformat=geojson&timeperiod=604799','json',d=>{if(d.statusCode!==200||!Array.isArray(d.result?.features))throw new Error('Format laporan tidak dikenali');return {communityReports:d.result.features.map(normalizeCitizen).filter(Boolean)};}],
+ ['community-haze','https://api.petabencana.id/reports?disaster=haze&geoformat=geojson&timeperiod=604799','json',d=>{if(d.statusCode!==200||!Array.isArray(d.result?.features))throw new Error('Format laporan tidak dikenali');return {communityReports:d.result.features.map(normalizeCitizen).filter(Boolean)};}],
+ ['aqms',`${base}/api/aqms`,'json',d=>{if(!Array.isArray(d.features))throw new Error('Format AQMS tidak dikenali');return {airQuality:d.features.filter(f=>validCoordinates(f.geometry?.coordinates)).map((f,i)=>({id:`sipongi-aqms-${i}`,kind:'air-quality-station',coordinates:f.geometry.coordinates.map(Number),city:f.properties.kota,province:f.properties.provinsi,address:f.properties.alamat,sourceValue:numeric(f.properties.nilai),sourceCategory:f.properties.cat,sourceTime:f.properties.waktu,timezone:'unspecified-by-api',sourceName:'SiPongi AQMS',sourceUrl:'https://sipongi.gakkum.kehutanan.go.id/peta'}))};}],
+ ['facilities',`${base}/api/daops/pondok-kerja`,'json',d=>{const fs=d.data?.features||d.features;if(!Array.isArray(fs))throw new Error('Format fasilitas tidak dikenali');return {facilities:fs.filter(f=>validCoordinates(f.geometry?.coordinates)).map(f=>({id:`sipongi-pondok-${f.properties.id}`,kind:'official-forestry-work-post',coordinates:f.geometry.coordinates.map(Number),name:f.properties.nama_daops,agency:f.properties.kode_daops,address:f.properties.alamat||null,phone:f.properties.telepon||null,liveAvailabilityKnown:false,sourceName:'SiPongi / Kementerian Kehutanan',sourceUrl:'https://sipongi.gakkum.kehutanan.go.id/peta'}))};}]
+ ];
+ const outcomes=await Promise.all(tasks.map(async([id,url,type,normalize])=>{try{const data=normalize(await fetchPublic(url,type));return {id,url,ok:true,fetchedAt:new Date().toISOString(),data};}catch(e){return {id,url,ok:false,fetchedAt:new Date().toISOString(),error:e.message};}}));
+ return {outcomes,fetchedAt:new Date().toISOString(),window:{from,to}};
+ });}

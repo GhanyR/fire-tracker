@@ -1,0 +1,53 @@
+.fire-logo{width:31px;height:34px;color:#d15f32;flex-shrink:0;transition:transform .25s ease}
+.brand:hover .fire-logo{transform:translateY(-1px) rotate(-3deg)}
+.header-drone{position:relative}.header-drone.active{background:#e5ebdc;color:#4c6945;border-color:#c8d4bd}
+.drone-connected-dot{width:5px;height:5px;background:#b58c49;border-radius:50%}.drone-connected-dot.connected{background:#3a9294}
+.panel-tabs{gap:0;justify-content:space-between;padding:0 17px}.panel-tabs>button{padding-left:5px;padding-right:5px}
+.uav-panel{animation:uav-enter .28s ease-out;color:#46563d}
+.uav-panel>.section-eyebrow{font-size:9px;letter-spacing:1.3px;color:#8d957f}
+.uav-panel>h2{font-size:27px;letter-spacing:-.9px;font-weight:550;margin-top:11px;color:#3b4b33}
+.uav-intro{font-size:11px;color:#828e72;margin:7px 0 19px;line-height:1.7}
+.uav-welcome{text-align:center;padding:10px 5px 20px}.uav-welcome h3{font-size:16px;font-weight:550;color:#506743;margin:12px 0 7px}
+.uav-welcome>p{font-size:11px;line-height:1.8;color:#849277;max-width:250px;margin:0 auto 19px}
+.uav-welcome>.button{font-size:12px;padding:9px 13px;min-height:38px}
+.uav-illustration{position:relative;width:160px;height:132px;margin:2px auto;color:#467b6b;display:grid;place-items:center;background:radial-gradient(ellipse,#d9e3cd77,transparent 65%)}
+.uav-illustration>span{height:66px;width:66px;background:#e3e8d8;border:1px solid #bfcdb1;border-radius:50%;display:grid;place-items:center;box-shadow:0 5px 18px #4d6e3f0e;z-index:1}
+.uav-illustration>i{position:absolute;width:122px;height:122px;border:1px dashed #bdc9aa;border-radius:50%;animation:uav-orbit 26s linear infinite}
+.uav-illustration>i:before{content:'';position:absolute;top:17px;left:8px;width:6px;height:6px;border-radius:50%;background:#bf834b;box-shadow:0 0 0 4px #bf834b17}
+.uav-illustration>b{position:absolute;width:154px;height:91px;border:1px solid #cdd6bf77;border-radius:50%;transform:rotate(-24deg)}
+.uav-connect-link{font-size:11px;margin:14px auto 0;color:#778d61;padding:7px 0}
+.uav-session-card{display:flex;align-items:flex-start;gap:8px;padding:12px 10px;background:#e3ebe0;border:1px solid #cedcc7;border-radius:6px;margin-bottom:12px}
+.uav-session-card.demo{background:#eee7d5;border-color:#ded0b2}
+.uav-status-dot{width:5px;height:5px;margin-top:5px;background:#4b9d9b;border-radius:50%;flex-shrink:0}.demo>.uav-status-dot{background:#bc9051}
+.uav-session-card>div{flex:1;min-width:0}.uav-session-card strong{font-size:10px;font-weight:600;color:#617c50}.uav-session-card.demo strong{color:#99703c}.uav-session-card small{display:block;font-size:9px;line-height:1.6;color:#8b957e;margin-top:3px}.uav-session-card>button{color:#8e9a7b;padding:0}
+.uav-demo-controls{display:flex;gap:8px;margin:0 0 16px}.uav-demo-controls>button{font-size:10px;border:1px solid #d6dcc8;border-radius:4px;padding:7px 9px;background:#f6f3e9;flex:1;color:#718461}
+.uav-list-head{display:flex;justify-content:space-between;align-items:center;font-size:11px;border-bottom:1px solid #d7ddcb;padding:9px 0}.uav-list-head>span{font-size:7px;letter-spacing:.8px;color:#98a28b}
+.uav-vehicle{display:flex;align-items:center;text-align:left;gap:9px;width:100%;padding:13px 5px;border-bottom:1px solid #dce0cf;transition:background .2s}
+.uav-vehicle.selected{background:#e7ebdf}.uav-vehicle-icon{height:32px;width:32px;border-radius:7px;background:#dce8df;color:#39878b;display:grid;place-items:center;flex-shrink:0}.uav-vehicle-icon.demo{background:#eee3ce;color:#b58a48}.uav-vehicle-icon.stale,.uav-vehicle-icon.delayed{background:#e4e6dc;color:#979e8a}
+.uav-vehicle>div{flex:1;min-width:0}.uav-vehicle strong{display:block;font-size:12px;font-weight:600;color:#536d45}.uav-vehicle>div>span{display:block;font-size:9px;color:#8e9c7d;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.uav-vehicle>small{font-size:8px;padding:3px 5px;border-radius:3px;background:#e0e7da;color:#648e5d}.uav-vehicle>.signal-demo{color:#a07c41;background:#eee4ce}.uav-vehicle>.signal-delayed,.uav-vehicle>.signal-stale{color:#998066;background:#e8e1d3}
+.uav-selected{padding:18px 0 14px}.uav-selected-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.uav-selected-heading h3{font-size:15px;color:#4b683e;font-weight:550}.uav-selected-heading>button{padding:5px;color:#728d60}
+.uav-metrics{display:grid;grid-template-columns:1fr 1fr;gap:17px 10px}.uav-metrics strong{font-size:20px;line-height:1.2;font-weight:400;letter-spacing:-.6px;color:#527242}.uav-metrics span{display:block;font-size:8px;line-height:1.7;color:#91a07f;margin-top:5px}
+.uav-gps-time{font-size:10px;color:#7a9067;line-height:1.8;margin-top:18px;padding-top:13px;border-top:1px solid #d9dfcc}.uav-gps-time>svg{vertical-align:middle;margin-right:5px}.uav-gps-time>span{font-size:9px;color:#98a48a;margin-left:18px}
+.uav-coordinate{display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#839775;padding:11px 0}.uav-coordinate>button{padding:4px}
+.uav-follow{display:flex;justify-content:center;width:100%;padding:9px 7px;background:#e2e9d8;border:1px solid #c9d7ba;color:#64834e;border-radius:4px;font-size:10px}.uav-follow.active{background:#5e7d4e;color:#fff7e7;border-color:#587545}
+.uav-field-note{font-size:9px;color:#99a78a;line-height:1.8;margin-top:8px}
+.uav-howto{border-top:1px solid #d7ddc9;padding-top:16px;margin-top:8px}.uav-howto summary{display:flex;align-items:center;justify-content:space-between;font-size:11px;cursor:pointer;list-style:none;color:#6d8558}.uav-howto summary::-webkit-details-marker{display:none}.uav-howto p{font-size:10px;line-height:1.8;color:#8b9a7a;margin-top:10px}.uav-howto a{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#6c8d51;margin-top:12px}
+.uav-sdk-link{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#7e946b;padding:17px 0 22px}
+.uav-error{font-size:11px;color:#986b42;line-height:1.8;background:#ede3d1;border:1px solid #dfcfaf;border-radius:5px;padding:12px;margin-bottom:14px}
+.uav-connection-form{border:1px solid #d3dcc6;background:#e8eddf99;border-radius:6px;padding:15px 12px;margin:12px 0 20px}.uav-connection-form h3{font-size:13px;color:#587344;margin-bottom:15px}.uav-connection-form label{display:block;font-size:10px;color:#778c63;margin-bottom:14px}.uav-connection-form label>small{display:block;font-size:8px;color:#9aa88b;margin:3px 0}.uav-connection-form input{width:100%;border:1px solid #ccd6bd;background:#f8f5eb;border-radius:4px;padding:9px 8px;margin-top:6px;font-size:11px;color:#567045}.uav-connection-form>.button{width:100%;font-size:11px}.uav-connection-form>p{font-size:9px;line-height:1.7;color:#94a483;margin-top:11px}
+.uav-waiting{display:flex;align-items:center;flex-direction:column;gap:10px;padding:31px 10px;color:#8f9f7c}.uav-waiting strong{font-size:12px;font-weight:500}.uav-waiting span{font-size:10px;text-align:center}.uav-change{font-size:11px;color:#779261;padding:8px 0 17px}
+.uav-map-marker{width:42px;height:42px;border:0;border-radius:50%;padding:0;background:#173b3ce8;color:#8ce2df;box-shadow:0 3px 16px #102b2c44;cursor:pointer;z-index:2;outline-offset:4px}
+.uav-bearing{position:absolute;inset:3px;display:block;transition:transform .35s linear;pointer-events:none}.uav-bearing svg{width:100%;height:100%;filter:drop-shadow(0 1px 1px #0005)}
+.uav-map-marker.is-demo{background:#49371fe8;color:#f2cc88}.uav-map-marker.is-stale{background:#41463be8;color:#b7bcae;box-shadow:none}
+.uav-map-marker.is-selected{outline:1px solid #a7dfcb}.uav-map-marker.is-demo.is-selected{outline-color:#e8be7a}
+.uav-halo{position:absolute;inset:-4px;border:1px solid #9ed3c34d;border-radius:50%;pointer-events:none}.is-selected:not(.is-stale) .uav-halo{animation:uav-pulse 2.7s ease-out infinite}.is-demo .uav-halo{border-color:#ebc17866}
+.uav-map-label{position:absolute;top:49px;left:50%;transform:translateX(-50%);font-size:10px;line-height:1;color:#f4f4df;background:#244137ed;border:1px solid #94bca65c;padding:5px 7px;border-radius:4px;white-space:nowrap;pointer-events:none;box-shadow:0 2px 8px #16311b22}.uav-map-label:empty{display:none}.is-demo .uav-map-label{background:#4e3e25ed;border-color:#d6b27e70}
+.uav-map-session{position:absolute;top:77px;left:20px;z-index:6;display:flex;align-items:center;gap:0;border-radius:5px;background:#f4f1e5ee;border:1px solid #e3ddc881;box-shadow:0 3px 14px #293b2522;backdrop-filter:blur(10px);color:#6d8a57;font-size:10px;animation:uav-enter .2s ease-out}
+.uav-map-session.demo{color:#9c7641}.uav-map-session>button{padding:7px 8px;font-size:10px}.uav-map-session>button+button{border-left:1px solid #d3d8c4}.uav-map-session strong{font-weight:550}.uav-map-session span{font-size:9px;opacity:.7}
+@keyframes uav-pulse{0%{transform:scale(.93);opacity:.7}85%,100%{transform:scale(1.42);opacity:0}}
+@keyframes uav-orbit{to{transform:rotate(360deg)}}
+@keyframes uav-enter{from{opacity:.2;translate:0 6px}to{opacity:1;translate:0 0}}
+@media(max-width:1050px){.header-date{display:none}}
+@media(max-width:760px){.fire-logo{width:26px;height:31px}.app-header{gap:7px;padding:0 12px}.fire-tracker-brand{gap:6px}.fire-tracker-brand h1{font-size:17px}.app-header .header-share,.app-header .header-drone{display:inline-flex;padding:6px;min-width:30px;min-height:32px;flex-shrink:0}.app-header .button>span{display:none}.app-header .button>svg{width:15px;height:15px}.app-header>.primary{padding:6px;min-width:30px;min-height:32px;flex-shrink:0}.app-header .emergency-button{padding-left:5px;margin-left:0;width:23px;min-height:32px}.drone-connected-dot{position:absolute;top:3px;right:3px;width:4px;height:4px}.panel-tabs{padding:0 12px;gap:0}.panel-tabs>button{font-size:11px;padding:0 4px}.panel-tabs>.mobile-close{padding:0;margin-left:6px!important;min-width:22px}.uav-map-session{left:12px;top:68px;max-width:173px}.uav-map-session>button{font-size:9px;padding:7px 6px}.uav-map-session>button svg{width:12px;height:12px}.uav-map-session strong{font-size:9px}.uav-panel>h2{font-size:25px}.uav-connection-form input{font-size:14px}.uav-map-marker{width:38px;height:38px}.uav-map-label{font-size:9px;top:45px}.uav-metrics span{font-size:9px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important}.uav-panel,.uav-map-session,.uav-illustration>i,.uav-halo{animation:none!important}.uav-bearing,.fire-logo,.uav-vehicle{transition:none!important}}

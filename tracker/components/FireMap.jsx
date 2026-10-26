@@ -1,12 +1,13 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import DroneLayer from './DroneLayer';
 import {assetUrl} from '../lib/data-client.mjs';
 import {validCoordinates} from '../lib/fire-data.mjs';
 const empty={type:'FeatureCollection',features:[]};
 const fc=features=>({type:'FeatureCollection',features});
 const point=(coordinates,properties)=>({type:'Feature',geometry:{type:'Point',coordinates},properties});
-export default function FireMap({rows,context,bmkg,layers,terrain,basemap,camera,selected,onSelect,onReady,onMove,exaggeration=1.5,orbit=false,onOrbitStop}){
+export default function FireMap({rows,context,bmkg,layers,terrain,basemap,camera,selected,onSelect,onReady,onMove,exaggeration=1.5,orbit=false,onOrbitStop,vehicles=[],selectedDroneId=null,droneNow=Date.now(),onSelectDrone}){
  const el=useRef(null),mapRef=useRef(null),dataRef=useRef({}),callbacks=useRef({}),selectionMarker=useRef(null);const [ready,setReady]=useState(false),[error,setError]=useState('');
  dataRef.current={rows,context,bmkg};callbacks.current={onSelect,onMove,onOrbitStop};
  useEffect(()=>{let disposed=false;let map;import('maplibre-gl').then(({default:ml})=>{
@@ -46,7 +47,7 @@ export default function FireMap({rows,context,bmkg,layers,terrain,basemap,camera
  useEffect(()=>{const m=mapRef.current;if(ready&&m&&terrain)m.setTerrain({source:'dem',exaggeration});},[exaggeration,ready,terrain]);
  useEffect(()=>{const m=mapRef.current;if(!ready||!m||!orbit)return;let timeout;const rotate=()=>{m.rotateTo(m.getBearing()+120,{duration:30000,easing:t=>t});timeout=setTimeout(rotate,30010);};rotate();return()=>{clearTimeout(timeout);m.stop();};},[orbit,ready]);
  useEffect(()=>{const m=mapRef.current;if(!ready||!m)return;m.setLayoutProperty('satellite','visibility',basemap==='satellite'?'visible':'none');m.setLayoutProperty('topo','visibility',basemap==='topo'?'visible':'none');m.setLayoutProperty('labels','visibility',basemap==='satellite'?'visible':'none');m.setPaintProperty('terrain-shade','hillshade-exaggeration',basemap==='relief'?0.7:0.26);},[basemap,ready]);
- useEffect(()=>{const m=mapRef.current;if(!ready||!camera||!m)return;if(camera.bounds)m.fitBounds(camera.bounds,{padding:35,duration:1200,pitch:terrain?52:0});else m.flyTo({center:camera.center,zoom:camera.zoom||11,pitch:terrain?(camera.pitch||66):0,bearing:camera.bearing??m.getBearing(),duration:1800,essential:true});},[camera,ready]);
+ useEffect(()=>{const m=mapRef.current;if(!ready||!camera||!m)return;if(camera.follow){m.easeTo({center:camera.center,duration:window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:450});return;}if(camera.bounds)m.fitBounds(camera.bounds,{padding:35,duration:1200,pitch:terrain?52:0});else m.flyTo({center:camera.center,zoom:camera.zoom||11,pitch:terrain?(camera.pitch||66):0,bearing:camera.bearing??m.getBearing(),duration:window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:1400,essential:false});},[camera,ready]);
  useEffect(()=>{const m=mapRef.current;if(!ready||!m)return;selectionMarker.current?.remove();if(!selected?.coordinates)return;import('maplibre-gl').then(({default:ml})=>{const e=document.createElement('div');e.className='selected-map-marker';selectionMarker.current=new ml.Marker({element:e}).setLngLat(selected.coordinates).addTo(m);});},[selected,ready]);
- return <div className="map-wrap"><div ref={el} className="map-canvas" aria-label="Peta interaktif titik panas dan laporan kebakaran Indonesia"/>{!ready&&!error&&<div className="map-loading"><span className="loader"/>Menyiapkan peta Indonesia…</div>}{error&&<div className="map-error">{error}</div>}</div>;
+ return <div className="map-wrap"><DroneLayer map={ready?mapRef.current:null} vehicles={vehicles} selectedId={selectedDroneId} now={droneNow} onSelect={onSelectDrone}/><div ref={el} className="map-canvas" aria-label="Peta interaktif titik panas dan laporan kebakaran Indonesia"/>{!ready&&!error&&<div className="map-loading"><span className="loader"/>Menyiapkan peta Indonesia…</div>}{error&&<div className="map-error">{error}</div>}</div>;
 }

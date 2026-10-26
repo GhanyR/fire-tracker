@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["tracker/**", "web/**", "pipeline/**", "inputs/**", ".github/workflows/update.yml"]
+    paths: ["bridge/**", "sdk/**", "schemas/**", "tracker/**", "web/**", "pipeline/**", "inputs/**", ".github/workflows/update.yml"]
 
 permissions:
   contents: write
@@ -56,7 +56,9 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: pipeline/requirements.txt
+          cache-dependency-path: |
+            pipeline/requirements.txt
+            bridge/requirements.txt
       - name: Pastikan label laporan lapangan ada
         continue-on-error: true
         run: |
@@ -64,7 +66,11 @@ jobs:
             https://api.github.com/repos/${{ github.repository }}/labels \
             -d '{"name":"laporan-lapangan","color":"d9501c","description":"Laporan dari tim lapangan (tampil di peta)"}'
       - name: Pasang dependensi
-        run: pip install -r pipeline/requirements.txt
+        run: pip install -r pipeline/requirements.txt -r bridge/requirements.txt
+      - name: Uji bridge dan SDK UAV
+        run: |
+          python -m unittest discover -s bridge/tests -v
+          npm test --prefix sdk
       - name: Uji penyimpanan offline
         run: node --test web/tests/*.test.mjs
       - name: Uji kontrak feed satelit

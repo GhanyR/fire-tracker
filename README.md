@@ -2,7 +2,7 @@
 
 Peta titik api (hotspot) dan dasbor terbuka kebakaran hutan dan lahan (karhutla) Indonesia untuk regu pemadam, BPBD, Manggala Agni, relawan, jurnalis, dan siapa pun yang terlibat.
 
-**Buka situsnya: https://ghanyr.github.io/pantau-api-nusantara/** (gratis, tanpa login, bisa dipasang di layar utama ponsel)
+**Buka situsnya: https://fire-tracker.fiveprayerapp.chatgpt.site/** · [Mirror GitHub Pages](https://ghanyr.github.io/pantau-api-nusantara/) (gratis, tanpa login, bisa dipasang di layar utama ponsel)
 
 **Fire Tracker** memakai peta medan 3D MapLibre, citra Esri dan elevasi AWS/Mapzen. Titik dan animasi kamera tetap terlihat, sedangkan keterangan dan daftar dipindahkan ke panel.
 
@@ -18,6 +18,18 @@ Peta titik api (hotspot) dan dasbor terbuka kebakaran hutan dan lahan (karhutla)
 Alat lapangan versi sebelumnya tetap dapat dibuka di [**/legacy/**](https://ghanyr.github.io/pantau-api-nusantara/legacy/): paket offline per area, integrasi GIS/TAK, laporan dan alat drone. Pengelompokan, skor, ilustrasi asap dan perkiraan rambatan versi tersebut adalah hasil pengolahan dan perkiraan aplikasi, bukan bukti lapangan. Panduan di bawah bagian ini merujuk ke alat lanjutan tersebut.
 
 Penyimpanan offline di GitHub Pages mencakup aplikasi, data terakhir dan ubin peta yang telah dilihat; area yang belum diunduh tetap memerlukan koneksi. Tautan repositori dan umpan lama dipertahankan agar integrasi tetap berfungsi.
+
+## Drone & UAV
+
+Buka panel **Drone** untuk [contoh dua UAV bergerak di peta 3D](https://fire-tracker.fiveprayerapp.chatgpt.site/#demo=1). Contoh selalu berlabel DEMO dan tidak menambah jumlah hotspot satelit. Pilih UAV untuk melihat arah hadap, baterai, ketinggian relatif titik lepas landas, jejak dan waktu posisi; tombol **Ikuti** mengaktifkan kamera, geser peta untuk melepasnya.
+
+Hubungkan PX4/ArduPilot dengan bridge MAVLink, atau kirim telemetri dari gateway lain lewat SDK JSON. DJI yang kompatibel membutuhkan aplikasi/gateway SDK vendor; ini bukan koneksi otomatis ke semua model DJI. Situs publik menerima WSS; bridge lokal dapat menyajikan dashboard dan WS pada alamat yang sama. Token dan koneksi drone tidak disimpan atau disertakan dalam tautan berbagi.
+
+- [Panduan koneksi dari clone baru](docs/UAV.md)
+- [SDK JavaScript tanpa dependensi](sdk/README.md) · [contoh pengiriman](sdk/examples/publish-json.mjs) · [adapter DJI OSD](sdk/examples/dji-osd.mjs)
+- [Kontrak telemetri terbuka](schemas/telemetry.schema.json)
+
+Penghubung ini membaca telemetri; pengendalian tetap melalui aplikasi pilot. Integrasi telah diuji dengan simulator dan server lokal; setiap perangkat nyata tetap memerlukan uji sambung di lapangan.
 
 ## Menjalankan antarmuka Fire Tracker
 

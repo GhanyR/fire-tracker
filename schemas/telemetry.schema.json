@@ -1,68 +1,26 @@
 {
- "$schema": "https://json-schema.org/draft/2020-12/schema",
- "$id": "telemetry.schema.json",
- "title": "Telemetri drone (bridge: POST /telemetry atau pesan WebSocket)",
- "type": "object",
- "required": [
-  "lat",
-  "lon"
- ],
- "properties": {
-  "type": {
-   "const": "telemetry"
-  },
-  "id": {
-   "type": "string",
-   "description": "Nama/callsign unik drone"
-  },
-  "lat": {
-   "type": "number",
-   "minimum": -90,
-   "maximum": 90
-  },
-  "lon": {
-   "type": "number",
-   "minimum": -180,
-   "maximum": 180
-  },
-  "alt": {
-   "type": "number",
-   "description": "Ketinggian relatif titik lepas landas (m)"
-  },
-  "alt_msl": {
-   "type": "number",
-   "description": "Ketinggian di atas permukaan laut (m)"
-  },
-  "hdg": {
-   "type": "number",
-   "description": "Arah hadap (derajat)"
-  },
-  "spd": {
-   "type": "number",
-   "description": "Kecepatan darat (m/s)"
-  },
-  "bat": {
-   "type": "number",
-   "minimum": 0,
-   "maximum": 100,
-   "description": "Baterai (%)"
-  },
-  "mode": {
-   "type": "string"
-  },
-  "armed": {
-   "type": "boolean"
-  },
-  "model": {
-   "type": "string"
-  },
-  "link": {
-   "type": "string",
-   "description": "mavlink | http | ws | sim"
-  },
-  "t": {
-   "type": "string",
-   "format": "date-time"
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "telemetry.schema.json",
+  "title": "Fire Tracker normalized telemetry envelope",
+  "description": "Canonical output from the bridge/SDK. HTTP input may omit optional measurements; normalization fills them with null. t is the GPS observation time, not a heartbeat time.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "id", "lat", "lon", "alt", "alt_msl", "hdg", "spd", "bat", "mode", "armed", "model", "link", "t", "simulated"],
+  "properties": {
+    "type": {"const": "telemetry"},
+    "id": {"type": "string", "minLength": 1, "maxLength": 40, "description": "Unique aircraft ID/callsign"},
+    "lat": {"type": "number", "minimum": -90, "maximum": 90, "description": "WGS84 latitude in degrees"},
+    "lon": {"type": "number", "minimum": -180, "maximum": 180, "description": "WGS84 longitude in degrees"},
+    "alt": {"type": ["number", "null"], "description": "Metres above home/takeoff reference; not terrain AGL"},
+    "alt_msl": {"type": ["number", "null"], "description": "Metres above mean sea level, only when known"},
+    "hdg": {"type": ["number", "null"], "minimum": 0, "maximum": 360, "description": "Heading in degrees clockwise from north"},
+    "spd": {"type": ["number", "null"], "minimum": 0, "description": "Horizontal ground speed, metres per second"},
+    "bat": {"type": ["number", "null"], "minimum": 0, "maximum": 100, "description": "Remaining battery percent"},
+    "mode": {"type": "string", "maxLength": 24},
+    "armed": {"type": ["boolean", "null"], "description": "Unknown is null"},
+    "model": {"type": "string", "maxLength": 40},
+    "link": {"type": "string", "maxLength": 24, "description": "e.g. mavlink, dji, http, ws, sim"},
+    "t": {"type": "string", "format": "date-time", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$", "description": "UTC GPS observation/reception time, normalized to milliseconds"},
+    "simulated": {"type": "boolean", "description": "True for training data; link=sim forces true"}
   }
- }
 }
