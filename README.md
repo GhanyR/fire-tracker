@@ -19,6 +19,12 @@ Alat lapangan versi sebelumnya tetap dapat dibuka di [**/legacy/**](https://ghan
 
 Penyimpanan offline di GitHub Pages mencakup aplikasi, data terakhir dan ubin peta yang telah dilihat; area yang belum diunduh tetap memerlukan koneksi. Tautan repositori dan umpan lama dipertahankan agar integrasi tetap berfungsi.
 
+## Bandingkan desain
+
+[**Buka empat desain berdampingan**](https://fire-tracker.fiveprayerapp.chatgpt.site/#designs=1): **Atlas**, **Vector**, **Ember** dan **Field**. Pilih **Fokus 2** untuk membesarkan dua kandidat, atau buka setiap konsep untuk mencoba peta, wilayah, usia observasi, pemutaran, UAV contoh dan laporan TXT/CSV. Semua memakai scope, jendela waktu dan sumber NASA yang sama; UAV selalu simulasi. Favorit tersimpan hanya di browser dan tidak mengubah dashboard utama.
+
+Branch eksplorasi: [`codex/design-atlas`](https://github.com/GhanyR/pantau-api-nusantara/tree/codex/design-atlas), [`codex/design-vector`](https://github.com/GhanyR/pantau-api-nusantara/tree/codex/design-vector), [`codex/design-ember`](https://github.com/GhanyR/pantau-api-nusantara/tree/codex/design-ember), [`codex/design-field`](https://github.com/GhanyR/pantau-api-nusantara/tree/codex/design-field). Masing-masing memakai mesin yang sama dan membuka konsep pilihannya saat dijalankan; default branch ditentukan oleh `tracker/lib/design-branch.mjs`. Dashboard utama tetap tersedia lewat tombol kembali.
+
 ## Drone & UAV
 
 [**Buka demo sinematik 9:16**](https://fire-tracker.fiveprayerapp.chatgpt.site/#showcase=1): dua UAV simulasi bergerak, jalur dan kerucut arah pandang di medan Bromo. Tekan **Rekam video 20 detik** untuk mengunduh video 1080 × 1920 (MP4 jika didukung browser; WebM sebagai cadangan), tanpa audio. Rekaman hanya menangkap kanvas aplikasi; posisi UAV asli dan kredensial tidak masuk ke mode ini. Inset adalah ilustrasi citra peta, bukan kamera langsung. Tetap buka tab selama merekam; pindah tab membatalkan rekaman.

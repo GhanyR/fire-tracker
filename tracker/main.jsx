@@ -8,6 +8,7 @@ import './styles/fire-tracker.css';
 import './styles/uav-workspace.css';
 import './styles/observation-story.css';
 import './styles/drone-cinema.css';
+import './styles/design-lab.css';
 window.__FIRE_TRACKER_STATIC__=true;
 const legacy=legacyDestination(location.hash,document.baseURI);
 if(legacy)location.replace(legacy);
