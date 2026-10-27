@@ -1,6 +1,6 @@
 {
-  "name": "Siaga Api",
-  "short_name": "Siaga Api",
+  "name": "Fire Tracker",
+  "short_name": "Fire Tracker",
   "description": "Peta kebakaran hutan dan lahan Indonesia dari satelit, untuk regu pemadam, penyelamat, dan warga.",
   "lang": "id",
   "start_url": "./",

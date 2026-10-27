@@ -5,8 +5,8 @@ Waktu dalam data mentah memakai **jam sejak `meta.t0`** (tengah malam UTC hari p
 
 URL tetap (ganti `<pemilik>`):
 
-- Situs: `https://<pemilik>.github.io/pantau-api-nusantara/data/...`
-- Mentah: `https://raw.githubusercontent.com/<pemilik>/pantau-api-nusantara/data/data/...`
+- Situs: `https://<pemilik>.github.io/fire-tracker/data/...`
+- Mentah: `https://raw.githubusercontent.com/<pemilik>/fire-tracker/data/data/...`
 
 ## File
 
