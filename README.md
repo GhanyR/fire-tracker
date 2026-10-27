@@ -11,8 +11,7 @@
 <p align="center">
   <a href="https://ghanyr.github.io/fire-tracker/">open the map</a> ·
   <a href="https://ghanyr.github.io/fire-tracker/#fleet=1&amp;demo=1">try the fleet demo</a> ·
-  <a href="#run-the-map-locally">run locally</a> ·
-  <a href="README.id.md">bahasa Indonesia</a>
+  <a href="#run-the-map-locally">run locally</a>
 </p>
 
 <a href="https://ghanyr.github.io/fire-tracker/#scene=bromo&amp;hours=168">
