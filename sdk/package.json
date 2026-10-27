@@ -4,8 +4,24 @@
   "description": "Open telemetry SDK for the Fire Tracker drone bridge",
   "type": "module",
   "exports": "./fire-tracker.mjs",
-  "files": ["fire-tracker.mjs", "README.md", "examples"],
+  "files": [
+    "fire-tracker.mjs",
+    "README.md",
+    "examples"
+  ],
   "license": "MIT",
-  "engines": {"node": ">=22"},
-  "scripts": {"test": "node --test tests/*.test.mjs"}
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "author": {
+    "name": "Ghany Rasyid",
+    "url": "https://github.com/GhanyR"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GhanyR/fire-tracker.git"
+  }
 }

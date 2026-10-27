@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "operations-unit.schema.json",
+  "title": "Private operations unit",
+  "description": "A unit returned by /api/operations/state. Pending or stale units may have null coordinates. POST unit requires finite coordinates and source UTC t newer than the prior observation and younger than fifteen minutes; never send bridge type/link fields. Server enforces authorization, time, bounds and stream safety.",
+  "type": "object", "additionalProperties": false,
+  "required": ["id", "kind", "name", "mission", "status", "lat", "lon", "t", "accuracy", "alt", "alt_msl", "hdg", "spd", "bat", "model", "mode", "armed", "simulated", "streams", "airframe", "flightStatus", "linkQuality"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,79}$"},
+    "kind": {"enum": ["drone", "team", "vehicle"]},
+    "name": {"$ref": "telemetry.schema.json#/properties/name"},
+    "mission": {"$ref": "telemetry.schema.json#/properties/mission"},
+    "status": {"type": "string", "maxLength": 40},
+    "lat": {"type": ["number", "null"], "minimum": -90, "maximum": 90},
+    "lon": {"type": ["number", "null"], "minimum": -180, "maximum": 180},
+    "t": {"type": ["string", "null"], "format": "date-time", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$", "description": "Exact source UTC string; null before the first position"},
+    "accuracy": {"type": ["number", "null"], "minimum": 0, "maximum": 100000},
+    "alt": {"type": ["number", "null"], "minimum": -1000, "maximum": 25000},
+    "alt_msl": {"type": ["number", "null"], "minimum": -1000, "maximum": 30000},
+    "hdg": {"$ref": "telemetry.schema.json#/properties/hdg"},
+    "spd": {"type": ["number", "null"], "minimum": 0, "maximum": 500},
+    "bat": {"$ref": "telemetry.schema.json#/properties/bat"},
+    "model": {"type": "string", "maxLength": 80},
+    "mode": {"type": "string", "maxLength": 40},
+    "armed": {"$ref": "telemetry.schema.json#/properties/armed"},
+    "simulated": {"type": "boolean"},
+    "streams": {"$ref": "telemetry.schema.json#/properties/streams"},
+    "airframe": {"$ref": "telemetry.schema.json#/properties/airframe"},
+    "flightStatus": {"$ref": "telemetry.schema.json#/properties/flightStatus"},
+    "linkQuality": {"$ref": "telemetry.schema.json#/properties/linkQuality"}
+  }
+}

@@ -15,6 +15,29 @@ function string(value, name, length) {
   if (typeof value !== 'string') throw new TypeError(`${name} must be a string`);
   return value.slice(0, length);
 }
+function choice(value, name, allowed, fallback = 'unknown') {
+  if (value == null) return fallback;
+  if (!allowed.includes(value)) throw new TypeError(`${name} is invalid`);
+  return value;
+}
+function streams(value) {
+  if (value == null) return [];
+  if (!Array.isArray(value) || value.length > 4) throw new TypeError('streams must be an array of at most four cameras');
+  const ids = new Set();
+  return value.map(item => {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) throw new TypeError('stream must be an object');
+    const id = string(item.id, 'stream id', 40);
+    if (!id || ids.has(id)) throw new TypeError('stream id must be nonempty and unique');
+    ids.add(id);
+    if (typeof item.url !== 'string' || item.url.length > 2048 || /[\u0000-\u0020]/.test(item.url)) throw new TypeError('stream URL is invalid');
+    const url = new URL(item.url);
+    const path = decodeURIComponent(url.pathname);
+    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.hash) throw new TypeError('stream URL must use HTTP(S) without embedded credentials or fragment');
+    if (/(?:^|\/)(?:commands?|arm|disarm|takeoff|land|reboot|control)(?:\/|$)/i.test(path) || [...url.searchParams.keys()].some(key => /token|secret|key|auth|password|^(?:cmd|command|action|control)$/i.test(key))) throw new TypeError('stream URL must not contain secrets or commands');
+    return { id, label: string(item.label, 'stream label', 80), kind: choice(item.kind, 'stream kind', ['eo', 'ir'], null),
+      protocol: choice(item.protocol, 'stream protocol', ['hls', 'mjpeg', 'whep', 'mp4'], null), url: item.url };
+  }).map(item => { if (!item.kind || !item.protocol) throw new TypeError('stream kind and protocol are required'); return item; });
+}
 function utcTime(value) {
   if (value == null) return new Date().toISOString();
   const match = typeof value === 'string' ? UTC.exec(value) : null;
@@ -23,8 +46,10 @@ function utcTime(value) {
   const parsed = new Date(canonical);
   if (!Number.isFinite(parsed.getTime()) || parsed.toISOString() !== canonical) throw new TypeError('t must be a valid UTC date and time');
   if (parsed.getTime() > Date.now() + 10000) throw new RangeError("t cannot be more than 10 seconds in the future");
-  return canonical;
+  return value;
 }
+
+const utcOrder=value=>{const m=UTC.exec(value);return Date.parse(m[1]+'Z')*1000+Number((m[2]||'').padEnd(6,'0'));};
 
 /** Validate normalized JSON; zero stays zero and absent measurements stay null. */
 export function normalizeTelemetry(data, { source = 'http' } = {}) {
@@ -41,6 +66,10 @@ export function normalizeTelemetry(data, { source = 'http' } = {}) {
     hdg: number(field(data, 'hdg', 'heading'), 'hdg', 0, 360), spd: number(field(data, 'spd', 'speed'), 'spd', 0),
     bat: number(field(data, 'bat', 'battery'), 'bat', 0, 100), mode: string(data.mode, 'mode', 24), armed,
     model: string(data.model, 'model', 40), link, t: utcTime(data.t), simulated: simulated || link.toLowerCase() === 'sim',
+    name: string(data.name, 'name', 80), mission: string(data.mission, 'mission', 160),
+    airframe: choice(data.airframe, 'airframe', ['multirotor', 'fixed-wing', 'unknown']),
+    flightStatus: choice(data.flightStatus, 'flightStatus', ['airborne', 'landed', 'unknown']),
+    linkQuality: number(data.linkQuality, 'linkQuality', 0, 100), streams: streams(data.streams),
   };
 }
 
@@ -68,6 +97,8 @@ export function fromDjiOsd(packet, options = {}) {
     spd: data.horizontal_speed, bat: data.battery?.capacity_percent,
     armed: data.armed ?? null, mode: options.mode ?? '', model: options.model ?? '', link: 'dji',
     t: sourceTime, simulated: options.simulated ?? false,
+    name: options.name, mission: options.mission, airframe: options.airframe,
+    flightStatus: options.flightStatus, linkQuality: options.linkQuality, streams: options.streams,
   });
 }
 
@@ -122,7 +153,7 @@ export class FireTrackerClient {
       if (item?.t == null) throw new TypeError('incoming telemetry requires t');
       const telemetry = normalizeTelemetry(item, { source: 'ws' });
       const previous = this._latest.get(telemetry.id);
-      if (previous && previous.t > telemetry.t) continue;
+      if (previous && utcOrder(previous.t) > utcOrder(telemetry.t)) continue;
       this._latest.delete(telemetry.id);
       this._latest.set(telemetry.id, telemetry);
       while (this._latest.size > this.maxVehicles) this._latest.delete(this._latest.keys().next().value);
@@ -198,4 +229,96 @@ export class FireTrackerClient {
     this._socket?.close();
     this._socket = null;
   }
+}
+
+/** Private, expiring operations sessions. Capabilities stay in caller memory.
+ * Create/join return secrets to the caller; they never silently select a role.
+ */
+export class OperationsClient {
+  constructor({ url, sessionId = '', token = '', requestTimeoutMs = 15000, fetch: fetchImpl = globalThis.fetch } = {}) {
+    const endpoint = new URL(url);
+    if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password || endpoint.search || endpoint.hash) {
+      throw new TypeError('operations url must use HTTP(S) without credentials, query or fragment');
+    }
+    if (typeof sessionId !== 'string' || /[\r\n]/.test(sessionId)) throw new TypeError('sessionId must be a string without line breaks');
+    if (typeof token !== 'string' || /[\r\n]/.test(token)) throw new TypeError('token must be a string without line breaks');
+    if (typeof fetchImpl !== 'function') throw new TypeError('fetch is unavailable in this runtime');
+    this.url = endpoint.href.replace(/\/$/, '');
+    if (!Number.isFinite(requestTimeoutMs) || requestTimeoutMs < 1 || requestTimeoutMs > 120000) throw new RangeError('requestTimeoutMs must be between 1 and 120000');
+    this.requestTimeoutMs = requestTimeoutMs;
+    this.sessionId = sessionId;
+    this.token = token;
+    this.fetch = fetchImpl;
+  }
+
+  async _request(path, method, body, privateRequest = true, { signal } = {}) {
+    const headers = {};
+    if (privateRequest) {
+      if (!this.sessionId) throw new TypeError('sessionId is required for private operations');
+      if (!this.token) throw new TypeError('token is required for private operations');
+      headers['X-Operation-Id'] = this.sessionId;
+      headers.Authorization = `Bearer ${this.token}`;
+    }
+    if (body !== undefined) headers['Content-Type'] = 'application/json';
+    const controller = new AbortController();
+    const abort = () => controller.abort(signal?.reason);
+    if (signal?.aborted) abort();
+    else signal?.addEventListener('abort', abort, { once: true });
+    const timer = setTimeout(() => controller.abort(new DOMException('Operations request timed out', 'TimeoutError')), this.requestTimeoutMs);
+    let rejectAbort;
+    const aborted = new Promise((_resolve, reject) => { rejectAbort = () => reject(controller.signal.reason); });
+    controller.signal.addEventListener('abort', rejectAbort, { once: true });
+    try {
+      if (controller.signal.aborted) throw controller.signal.reason;
+      return await Promise.race([aborted, (async () => {
+        const response = await this.fetch(`${this.url}/api/operations/${path}`, {
+          method, headers, cache: 'no-store', credentials: 'omit', redirect: 'error', referrerPolicy: 'no-referrer', signal: controller.signal,
+          ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+        });
+        let result;
+        try { result = await response.json(); } catch { throw new Error(`Operations HTTP ${response.status}: invalid JSON response`); }
+        if (!response.ok || !result?.ok) throw new Error(`Operations HTTP ${response.status}: ${result?.error || 'request failed'}`);
+        return result;
+      })()]);
+    } finally {
+      clearTimeout(timer);
+      signal?.removeEventListener('abort', abort);
+      controller.signal.removeEventListener('abort', rejectAbort);
+    }
+  }
+
+  create({ label } = {}) {
+    return this._request('create', 'POST', { label: string(label, 'label', 80) }, false);
+  }
+
+  join({ sessionId = this.sessionId, inviteToken, name, kind = 'team' } = {}) {
+    if (typeof sessionId !== 'string' || !sessionId) throw new TypeError('sessionId is required to join');
+    if (typeof inviteToken !== 'string' || !inviteToken) throw new TypeError('inviteToken is required to join');
+    return this._request('join', 'POST', { sessionId, inviteToken, name: string(name, 'name', 80),
+      kind: choice(kind, 'kind', ['team', 'vehicle'], null) }, false);
+  }
+
+  state(options) { return this._request('state', 'GET', undefined, true, options); }
+
+  async publishUnit(unit, options) {
+    if (!unit || unit.t == null) throw new TypeError('unit requires source UTC t');
+    const { type: _type, link: _link, ...telemetry } = normalizeTelemetry(unit);
+    // Validation must not replace the gateway's observation string or sub-millisecond precision.
+    return this._request('unit', 'POST', { unit: { ...telemetry, t: unit.t,
+      kind: choice(unit.kind ?? 'drone', 'kind', ['drone', 'team', 'vehicle'], null),
+      status: string(unit.status, 'status', 40), accuracy: number(unit.accuracy, 'accuracy', 0, 100000),
+    } }, true, options);
+  }
+
+  async publishPosition(position) {
+    if (!position || position.t == null) throw new TypeError('position requires source UTC t');
+    utcTime(position.t);
+    return this._request('position', 'POST', {
+      lat: number(position.lat, 'lat', -90, 90, true), lon: number(position.lon, 'lon', -180, 180, true),
+      t: position.t, accuracy: number(position.accuracy, 'accuracy', 0, 100000), status: string(position.status, 'status', 40),
+    });
+  }
+
+  stopSharing() { return this._request('device', 'DELETE'); }
+  endSession() { return this._request('end', 'DELETE'); }
 }

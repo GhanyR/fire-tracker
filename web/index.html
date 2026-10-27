@@ -1,4 +1,4 @@
-<title>Siaga Api · Titik api Indonesia</title>
+<title>Fire Tracker · Titik api Indonesia</title>
 <style>
 /* Instrumen, bukan dekorasi: krom netral ala sistem operasi, warna hangat hanya untuk api.
    Biru = bisa diklik. Hijau = aman. Kuning, oranye, merah = api dan bahaya. */
@@ -675,7 +675,7 @@ details.menu>div a:hover{background:var(--tint);color:#fff}
       <header class="top">
         <button class="brand" id="brand" title="Kembali ke tampilan nasional">
       <span class="mark"><svg width="16" height="18" viewBox="0 0 20 22" aria-hidden="true"><path d="M10 1c1.2 3.6-1.8 5.4-1.8 8.2 0 1.4 1 2.3 2.1 2.3 1.7 0 2.4-1.6 2-3.4 2.6 1.8 4.7 4.5 4.7 7.6C17 19 13.9 21 10 21S3 19 3 15.7C3 10.4 9.3 7.6 10 1z" fill="#FF7A2E"/><path d="M10 13.2c.8 1.6 2.6 2.4 2.6 4.1 0 1.5-1.2 2.3-2.6 2.3s-2.6-.8-2.6-2.3c0-1.7 1.9-2.6 2.6-4.1z" fill="#FFD640"/></svg></span>
-      <b id="brandName">Siaga Api</b>
+      <b id="brandName">Fire Tracker</b>
     </button>
         <span class="spacer"></span>
         <button class="tbtn" id="btnTour" title="Cara memakai"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M6.2 6.2a1.9 1.9 0 1 1 2.6 1.8c-.5.2-.8.6-.8 1.1v.4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="11.6" r=".8" fill="currentColor"/></svg><span class="lbl">Panduan</span></button>
@@ -731,7 +731,7 @@ details.menu>div a:hover{background:var(--tint);color:#fff}
 <script src="https://cdn.jsdelivr.net/npm/deck.gl@9.1.14/dist.min.js"></script>
 <script>window.deck||document.write('<script src="https://unpkg.com/deck.gl@9.1.14/dist.min.js"><\/script>')</script>
 <script>
-/* Siaga Api – dashboard terbuka karhutla. Lisensi MIT. Kode: lihat repo di menu "Tentang data".
+/* Fire Tracker – dashboard terbuka karhutla. Lisensi MIT. Kode: lihat repo di menu "Tentang data".
    Semua data dibaca dari folder data/ (hasil pipeline/build.py). Ganti CFG bila data disimpan di tempat lain. */
 (function(){
 'use strict';
@@ -1154,7 +1154,7 @@ function nearHeadline(N,C){const near=C.nearest;
   if(C.level==='warn'){if(C.n24||C.act.length)return {t:'Ada api di sekitar Anda',s:fmt(C.n24)+' titik panas dalam 24 jam terakhir dalam radius '+N.r+' km'+(near?', terdekat '+fmt(near.km,1)+' km':'')+'. Pantau perkembangannya.'};
     const x=C.smoke[0];return {t:'Asap bisa mengarah ke Anda',s:'Angin dari '+dirName(x.w.wd)+' membawa asap insiden '+x.d.name+' ('+fmt(x.km)+' km) ke arah lokasi Anda.'}}
   return {t:'Tidak ada titik panas dalam '+N.r+' km',s:'Dalam 24 jam terakhir menurut data satelit s.d. '+fmtT(S.meta.tmax)+'. Satelit bisa melewatkan api kecil, api di bawah awan, atau bara di gambut.'}}
-function nearShareText(N,C){const h=nearHeadline(N,C);return 'Siaga Api: '+h.t+'. '+h.s+(pagesURL()?' '+pagesURL():'')}
+function nearShareText(N,C){const h=nearHeadline(N,C);return 'Fire Tracker: '+h.t+'. '+h.s+(pagesURL()?' '+pagesURL():'')}
 function botLink(N){const b=S.meta&&S.meta.bot;if(!b)return null;const f=v=>(+v).toFixed(3).replace('.','p');return 'https://t.me/'+b+'?start=L'+f(N.lat)+'_'+f(N.lon)+'_'+N.r}
 let KABC=null;function kabCenters(){if(KABC)return KABC;KABC=[];const A=S.geo.adm2,K=S.meta.kab||[],KP=S.meta.kabprov||[];if(!A)return KABC;
   for(const f of A.features){const g=f.geometry;if(!g)continue;const polys=g.type==='Polygon'?[g.coordinates]:g.coordinates;let best=null,ba=-1;for(const p of polys){const r=p[0];let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;for(const [x,y] of r){x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,y);y1=Math.max(y1,y)}const a=(x1-x0)*(y1-y0);if(a>ba){ba=a;best=[(x0+x1)/2,(y0+y1)/2]}}
@@ -1216,9 +1216,9 @@ function contactSec(){const K=((S.news&&S.news.kontak_darurat)||[]).slice(0,8);i
 let NEAR_T=0;
 function nearWatch(now){clearInterval(NEAR_T);const N=S.near;if(!N||!N.notify||!('Notification' in window))return;
   const check=()=>{try{if(Notification.permission!=='granted')return;const C=nearCalc(S.near);if(C.level==='safe')return;const key='pan-near-last';const g=S.meta.generated+'|'+C.level;if(localStorage.getItem(key)===g)return;localStorage.setItem(key,g);
-    const h=nearHeadline(S.near,C);new Notification('Siaga Api: '+h.t,{body:h.s,tag:'pantau-api-near'})}catch(e){}};
+    const h=nearHeadline(S.near,C);new Notification('Fire Tracker: '+h.t,{body:h.s,tag:'pantau-api-near'})}catch(e){}};
   if(now!==false)check();
-  NEAR_T=setInterval(async()=>{try{const m=await getJSON(CFG.data+'meta.json',1);if(m&&m.generated!==S.meta.generated){toast('Data satelit baru tersedia. Muat ulang halaman untuk melihatnya.',8000);try{if(Notification.permission==='granted')new Notification('Siaga Api: data baru',{body:'Buka halaman untuk melihat titik api terbaru di sekitar Anda.',tag:'pantau-api-data'})}catch(e){}}}catch(e){}},20*60e3)}
+  NEAR_T=setInterval(async()=>{try{const m=await getJSON(CFG.data+'meta.json',1);if(m&&m.generated!==S.meta.generated){toast('Data satelit baru tersedia. Muat ulang halaman untuk melihatnya.',8000);try{if(Notification.permission==='granted')new Notification('Fire Tracker: data baru',{body:'Buka halaman untuk melihat titik api terbaru di sekitar Anda.',tag:'pantau-api-data'})}catch(e){}}}catch(e){}},20*60e3)}
 
 /* ================= Lainnya ================= */
 function otherPanel(){const sub=S.otherSub||'sumber';
@@ -1227,7 +1227,7 @@ function otherPanel(){const sub=S.otherSub||'sumber';
   if(sub==='sumber')return [wrap,...resPanel()];
   if(sub==='integrasi')return [wrap,...integPanel()];
   if(sub==='bot')return [wrap,...botPanel()];
-  return [wrap,el('div',{class:'hero'},null,el('h2',{},'Siaga Api'),el('p',{style:'margin:0'},'Dasbor terbuka kebakaran hutan dan lahan Indonesia untuk regu pemadam, BPBD, relawan, jurnalis, dan warga. Data satelit NASA, cuaca Open-Meteo, citra Sentinel-2, dan peta OpenStreetMap, diperbarui otomatis tiap 3 jam.'),
+  return [wrap,el('div',{class:'hero'},null,el('h2',{},'Fire Tracker'),el('p',{style:'margin:0'},'Dasbor terbuka kebakaran hutan dan lahan Indonesia untuk regu pemadam, BPBD, relawan, jurnalis, dan warga. Data satelit NASA, cuaca Open-Meteo, citra Sentinel-2, dan peta OpenStreetMap, diperbarui otomatis tiap 3 jam.'),
     el('div',{class:'actions'},el('button',{class:'btn primary',onclick:showInfo},'Sumber & cara hitung'),el('button',{class:'btn',onclick:()=>startTour(0)},'Buka panduan'),repoURL()?el('a',{class:'btn',href:repoURL(),target:'_blank',rel:'noopener'},'Kode sumber (MIT)'):null))]}
 function botPanel(){const b=S.meta&&S.meta.bot;const repo=repoURL();const set=repo?repo+'/settings/secrets/actions':null;
   const step=(n,t,body)=>el('li',{},el('b',{},t),body?el('div',{class:'note',style:'margin-top:2px'},body):null);
@@ -1367,7 +1367,7 @@ function initOffline(){
   const upd=()=>{const off=navigator.onLine===false;document.documentElement.classList.toggle('offline',off);const f=$('#freshTxt');if(f&&off&&!/offline/.test(f.textContent))f.textContent+=' (offline)'};
   addEventListener('offline',()=>{upd();toast('Sinyal hilang. Menampilkan data terakhir yang tersimpan.',4200)});
   addEventListener('online',()=>{updateFresh();toast('Tersambung lagi')});upd();
-  if(!('serviceWorker' in navigator)||!(location.protocol==='https:'||/^(localhost|127\.0\.0\.1)$/.test(location.hostname))||/claude|anthropic/.test(location.hostname))return;
+  if(!('serviceWorker' in navigator)||!(location.protocol==='https:'||/^(localhost|127\.0\.0\.1)$/.test(location.hostname)))return;
   const warm=()=>{for(const f of ['meta.json','incidents.json','pixels.json','weather.json','aq.json','resources.json','reports.json','news.json','stats.json','inc3d/index.json'])fetch(CFG.data+f).catch(()=>{})};
   navigator.serviceWorker.addEventListener('controllerchange',()=>{SW.ok=true;warm()});
   navigator.serviceWorker.register('sw.js').then(()=>{SW.ok=!!navigator.serviceWorker.controller}).catch(()=>{})}
@@ -2211,11 +2211,7 @@ function drawCursor(){for(const id of ['#c1','#c2','#c3']){const svg=$(id);if(!s
   if(id==='#c1'&&!S.sel){const on=css('--ember'),off=css('--line-2');svg.querySelectorAll('rect[data-h]').forEach(r=>r.setAttribute('fill',+r.dataset.h<=S.T?on:off))}}}
 
 /* ================= simpan file (unduhan) ================= */
-const DL_OK=['gif','png','jpg','jpeg','webp','mp4','webm','txt','json','md','csv','html','svg','pdf','xlsx','zip'];
-let DLNS;async function dlns(){if(DLNS!==undefined)return DLNS;try{DLNS=window.claude&&window.claude.use?await window.claude.use('downloads'):null}catch(e){DLNS=null}return DLNS}
-async function saveFile(name,data,mime){const ext=(name.split('.').pop()||'').toLowerCase();const dl=await dlns();
-  if(dl){let fn=name,payload=data;if(!DL_OK.includes(ext)){fn=name+'.zip';payload=zipStore([{name,data}])}
-    try{await dl.save({filename:fn,data:payload});toast(fn!==name?'Disiapkan sebagai '+fn+' (buka zip untuk file '+ext.toUpperCase()+')':'File disiapkan');return}catch(e){if(e&&e.code==='declined')return;if(e&&e.code==='rate_limited'){toast('Tunggu sebentar, ada unduhan lain yang belum dijawab');return}}}
+async function saveFile(name,data,mime){
   try{const b=new Blob([data],{type:mime||'application/octet-stream'});const u=URL.createObjectURL(b);const a=el('a',{href:u,download:name});document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);toast('Unduhan dimulai: '+name)}
   catch(e){if(typeof data==='string')showText(name,data,'Unduhan tidak tersedia di tampilan ini. Salin isi berikut dan simpan sebagai '+name+'.');else toast('Unduhan tidak tersedia di tampilan ini')}}
 const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
@@ -2328,9 +2324,9 @@ function missionGeoJSON(m,d){return JSON.stringify({type:'FeatureCollection',nam
   {type:'Feature',properties:{peran:'rute',agl_m:m.agl},geometry:{type:'LineString',coordinates:[[m.home.lon,m.home.lat],...m.wps.map(w=>[w.lon,w.lat]),[m.home.lon,m.home.lat]]}},
   {type:'Feature',properties:{peran:'area_target'},geometry:{type:'Polygon',coordinates:[[...m.area,m.area[0]]]}},
   ...m.wps.map((w,k)=>({type:'Feature',properties:{peran:'titik',no:k+1,label:w.label,alt_relatif_m:w.alt,melayang_s:w.hold||0},geometry:{type:'Point',coordinates:[w.lon,w.lat]}}))]})}
-function missionGPX(m,d){return '<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="Siaga Api" xmlns="http://www.topografix.com/GPX/1/1"><metadata><name>Misi '+esc(d.id)+'</name></metadata>'+
+function missionGPX(m,d){return '<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="Fire Tracker" xmlns="http://www.topografix.com/GPX/1/1"><metadata><name>Misi '+esc(d.id)+'</name></metadata>'+
   '<wpt lat="'+m.home.lat.toFixed(7)+'" lon="'+m.home.lon.toFixed(7)+'"><name>Lepas landas</name></wpt><rte><name>'+esc(MTYPE[m.type])+'</name>'+m.wps.map((w,k)=>'<rtept lat="'+w.lat.toFixed(7)+'" lon="'+w.lon.toFixed(7)+'"><ele>'+Math.round((m.home.ground||0)+w.alt)+'</ele><name>WP'+(k+1)+'</name><desc>'+esc(w.label)+'</desc></rtept>').join('')+'</rte></gpx>\n'}
-function missionReadme(m,d){return ['MISI DRONE – '+d.id+' '+d.name,'Dibuat: '+m.created+' oleh Siaga Api','Jenis: '+MTYPE[m.type],'Ketinggian: '+m.agl+' m di atas tanah'+(m.hasDem?' (disesuaikan relief, relatif titik lepas landas)':' (relief tidak tersedia, dianggap datar)'),'Kecepatan: '+m.speed+' m/s','Titik: '+m.wps.length+' · Jarak: '+fmt(m.km,1)+' km · Waktu: ±'+fmt(m.minutes)+' menit · Baterai: ±'+m.batt,'Lepas landas: '+m.home.lat.toFixed(6)+', '+m.home.lon.toFixed(6)+' ('+(m.home.note||'')+')','','PERINGATAN:',...m.warn.map(x=>'- '+x),'','FILE:','- misi.plan       QGroundControl (ArduPilot/PX4): Plan > Open','- misi.waypoints  Mission Planner: Flight Plan > Load WP File','- misi-litchi.csv Litchi Mission Hub: Import','- misi.kml        Google Earth, DJI Pilot 2 / FlightHub 2 (impor rute/area), ATAK','- misi.geojson    QGIS, ArcGIS, aplikasi GIS lain','- misi.gpx        aplikasi GPS umum','','Periksa ulang semua titik di aplikasi kendali sebelum terbang. Pilot bertanggung jawab atas keselamatan penerbangan.'].join('\n')}
+function missionReadme(m,d){return ['MISI DRONE – '+d.id+' '+d.name,'Dibuat: '+m.created+' oleh Fire Tracker','Jenis: '+MTYPE[m.type],'Ketinggian: '+m.agl+' m di atas tanah'+(m.hasDem?' (disesuaikan relief, relatif titik lepas landas)':' (relief tidak tersedia, dianggap datar)'),'Kecepatan: '+m.speed+' m/s','Titik: '+m.wps.length+' · Jarak: '+fmt(m.km,1)+' km · Waktu: ±'+fmt(m.minutes)+' menit · Baterai: ±'+m.batt,'Lepas landas: '+m.home.lat.toFixed(6)+', '+m.home.lon.toFixed(6)+' ('+(m.home.note||'')+')','','PERINGATAN:',...m.warn.map(x=>'- '+x),'','FILE:','- misi.plan       QGroundControl (ArduPilot/PX4): Plan > Open','- misi.waypoints  Mission Planner: Flight Plan > Load WP File','- misi-litchi.csv Litchi Mission Hub: Import','- misi.kml        Google Earth, DJI Pilot 2 / FlightHub 2 (impor rute/area), ATAK','- misi.geojson    QGIS, ArcGIS, aplikasi GIS lain','- misi.gpx        aplikasi GPS umum','','Periksa ulang semua titik di aplikasi kendali sebelum terbang. Pilot bertanggung jawab atas keselamatan penerbangan.'].join('\n')}
 function missionZip(m,d){return zipStore([{name:'BACA-DULU.txt',data:missionReadme(m,d)},{name:'misi.plan',data:qgcPlan(m)},{name:'misi.waypoints',data:mpWaypoints(m)},{name:'misi-litchi.csv',data:litchiCSV(m)},{name:'misi.kml',data:missionKML(m,d)},{name:'misi.geojson',data:missionGeoJSON(m,d)},{name:'misi.gpx',data:missionGPX(m,d)}])}
 
 /* ---------- armada langsung & simulasi ---------- */
@@ -2338,7 +2334,7 @@ function bridgeConnect(){const url=($('#wsUrl')&&$('#wsUrl').value.trim())||DR.w
   let ws;try{ws=new WebSocket(url)}catch(e){DR.wsState='gagal: '+(e.message||'diblokir');renderRail();return}
   DR.ws=ws;DR.wsState='menghubungkan…';renderRail();const to=setTimeout(()=>{if(ws.readyState!==1){DR.wsState='tidak tersambung. Jalankan bridge di komputer ini, atau buka dasbor dari http://localhost:8787';try{ws.close()}catch(e){}renderRail()}},5000);
   ws.onopen=()=>{clearTimeout(to);DR.wsState='tersambung';renderRail()};
-  ws.onerror=()=>{DR.wsState='gagal tersambung. Di tampilan Claude, koneksi langsung diblokir; pakai versi situs atau http://localhost:8787';renderRail()};
+  ws.onerror=()=>{DR.wsState='Koneksi bridge terputus. Periksa alamat, jaringan, TLS, dan token pembaca.';renderRail()};
   ws.onclose=()=>{if(DR.wsState==='tersambung'){DR.wsState='putus';renderRail()}};
   ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch(x){return}ingest(m)}}
 function ingest(m){if(!m)return;if(m.type==='hello'){(m.drones||[]).forEach(ingest);(m.detections||[]).forEach(ingest);(m.reports||[]).forEach(ingest);return}
@@ -2577,7 +2573,7 @@ function csvEsc(v){v=v==null?'':String(v);return /[",\n;]/.test(v)?'"'+v.replace
 function incCSV(list){const H=['id','nama','desa','kecamatan','kabupaten','provinsi','lat','lon','status','prioritas','skor','titik_24j','titik_7h','frp_maks_mw','jejak_ha','gambut','deteksi_pertama_wib','deteksi_terakhir_wib','geser_km','arah_geser','angin_kmj','angin_dari','rh_persen','hujan72_mm','hari_tanpa_hujan','kota_terdekat','jarak_kota_km','google_maps'];
   const rows=[H.join(',')];for(const d of list){const w=wxOf(d);rows.push([d.id,d.name,d.desa||'',d.kec||'',d.kab,d.prov,d.lat.toFixed(5),d.lon.toFixed(5),ST_LBL[d.status],CLS_LBL[d.cls],d.score,d.n24,d.n,d.frpM,d.ha,d.peat?'ya':'tidak',fmtT(d.t0,{noTz:true}),fmtT(d.t1,{noTz:true}),d.dist,dirName(d.brg),w?w.ws:'',w?dirName(w.wd):'',w?w.rh:'',w?w.fc72:'',w?w.dsr:'',d.town?d.town.name:'',d.town?d.town.km:'','https://www.google.com/maps/search/?api=1&query='+d.lat.toFixed(5)+','+d.lon.toFixed(5)].map(csvEsc).join(','))}return rows.join('\n')}
 function incGeoJSON(list){return JSON.stringify({type:'FeatureCollection',name:'insiden_karhutla',features:list.map(d=>({type:'Feature',id:d.id,properties:{id:d.id,nama:d.name,desa:d.desa||'',kabupaten:d.kab,provinsi:d.prov,status:ST_LBL[d.status],skor:d.score,prioritas:CLS_LBL[d.cls],titik_24j:d.n24,titik_7h:d.n,frp_maks:d.frpM,jejak_ha:d.ha,gambut:d.peat,deteksi_terakhir:fmtT(d.t1)},geometry:incPoly(d,'hull')?{type:'Polygon',coordinates:[[...d.hull,d.hull[0]]]}:{type:'Point',coordinates:[d.lon,d.lat]}}))})}
-function incKML(list){const c=KML=>KML;const col={kritis:'ff2e12a0',tinggi:'ff1a57d2',sedang:'ff128ab9',rendah:'ff7b837a'};let k='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>Siaga Api '+esc(S.meta.tmax_wib)+'</name>';
+function incKML(list){const c=KML=>KML;const col={kritis:'ff2e12a0',tinggi:'ff1a57d2',sedang:'ff128ab9',rendah:'ff7b837a'};let k='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>Fire Tracker '+esc(S.meta.tmax_wib)+'</name>';
   for(const [cl,cc] of Object.entries(col))k+='<Style id="'+cl+'"><IconStyle><color>'+cc+'</color><Icon><href>http://maps.google.com/mapfiles/kml/shapes/firedept.png</href></Icon></IconStyle><LineStyle><color>'+cc+'</color><width>2</width></LineStyle><PolyStyle><color>40'+cc.slice(2)+'</color></PolyStyle></Style>';
   for(const d of list){k+='<Placemark><name>'+esc(d.id+' '+d.name)+'</name><description><![CDATA['+sitrep(d).replace(/\n/g,'<br>')+']]></description><styleUrl>#'+d.cls+'</styleUrl><Point><coordinates>'+d.lon+','+d.lat+',0</coordinates></Point></Placemark>';
     if(incPoly(d,'hull'))k+='<Placemark><name>Batas '+esc(d.id)+'</name><styleUrl>#'+d.cls+'</styleUrl><Polygon><outerBoundaryIs><LinearRing><coordinates>'+[...d.hull,d.hull[0]].map(p=>p[0]+','+p[1]+',0').join(' ')+'</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>'}
@@ -2592,7 +2588,7 @@ function showExport(){const L=filtered();const day=(S.meta.tmax_wib||'').slice(0
     el('div',{class:'actions'},el('button',{class:'btn',onclick:()=>{closeModal();setTab('integrasi')}},'Buka Integrasi'),el('button',{class:'btn',onclick:closeModal},'Tutup'))))}
 function showInfo(){const m=S.meta;const repo=repoURL();
   openModal(el('div',{},el('h2',{},'Tentang data'),
-    el('p',{},'Siaga Api merangkum kebakaran hutan dan lahan Indonesia dari data satelit, cuaca, dan laporan terbuka. Data diolah '+(m.generated_wib||'')+' WIB; lintasan satelit terakhir '+fmtT(m.tmax)+'. Pembaruan otomatis tiap 3 jam.'),
+    el('p',{},'Fire Tracker merangkum kebakaran hutan dan lahan Indonesia dari data satelit, cuaca, dan laporan terbuka. Data diolah '+(m.generated_wib||'')+' WIB; lintasan satelit terakhir '+fmtT(m.tmax)+'. Pembaruan otomatis tiap 3 jam.'),
     el('h4',{},'Titik api'),el('p',{},'NASA FIRMS (LANCE NRT): VIIRS S-NPP, NOAA-20, NOAA-21 (375 m) dan MODIS (1 km), file 7 hari wilayah Asia Tenggara, disaring ke batas Indonesia. Total '+fmt(m.det7)+' deteksi.'),
     el('h4',{},'Insiden & skor'),el('p',{},'Deteksi yang bersentuhan dalam grid ±1,1 km digabung menjadi satu insiden (minimal 10 deteksi). Jejak = jumlah piksel VIIRS unik × 14 ha, bukan luas terbakar resmi. Skor 0–100: aktivitas 24 jam 35, kekuatan api 20, pertumbuhan 10, gambut 10, dekat kota 10, cuaca 72 jam 15; insiden tanpa deteksi 24 jam dikali 0,55.'),
     el('h4',{},'3D citra satelit'),el('p',{},'Citra Esri World Imagery (resolusi sub-meter di banyak tempat) di atas relief AWS Terrain Tiles, menyambung sampai cakrawala. Bila Esri tidak bisa diakses, dipakai Sentinel-2 cloudless (EOX, ±10 m). Paket offline untuk insiden prioritas teratas memakai citra dan relief yang sama, dengan jalan, sungai, kanal, dan nama desa dari OpenStreetMap. Animasi api memakai waktu deteksi pertama dan terakhir tiap piksel VIIRS. Asap disimulasikan dari arah dan kecepatan angin Open-Meteo pada waktu putar ulang; ini ilustrasi arah, bukan model sebaran asap.'),

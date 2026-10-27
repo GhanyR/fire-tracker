@@ -1,4 +1,4 @@
-/* Siaga Api: penyimpanan offline untuk regu lapangan.
+/* Fire Tracker: penyimpanan offline untuk regu lapangan.
    - Aplikasi, batas wilayah, dan citra dasar disimpan saat pertama dibuka.
    - Data (data/*.json) diambil dari jaringan dulu; bila sinyal hilang, pakai salinan terakhir.
    - Ubin citra satelit (Esri/EOX), ubin relief, dan paket 3D disimpan saat dilihat, atau lewat tombol "Simpan area untuk offline". */
