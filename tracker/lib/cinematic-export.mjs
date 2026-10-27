@@ -381,7 +381,7 @@ export function drawShowcaseFrame(ctx, { map, fleet, elapsedMs = 0, sceneLabel =
 
     ctx.fillStyle = 'rgba(126,249,236,0.2)'; ctx.fillRect(100, 1730, 880, 3);
     ctx.fillStyle = CYAN; ctx.fillRect(100, 1730, 880 * sequenceProgress, 3);
-    write(ctx, 'fire-tracker.fiveprayerapp.chatgpt.site', 100, 1770, 29, WHITE, 650, 880);
+    write(ctx, 'ghanyr.github.io/fire-tracker', 100, 1770, 29, WHITE, 650, 880);
     write(ctx, 'SIMULASI UAV · citra peta bukan siaran langsung', 100, 1810, 22, CYAN, 600, 880);
     write(ctx, 'Imagery © Esri & contributors · Terrain Mapzen/AWS', 100, 1843, 18, MUTED, 450, 880);
   } finally { ctx.restore(); }

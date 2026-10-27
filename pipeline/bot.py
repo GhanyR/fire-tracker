@@ -1,4 +1,4 @@
-"""Bot Telegram Siaga Api: peringatan api di sekitar lokasi pengguna.
+"""Bot Telegram Fire Tracker: peringatan api di sekitar lokasi pengguna.
 
 Dijalankan GitHub Actions tiap 10 menit (.github/workflows/bot.yml), tanpa server:
   1. Membaca pesan baru ke bot (getUpdates): /start, kirim lokasi, /radius, /status, /ikuti, /berhenti.
@@ -17,7 +17,7 @@ from . import config
 API = "https://api.telegram.org/bot{token}/{method}"
 DIRS = ["utara", "timur laut", "timur", "tenggara", "selatan", "barat daya", "barat", "barat laut"]
 ST = {"aktif": "masih menyala", "aktif24": "aktif dalam 24 jam", "mereda": "mereda", "padam3": "tidak terdeteksi lagi"}
-HELP = ("Siaga Api mengirim peringatan bila satelit mendeteksi api di sekitar lokasi Anda.\n\n"
+HELP = ("Fire Tracker mengirim peringatan bila satelit mendeteksi api di sekitar lokasi Anda.\n\n"
         "• Kirim lokasi: tekan tombol 'Kirim lokasi saya' atau 📎 › Lokasi.\n"
         "• /radius 10 : ubah radius (5–100 km).\n"
         "• /status : lihat api di sekitar Anda sekarang.\n"
@@ -205,7 +205,7 @@ def handle(bot, subs, msg, data):
             if "lat" not in sub:
                 bot.send(chat, "Kirim lokasi Anda juga untuk peringatan api di sekitar Anda.", "lokasi")
         else:
-            bot.send(chat, "Selamat datang di Siaga Api.\n\n" + HELP, "lokasi")
+            bot.send(chat, "Selamat datang di Fire Tracker.\n\n" + HELP, "lokasi")
     elif cmd in ("/radius", "radius"):
         try:
             r = max(5, min(100, int(re.sub(r"\D", "", arg) or "0")))

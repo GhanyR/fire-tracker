@@ -23,7 +23,7 @@ From the repository root:
 ```sh
 npm ci --prefix tracker
 mkdir -p tracker/public/data
-curl --fail -L https://ghanyr.github.io/pantau-api-nusantara/data/observations.json -o tracker/public/data/observations.json
+curl --fail -L https://ghanyr.github.io/fire-tracker/data/observations.json -o tracker/public/data/observations.json
 npm run build --prefix tracker
 python3 -m venv .venv
 .venv/bin/pip install -r bridge/requirements.txt

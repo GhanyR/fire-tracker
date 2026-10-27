@@ -1,6 +1,6 @@
 # Integrasi dengan alat lain
 
-Semua umpan diperbarui tiap 3 jam di `https://<pemilik>.github.io/pantau-api-nusantara/data/feeds/` (dan cabang `data`).
+Semua umpan diperbarui tiap 3 jam di `https://<pemilik>.github.io/fire-tracker/data/feeds/` (dan cabang `data`).
 
 | Alat | Cara |
 |---|---|
@@ -24,7 +24,7 @@ Python:
 
 ```python
 import requests
-BASE = "https://raw.githubusercontent.com/<pemilik>/pantau-api-nusantara/data/data"
+BASE = "https://raw.githubusercontent.com/<pemilik>/fire-tracker/data/data"
 inc = requests.get(f"{BASE}/incidents.json").json()
 for i in inc[:10]:
     print(i["id"], i["name"], i["prov"], i["score"], i["n24"], i["lat"], i["lon"])
@@ -33,7 +33,7 @@ for i in inc[:10]:
 JavaScript:
 
 ```js
-const fc = await (await fetch("https://<pemilik>.github.io/pantau-api-nusantara/data/feeds/incidents.geojson")).json();
+const fc = await (await fetch("https://<pemilik>.github.io/fire-tracker/data/feeds/incidents.geojson")).json();
 ```
 
 Node-RED: node `http request` (GET, parse JSON) ke `incidents.json`, `split`, `switch` pada `payload.cls == "kritis"`, lalu kirim ke Telegram/WhatsApp gateway Anda.

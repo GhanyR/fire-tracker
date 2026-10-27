@@ -1,6 +1,7 @@
 // Combine the terrain-first app with the existing field tools and fixed feeds.
 import {cp,mkdir,readFile,writeFile,readdir} from 'node:fs/promises';
 import {resolve,join} from 'node:path';
+import {retargetPublishedData} from './retarget-data.mjs';
 const target=resolve(process.argv[2]||'site');
 await mkdir(join(target,'legacy'),{recursive:true});
 const legacy=await readFile(join(target,'index.html'),'utf8');
@@ -11,4 +12,5 @@ let worker=await readFile(new URL('../../web/sw.js',import.meta.url),'utf8');
 worker=worker.replace("const V = 'pantau-api-v6'", "const V = 'pantau-api-v7'");
 worker=worker.replace("const SHELL = [",`const SHELL = ${JSON.stringify([...assets,'favicon.svg','legacy/'])}.concat([`).replace("dist.min.js'];", "dist.min.js']);");
 await writeFile(join(target,'sw.js'),worker);
+await retargetPublishedData(join(target,'data'),{pagesUrl:process.env.PAN_PAGES_URL,repositoryUrl:process.env.PAN_REPO_URL});
 console.log('Fire Tracker + legacy field tools assembled at',target);
