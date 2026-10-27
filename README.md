@@ -1,6 +1,6 @@
 # Fire Tracker
 
-Peta kebakaran Indonesia. Pantau hotspot, drone, dan posisi tim di satu tempat.
+peta kebakaran Indonesia untuk memantau hotspot, drone, dan posisi tim
 
 Dikembangkan dan dikelola oleh [Ghany Rasyid](https://github.com/GhanyR).
 
