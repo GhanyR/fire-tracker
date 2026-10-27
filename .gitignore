@@ -10,3 +10,6 @@ pipeline/tests/fixtures/*.csv
 tracker/node_modules/
 tracker/dist/
 tracker/public/data/observations.json
+
+server/wrangler.jsonc
+server/.wrangler/

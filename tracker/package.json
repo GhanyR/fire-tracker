@@ -13,13 +13,22 @@
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
+    "hls.js": "1.7.3",
+    "lucide-react": "^1.31.0",
     "maplibre-gl": "^5.20.0",
-    "lucide-react": "^1.31.0"
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "6.0.2",
     "vite": "8.0.13"
+  },
+  "author": {
+    "name": "Ghany Rasyid",
+    "url": "https://github.com/GhanyR"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GhanyR/fire-tracker.git"
   }
 }

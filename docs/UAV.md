@@ -4,6 +4,18 @@ Fire Tracker displays aircraft telemetry through a bridge you run. PX4/ArduPilot
 
 This integration receives position/status only. It sends no flight, arm/disarm, camera or mission commands. Continue using the aircraft's ground station and pilot workflow for flight control.
 
+## Compatibility
+
+| Source | Integration provided here | What you must supply | Verification boundary |
+| --- | --- | --- | --- |
+| PX4 | MAVLink UDP/serial/TCP receiver through the Python bridge | Aircraft telemetry link and forwarding from the ground station/router | Encoded MAVLink packets tested locally; no physical aircraft tested |
+| ArduPilot | Same MAVLink bridge | Compatible telemetry radio/controller and forwarding configuration | Same synthetic protocol test; no physical pairing verified |
+| DJI | `fromDjiOsd` JSON adapter and stdin example | A gateway built with a compatible DJI SDK/Cloud API, supported aircraft/controller, SDK credentials and vendor-side setup | Adapter tested with synthetic OSD; no universal or automatic DJI pairing |
+| Other UAV/gateway | Authenticated HTTP JSON or WebSocket telemetry | Vendor adapter supplying the documented fields and source UTC time | Local authenticated HTTP/WS tested |
+| EO / IR camera | Supplied HLS, MJPEG, WHEP or MP4 stream descriptors | A reachable camera/gateway media URL and its CORS/TLS configuration | Protocol support depends on browser and gateway; no camera hardware verified |
+
+An IR stream is imagery supplied by your camera gateway. Fire Tracker does not generate thermal measurements or infer temperatures from satellite or map colors. Metadata never starts a camera automatically; the viewer chooses a camera explicitly. Names, tasks and stream labels are gateway descriptions, not commands sent to an aircraft.
+
 ## Local quick start
 
 From the repository root:
@@ -11,7 +23,7 @@ From the repository root:
 ```sh
 npm ci --prefix tracker
 mkdir -p tracker/public/data
-curl --fail -L https://ghanyr.github.io/pantau-api-nusantara/data/observations.json -o tracker/public/data/observations.json
+curl --fail -L https://ghanyr.github.io/fire-tracker/data/observations.json -o tracker/public/data/observations.json
 npm run build --prefix tracker
 python3 -m venv .venv
 .venv/bin/pip install -r bridge/requirements.txt
@@ -32,7 +44,7 @@ Connect the aircraft to QGroundControl, Mission Planner, MAVProxy or your existi
 
 Enable MAVLink forwarding in QGroundControl's telemetry settings and target `127.0.0.1:14551`. With MAVProxy, add `--out 127.0.0.1:14551` to your existing connection command. Forwarding is documented by [QGroundControl](https://github.com/mavlink/qgroundcontrol/blob/master/docs/en/qgc-user-guide/settings_view/telemetry.md) and [MAVProxy](https://ardupilot.ardupilot.org/mavproxy/docs/getting_started/forwarding.html). PX4's [telemetry guide](https://docs.px4.io/main/en/data_links/telemetry) describes the aircraft-to-ground-station link.
 
-The bridge listens to `GLOBAL_POSITION_INT`, `HEARTBEAT`, `VFR_HUD`, `SYS_STATUS` and `BATTERY_STATUS`. It converts latitude/longitude from degree × 10⁷, altitude from millimetres, and heading from centidegrees. `alt` is relative to home; `alt_msl` is mean sea level. See the [MAVLink message definitions](https://mavlink.io/en/messages/common.html#GLOBAL_POSITION_INT).
+The bridge listens to `GLOBAL_POSITION_INT`, `HEARTBEAT`, `VFR_HUD`, `SYS_STATUS`, `BATTERY_STATUS` and `EXTENDED_SYS_STATE`. It converts latitude/longitude from degree × 10⁷, altitude from millimetres, and heading from centidegrees. `alt` is relative to home; `alt_msl` is mean sea level. Heartbeat aircraft types identify fixed-wing and common multirotors; unsupported/transitioning types remain `unknown`. Explicit landed state gives `landed` or `airborne`; armed state alone never implies flight. Link quality remains unknown unless supplied by a gateway. See the [MAVLink message definitions](https://mavlink.io/en/messages/common.html#GLOBAL_POSITION_INT).
 
 `GLOBAL_POSITION_INT.time_boot_ms` is not UTC. The bridge stamps each new position message with the host's UTC reception time. Heartbeat/battery updates keep that last position timestamp, so cached coordinates become stale naturally. Duplicate or older boot timestamps are discarded, with uint32 wrap supported. After an aircraft reboots and resets its boot timer, restart the bridge to start a new feed. Keep the bridge host's clock synchronized. Separate aircraft must use distinct MAVLink system IDs, including across multiple `--mavlink` inputs.
 
@@ -55,11 +67,16 @@ The normalized stream follows [telemetry.schema.json](../schemas/telemetry.schem
   "type": "telemetry", "id": "uav-1", "lat": -2.7634, "lon": 114.1032,
   "alt": 80, "alt_msl": null, "hdg": 90, "spd": 8, "bat": 76,
   "mode": "", "armed": null, "model": "", "link": "http",
-  "t": "2026-10-26T08:00:00.000Z", "simulated": true
+  "t": "2026-10-26T08:00:00.000Z", "simulated": true,
+  "name": "Alpha", "mission": "Perimeter survey", "airframe": "multirotor",
+  "flightStatus": "unknown", "linkQuality": null,
+  "streams": [{"id":"front-eo","label":"Front EO","kind":"eo","protocol":"hls","url":"https://camera.example/live.m3u8"}]
 }
 ```
 
 Coordinates must be finite JSON numbers in range, with no string/boolean conversion. Missing altitude, speed, heading, battery and armed state remain `null`; zero is a known measurement. `alt` means height relative to home, not height above terrain. `alt_msl` means height above mean sea level. Do not map an unknown datum into either field. Source timestamps more than ten seconds ahead of the bridge clock are rejected before storage. Source timestamps must be valid ISO 8601 UTC (`Z` or `+00:00`); output is normalized to milliseconds. Older observations for an existing aircraft are rejected (`409` over HTTP); equal timestamps may update status while keeping GPS age unchanged.
+
+`name` is at most 80 characters and `mission` 160. `airframe` is `multirotor`, `fixed-wing` or `unknown`; `flightStatus` is `airborne`, `landed` or `unknown`. `linkQuality` is a supplied percentage from 0 to 100, or `null`. Missing names/tasks become empty strings, unknown enums remain `unknown`, and absent cameras become `[]`. A unit supports at most four streams with unique IDs (40 characters) and labels (80). Each stream requires `kind: eo|ir`, `protocol: hls|mjpeg|whep|mp4`, and an HTTP(S) URL (2048 characters). Credentials, secret query parameters, fragments and command endpoints are rejected. Use a gateway media endpoint with access controlled separately from the URL. A descriptor does not prove that the stream is reachable or that a sensor measures temperature.
 
 `POST /telemetry` accepts one object or an array of up to 200; a failed validation or stale observation rejects the whole batch. `POST /detection` and `POST /report` accept geolocated observations. They follow the same publishing permissions.
 
@@ -85,6 +102,21 @@ await tracker.connect();
 ```
 
 A gateway uses a publisher token and `await tracker.publishTelemetry(normalizedObject)`. The SDK supports Node 22+ and modern browsers, parses hello/state/telemetry envelopes, sends auth before subscribing, pings the bridge, rejects invalid values and ignores older inbound observations. See [SDK API and runnable examples](../sdk/README.md).
+
+## Private operations and cloud relay
+
+The bridge remains local and in memory. To forward its telemetry into a six-hour private operation, run the [Node relay](../sdk/examples/bridge-to-cloud.mjs) on the gateway. Supply `FIRE_TRACKER_READ_TOKEN` and `OPERATIONS_PUBLISHER_TOKEN` through the process environment/secret manager, then run:
+
+```sh
+FIRE_TRACKER_URL=http://127.0.0.1:8787 \
+OPERATIONS_URL=https://fire-tracker.fiveprayerapp.chatgpt.site \
+OPERATIONS_SESSION_ID=your-session-id \
+node sdk/examples/bridge-to-cloud.mjs
+```
+
+The relay subscribes using the bridge read token and sends units using the separate operation publisher token. It forwards the bridge observation `t` and `simulated` flag unchanged; it never replaces acquisition time with relay time. Pending work is bounded to the latest observation per unit and at most 100 units. The API rejects future, equal, older or fifteen-minute-old observations, so an old bridge snapshot is not made fresh. Errors are reported without printing telemetry or tokens. Restart after bridge disconnection; create a new operation after expiry. Stop with Ctrl+C. It makes no GPS requests and issues no flight commands.
+
+`OperationsClient` uses `/api/operations/{create,join,state,unit,position,device,end}`. Private requests carry the session ID in `X-Operation-Id` and the capability in `Authorization: Bearer …`. Create/join return credentials without writing them to storage. Canonical unit kinds are `drone`, `team` and `vehicle`. A joined device token can publish/delete only its own position and cannot read the fleet. See [the operations API](OPERATIONS.md), [unit schema](../schemas/operations-unit.schema.json) and [SDK examples](../sdk/README.md#private-operations).
 
 ## DJI gateway
 
@@ -134,4 +166,4 @@ cd sdk
 PATH="$PWD/../.venv/bin:$PATH" npm test
 ```
 
-The SDK tests start a real local bridge and exercise HTTP publishing, authenticated WebSocket subscriptions, snapshot delivery, read-only rejection, invalid values and out-of-order observations. These tests use synthetic telemetry; aircraft hardware, radio/controller connections and real DJI credentials require a separate field test.
+The SDK tests start a real local bridge and exercise HTTP publishing, authenticated WebSocket subscriptions, fleet/camera metadata, snapshot delivery, read-only rejection, invalid values and out-of-order observations. The relay test forwards synthetic bridge packets into a local private-API HTTP collector and verifies separate capability headers and unchanged observation time. With `pymavlink` installed, Python tests encode/decode actual MAVLink `HEARTBEAT`, `GLOBAL_POSITION_INT`, `BATTERY_STATUS` and `EXTENDED_SYS_STATE` packets before normalization. That test is explicitly skipped if the optional library is unavailable. These are synthetic protocol tests; aircraft, radio/controller connections, camera streams and real DJI credentials require a separate field test.

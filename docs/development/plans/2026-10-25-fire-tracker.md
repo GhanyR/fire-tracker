@@ -18,7 +18,7 @@ Spec: ../specs/2026-10-25-fire-tracker-design.md
 - Public source/build artifacts must exclude hosting identity, tokens and subscriber/private state.
 
 ## Tasks
-1. Raw observation snapshot: add pipeline adapter and fixed-time regression tests; run pipeline smoke. Export exact columns id/lon/lat/time/frp/confidence/sensor/province/municipality. Agent may work only in adapter, tests, and build insertion. Parent reviews and owns commits/publication.
+1. Raw observation snapshot: add pipeline adapter and fixed-time regression tests; run pipeline smoke. Export exact columns id/lon/lat/time/frp/confidence/sensor/province/municipality. Keep adapter, tests, and pipeline integration changes focused; review before publication.
 2. Frontend discovery and visual simplification: test search/group/geographic focus and time boundaries first, implement helpers, latest panel, simple brand, compact timeline, reliable refresh and field summary. Preserve terrain and circle rendering. Run full Node tests and production build, inspect real-data desktop/mobile preview.
 3. Open distribution: mirror only app-specific React/lib/styles/public attribution into tracker/, Vite static entry uses base-aware URLs and static-mode fallback, preserve legacy entry and data feeds, update workflow to test/build frontend and raw snapshot, README/metadata naming. Build both targets, independent review, fix important findings, push and wait for Pages success; package pushed Sites source using helper and deploy; verify both public URLs and actual data timestamps.
 

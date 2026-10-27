@@ -51,7 +51,7 @@ def write_all(outdir, incidents, px, meta, wib, pages_url):
             f.write(f"{px['lat'][k]:.5f},{px['lon'][k]:.5f},{wib(px['tl'][k])},{px['frp'][k]:.1f},{int(px['n'][k])}\n")
     # KML
     k = ['<?xml version="1.0" encoding="UTF-8"?>', '<kml xmlns="http://www.opengis.net/kml/2.2"><Document>',
-         f'<name>Siaga Api – {escape(meta["generated"])}</name>']
+         f'<name>Fire Tracker – {escape(meta["generated"])}</name>']
     for c, col in KML_COL.items():
         k.append(f'<Style id="{c}"><IconStyle><color>{col}</color><scale>1.1</scale><Icon><href>http://maps.google.com/mapfiles/kml/shapes/firedept.png</href></Icon></IconStyle>'
                  f'<LineStyle><color>{col}</color><width>2</width></LineStyle><PolyStyle><color>40{col[2:]}</color></PolyStyle></Style>')
@@ -69,7 +69,7 @@ def write_all(outdir, incidents, px, meta, wib, pages_url):
     # KML NetworkLink: Google Earth / ATAK memuat ulang otomatis
     if pages_url:
         nl = f'''<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2"><NetworkLink><name>Siaga Api (otomatis diperbarui)</name>
+<kml xmlns="http://www.opengis.net/kml/2.2"><NetworkLink><name>Fire Tracker (otomatis diperbarui)</name>
 <refreshVisibility>0</refreshVisibility><Link><href>{pages_url}/data/feeds/incidents.kml</href><refreshMode>onInterval</refreshMode><refreshInterval>1800</refreshInterval></Link></NetworkLink></kml>'''
         open(os.path.join(outdir, "network-link.kml"), "w").write(nl)
     # CoT (Cursor-on-Target) untuk ATAK/WinTAK/TAK Server
