@@ -7,10 +7,9 @@
   </picture>
 </p>
 <h1 align="center">Fire Tracker</h1>
-<p align="center">hotspot observations, drones, and field teams on a 3d map of Indonesia</p>
+<p align="center">see recent satellite hotspots across Indonesia</p>
 <p align="center">
   <a href="https://ghanyr.github.io/fire-tracker/">open the map</a> ·
-  <a href="https://ghanyr.github.io/fire-tracker/#fleet=1&amp;demo=1">try the fleet demo</a> ·
   <a href="#run-the-map-locally">run locally</a>
 </p>
 
@@ -40,7 +39,27 @@ Each detection includes its acquisition time, sensor, confidence, coordinates an
 
 ![Selected satellite observation with its sensor, acquisition time, fire radiative power and confidence](assets/readme/observation.jpg)
 
-## bring your own telemetry
+## take the context with you
+
+Situation reports keep the selected area, observation window, source timestamps and limitations together. Export a brief for a handoff or print it for offline use.
+
+![Situation report with dated source information, observation counts and verification notes](assets/readme/report.jpg)
+
+The map and dated observation list also work on a phone.
+
+<p align="center">
+  <img src="assets/readme/mobile.jpg" alt="Fire Tracker on a phone with 3D terrain, acquisition-age legend and observation timeline" width="280">
+  <img src="assets/readme/mobile-list.jpg" alt="Phone list showing dated satellite observations grouped by region" width="280">
+</p>
+
+## nearby alerts
+
+Choose an area and radius, then enable browser notifications from the bell. New satellite observations can reach the registered browser after the tab is closed; existing points do not trigger an initial alert. A saved area stays fixed. iPhone/iPad require the Home Screen app.
+
+Collection runs every three hours; alert checks run about every fifteen minutes, subject to source, scheduler and device delays. A hotspot still needs ground verification. [Setup, privacy and browser requirements](docs/NEARBY_ALERTS.md).
+
+<details>
+<summary>Drone and team tools</summary>
 
 The fleet view shows aircraft, missions, GPS age, battery and flight paths. Ground teams can share positions in a private operation session. EO/IR viewing requires a compatible camera stream.
 
@@ -53,26 +72,11 @@ The fleet view shows aircraft, missions, GPS age, battery and flight paths. Grou
 
 **The pictured aircraft and teams are simulated.** The 3D view is not camera footage. Real telemetry uses the MAVLink bridge, a compatible DJI gateway, or the JSON SDK. Protocol tests pass; physical aircraft and cameras still need field testing.
 
-[Device guide](docs/UAV.md) · [JavaScript SDK](sdk/README.md) · [Private operations API](docs/OPERATIONS.md) · [Host the API](server/README.md)
+Team GPS sharing is opt-in and requires the page to remain in the foreground.
 
-## take the context with you
+[Try the fleet demo](https://ghanyr.github.io/fire-tracker/#fleet=1&demo=1) · [Device guide](docs/UAV.md) · [JavaScript SDK](sdk/README.md) · [Private operations API](docs/OPERATIONS.md) · [Host the API](server/README.md)
 
-Situation reports keep the selected area, observation window, source timestamps and limitations together. Export a brief for a handoff or print it for offline use.
-
-![Situation report with dated source information, observation counts and verification notes](assets/readme/report.jpg)
-
-The map also works on a phone. Team GPS sharing is opt-in and requires the page to remain in the foreground.
-
-<p align="center">
-  <img src="assets/readme/mobile.jpg" alt="Fire Tracker on a phone with 3D terrain, acquisition-age legend and observation timeline" width="280">
-  <img src="assets/readme/mobile-list.jpg" alt="Phone list showing dated satellite observations grouped by region" width="280">
-</p>
-
-## nearby alerts
-
-Choose an area and radius, then enable browser notifications from the bell. New satellite observations can reach the registered browser after the tab is closed; existing points do not trigger an initial alert. A saved area stays fixed. iPhone/iPad require the Home Screen app.
-
-Collection runs every three hours; alert checks run about every fifteen minutes, subject to source, scheduler and device delays. A hotspot still needs ground verification. [Setup, privacy and browser requirements](docs/NEARBY_ALERTS.md).
+</details>
 
 ## run the map locally
 
