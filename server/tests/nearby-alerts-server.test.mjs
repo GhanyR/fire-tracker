@@ -56,7 +56,9 @@ async function fixture(t){
  const m=await material(),pushes=[];let now=start,providerStatus=201,providerHeaders={},blockPush=null,pushStarted=null;
  let snapshot={version:1,columns:['id','lon','lat','time','frp','confidence','sensor','province','municipality'],rows:[],sources:[{id:'VIIRS_NOAA21_NRT',name:'VIIRS NOAA-21',url:'https://firms.modaps.eosdis.nasa.gov/public.csv',ok:true}],provinces:['JAWA TIMUR'],municipalities:['Kab. Synthetic'],retrievedAt:new Date(now).toISOString(),latestObservedAt:null};
  const fetcher=async(url,options={})=>{
-  assert.equal(options.redirect,'error');
+  // Cloudflare Workers rejects redirect:error before any I/O.
+  if(options.redirect==='error')throw new TypeError('Invalid redirect value: use manual in Workers.');
+  assert.equal(options.redirect,'manual');
   if(url==='https://ghanyr.github.io/fire-tracker/data/observations.json')return Response.json(snapshot);
   assert.equal(new URL(url).hostname,'fcm.googleapis.com');
   pushStarted?.();if(blockPush)await blockPush;
@@ -233,4 +235,10 @@ test('saved watch bounds match the Indonesia map, and test pushes use the inject
  const historical=1600000000000;f.setTime(historical);
  const s=await f.subscribe({body:{watch:f.watch,subscription:{...f.subscription,expirationTime:historical+60000}}});
  assert.equal((await f.call('test',{id:s.id,token:s.token})).status,200);
+});
+
+
+test('Worker-compatible no-follow requests reject provider redirects without recording delivery',async t=>{
+ const f=await fixture(t);await f.subscribe();f.setTime(start+60000);f.setRows([f.row('redirect-case',start+1000)]);f.provider(302,{Location:'https://attacker.example/'});
+ const result=await f.dispatch();assert.equal(result.status,200);assert.equal(result.body.sent,0);assert.equal(result.body.failed,1);assert.equal(f.pushes.length,1);assert.equal(f.sqlite.prepare('SELECT count(*) n FROM alert_deliveries').get().n,0);
 });

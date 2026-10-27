@@ -104,7 +104,7 @@ async function timeout(operation,ms){
 }
 async function fetchSnapshot(fetcher,now){
  try{return await timeout(async signal=>{
-  const response=await fetcher(SNAPSHOT,{cache:'no-store',redirect:'error',signal});if(!response.ok)throw new Error();
+  const response=await fetcher(SNAPSHOT,{cache:'no-store',redirect:'manual',signal});if(!response.ok)throw new Error();
   const reader=response.body?.getReader();if(!reader)throw new Error();const chunks=[];let total=0;
   try{while(true){const {value,done}=await reader.read();if(done)break;total+=value.length;if(total>32*1024*1024){await reader.cancel();throw new Error();}chunks.push(value);}}finally{reader.releaseLock();}
   const bytes=new Uint8Array(total);let at=0;for(const c of chunks){bytes.set(c,at);at+=c.length;}
@@ -133,7 +133,7 @@ async function push(config,payload,message,fetcher,sendPush,readNow,beforeSend){
  if(request.body.byteLength>4096)throw new Error('Push payload too large');
  return timeout(async signal=>{
   if(!await beforeSend(readNow()))throw new Error('The watch lease is no longer active');
-  const response=await (sendPush||fetcher)(subscriptionValue.endpoint,{...request,redirect:'error',signal});
+  const response=await (sendPush||fetcher)(subscriptionValue.endpoint,{...request,redirect:'manual',signal});
   const result={status:response.status,retryAfter:response.headers?.get('Retry-After')};try{await response.body?.cancel();}catch{}return result;
  },10000);
 }
