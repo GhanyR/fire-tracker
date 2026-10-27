@@ -1,6 +1,6 @@
 # Fire Tracker Fleet and Private Operations Implementation Plan
 
-> **For agentic workers:** Use the existing Sites workflow and bounded independent tasks. Steps use checkbox syntax for tracking.
+> Implementation checklist for fleet and private operations.
 
 **Goal:** Make the public tracker useful for monitoring connected UAVs and voluntarily shared response-team locations, with an operational fleet view matching the supplied reference.
 

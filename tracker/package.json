@@ -22,5 +22,13 @@
   "devDependencies": {
     "@vitejs/plugin-react": "6.0.2",
     "vite": "8.0.13"
+  },
+  "author": {
+    "name": "Ghany Rasyid",
+    "url": "https://github.com/GhanyR"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GhanyR/fire-tracker.git"
   }
 }

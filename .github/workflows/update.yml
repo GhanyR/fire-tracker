@@ -120,8 +120,8 @@ jobs:
         run: |
           cd site
           git init -q -b data
-          git config user.name "pantau-api-bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Ghany Rasyid"
+          git config user.email "63539023+GhanyR@users.noreply.github.com"
           git add data
           git commit -q -m "data $(date -u +%Y-%m-%dT%H:%MZ)"
           git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" data
