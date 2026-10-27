@@ -5,13 +5,14 @@ import DroneLayer from './DroneLayer';
 import TeamLayer from './TeamLayer';
 import {assetUrl} from '../lib/data-client.mjs';
 import {validCoordinates} from '../lib/fire-data.mjs';
+import {watchCircle} from '../lib/nearby-alerts.mjs';
 import {HOUR} from '../lib/observation-time.mjs';
 import {age,number,time,title} from './format.mjs';
 const timeColor=(at,key='observed')=>['case',['>=',['get',key],at-3*HOUR],'#ff663e',['>=',['get',key],at-12*HOUR],'#dba15b','#8caaad'];
 const empty={type:'FeatureCollection',features:[]};
 const fc=features=>({type:'FeatureCollection',features});
 const point=(coordinates,properties)=>({type:'Feature',geometry:{type:'Point',coordinates},properties});
-export default function FireMap({playbackTarget=null,colorMode='light',rows,metadata,referenceTime=Date.now(),replaying=false,context,bmkg,layers,terrain,basemap,camera,selected,onSelect,onReady,onMove,exaggeration=1.5,orbit=false,onOrbitStop,vehicles=[],selectedDroneId=null,droneNow=Date.now(),onSelectDrone,teams=[],selectedTeamId=null,onSelectTeam}){
+export default function FireMap({watchArea=null,playbackTarget=null,colorMode='light',rows,metadata,referenceTime=Date.now(),replaying=false,context,bmkg,layers,terrain,basemap,camera,selected,onSelect,onReady,onMove,exaggeration=1.5,orbit=false,onOrbitStop,vehicles=[],selectedDroneId=null,droneNow=Date.now(),onSelectDrone,teams=[],selectedTeamId=null,onSelectTeam}){
  const el=useRef(null),mapRef=useRef(null),dataRef=useRef({}),callbacks=useRef({}),selectionMarker=useRef(null);const [ready,setReady]=useState(false),[error,setError]=useState('');
  const hasRecent=useMemo(()=>rows.some(r=>r[3]>=referenceTime-HOUR),[rows,referenceTime]);
  const rowLookup=useMemo(()=>new Map(rows.map(r=>[r[0],r])),[rows]);
@@ -30,6 +31,7 @@ export default function FireMap({playbackTarget=null,colorMode='light',rows,meta
  map.addLayer({id:'hotspots',type:'circle',source:'hotspots',filter:['!',['has','point_count']],paint:{'circle-pitch-alignment':'map','circle-color':timeColor(referenceTime),'circle-radius':['interpolate',['linear'],['zoom'],4,2,8,2.8,12,4,15,5.5],'circle-stroke-color':'#fff0c7','circle-stroke-width':0.55,'circle-opacity':0.9}});
  map.addLayer({id:'observation-pulse',type:'circle',source:'hotspots',filter:['all',['!',['has','point_count']],['>=',['get','observed'],referenceTime-HOUR]],paint:{'circle-pitch-alignment':'map','circle-radius':9,'circle-color':'#ff794d','circle-opacity':0,'circle-stroke-color':'#ffe1ba','circle-stroke-width':1}});
  for(const [id,color,radius] of [['operations','#e5e8d3',6],['citizens','#f7be5c',5],['facilities','#60bfac',6],['air','#b798db',6],['bmkg','#50c8ee',5]]){map.addSource(id,{type:'geojson',data:empty});map.addLayer({id,type:'circle',source:id,paint:{'circle-pitch-alignment':'map','circle-radius':radius,'circle-color':color,'circle-stroke-width':id==='operations'?2:1,'circle-stroke-color':id==='operations'?'#48654e':'#fff8e9','circle-opacity':0.96}});}
+ map.addSource('alert-area',{type:'geojson',data:empty});map.addLayer({id:'alert-area-fill',type:'fill',source:'alert-area',paint:{'fill-color':'#72cdb8','fill-opacity':.09}});map.addLayer({id:'alert-area-line',type:'line',source:'alert-area',paint:{'line-color':'#72cdb8','line-width':2,'line-dasharray':[3,2]}});
  map.addSource('playback-focus',{type:'geojson',data:empty});map.addLayer({id:'playback-focus-ring',type:'circle',source:'playback-focus',paint:{'circle-radius':16,'circle-color':'#ff663e','circle-opacity':.08,'circle-stroke-color':'#ff663e','circle-stroke-width':2,'circle-stroke-opacity':.9}});map.addLayer({id:'playback-focus-center',type:'circle',source:'playback-focus',paint:{'circle-radius':4,'circle-color':'#ff663e','circle-stroke-color':'#fff1da','circle-stroke-width':1.5}});
  map.on('click',e=>{const f=map.queryRenderedFeatures(e.point,{layers:['air','facilities','operations','citizens','bmkg','hotspots','clusters']})[0];if(!f)return;
  if(f.layer.id==='clusters'){map.getSource('hotspots').getClusterExpansionZoom(f.properties.cluster_id).then(z=>map.easeTo({center:f.geometry.coordinates,zoom:z+0.5,duration:700}));return;}
@@ -50,6 +52,7 @@ export default function FireMap({playbackTarget=null,colorMode='light',rows,meta
  });
  map.on('error',e=>{console.warn('Fire Tracker map:',e.error?.message);if(e.error?.message?.includes('WebGL'))setError('Peta 3D tidak didukung perangkat ini. Daftar dan ekspor data tetap tersedia.');});
  }catch{setError('Peta tidak dapat dimuat. Gunakan daftar laporan atau ekspor data.');}});return()=>{disposed=true;mapRef.current=null;setReady(false);selectionMarker.current?.remove();hover?.remove();map?.remove();};},[]);
+ useEffect(()=>{const m=mapRef.current;if(!ready||!m)return;let area=empty;try{if(watchArea)area=fc([watchCircle(watchArea)]);}catch{}m.getSource('alert-area').setData(area);},[ready,watchArea?.lat,watchArea?.lon,watchArea?.radiusKm]);
  useEffect(()=>{const m=mapRef.current;if(!ready||!m)return;m.getSource('hotspots').setData(fc(rows.map((r,index)=>point([r[1],r[2]],{id:r[0],index,confidence:r[5],frp:r[4],observed:r[3]}))));},[rows,ready]);
  useEffect(()=>{const m=mapRef.current;if(!ready||!m)return;m.getSource('playback-focus').setData(playbackTarget&&layers.satellite?fc([point(playbackTarget.center,{})]):empty);},[ready,playbackTarget,layers.satellite]);
  useEffect(()=>{const m=mapRef.current;if(!ready||!m)return;m.setPaintProperty('clusters','circle-color',timeColor(referenceTime,'maxObserved'));m.setPaintProperty('hotspots','circle-color',timeColor(referenceTime));m.setPaintProperty('hotspot-glow','circle-color',timeColor(referenceTime));m.setFilter('observation-pulse',['all',['!',['has','point_count']],['>=',['get','observed'],referenceTime-HOUR]]);},[referenceTime,ready]);

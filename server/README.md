@@ -2,6 +2,8 @@
 
 `worker.mjs` is a standalone Cloudflare Worker exposing the same private API as the hosted tracker. `lib/operations-server.mjs`, schema-only Drizzle SQL, schema and tests are included under MIT. No credentials or user locations are in this source.
 
+Run `npm ci --prefix server` first. The worker also serves [nearby push alerts](../docs/NEARBY_ALERTS.md), with separate secrets, encrypted watches and a scheduler.
+
 1. Create a D1 database in your own Cloudflare account (for example `npx wrangler@4.92.0 d1 create fire-tracker-operations`).
 2. Copy `wrangler.example.jsonc` to an untracked `wrangler.jsonc` in this folder. Replace the placeholder with the actual D1 ID returned by Cloudflare; preserve binding `DB`.
 3. From the repository root, apply `npx wrangler@4.92.0 d1 migrations apply DB --remote --config server/wrangler.jsonc`, then deploy with `npx wrangler@4.92.0 deploy --config server/wrangler.jsonc`.

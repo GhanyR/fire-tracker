@@ -13,3 +13,4 @@ tracker/public/data/observations.json
 
 server/wrangler.jsonc
 server/.wrangler/
+server/node_modules/

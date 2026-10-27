@@ -68,6 +68,12 @@ The map also works on a phone. Team GPS sharing is opt-in and requires the page 
   <img src="assets/readme/mobile-list.jpg" alt="Phone list showing dated satellite observations grouped by region" width="280">
 </p>
 
+## nearby alerts
+
+Choose an area and radius, then enable browser notifications from the bell. New satellite observations can reach the registered browser after the tab is closed; existing points do not trigger an initial alert. A saved area stays fixed. iPhone/iPad require the Home Screen app.
+
+Collection runs every three hours; alert checks run about every fifteen minutes, subject to source, scheduler and device delays. A hotspot still needs ground verification. [Setup, privacy and browser requirements](docs/NEARBY_ALERTS.md).
+
 ## run the map locally
 
 Requires **Node 22.13+**. This starts the map frontend; the data pipeline, telemetry bridge and private API are separate services.

@@ -48,6 +48,8 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const u = new URL(req.url);
+  // Keep private watches, operation state, and capabilities out of all offline caches.
+  if (u.pathname.startsWith('/api/') || req.headers.has('Authorization') || req.headers.has('X-Alert-Id') || req.headers.has('X-Operation-Id')) return;
   if (u.hostname === 'server.arcgisonline.com' || u.hostname === 'tiles.maps.eox.at' || u.hostname.endsWith('s3.amazonaws.com') || u.hostname === 'gibs.earthdata.nasa.gov') {
     e.respondWith(cacheFirst(req, CACHE.tiles, TILE_MAX));
     return;

@@ -49,6 +49,7 @@ Run the checks for the parts you changed from the repository root. Frontend and 
 ```sh
 npm test --prefix tracker
 npm run build --prefix tracker
+npm ci --prefix server
 node --test server/tests/*.test.mjs
 node --test web/tests/*.test.mjs
 ```

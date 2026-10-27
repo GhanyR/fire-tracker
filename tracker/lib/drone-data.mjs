@@ -40,7 +40,7 @@ export function demoDrones(elapsedMs,now=Date.now()){
  return units.map(([name,mission,airframe,bat,alt,spd],i)=>{const landed=i===5,a=elapsedMs/(80000+i*26000)+i*Math.PI/3,r=.006+i*.003;return {type:'telemetry',id:`DEMO-0${i+1}`,name,mission,airframe,flightStatus:landed?'landed':'airborne',linkQuality:96-i*5,streams:[],lat:landed?-8.026:-8.015+Math.cos(a)*r,lon:landed?112.948:112.955+Math.sin(a)*r/Math.cos(-8.015*Math.PI/180),alt,alt_msl:null,hdg:landed?null:(a*180/Math.PI+90)%360,spd,bat,mode:landed?'Demo siaga':'Demo pemantauan',armed:!landed,model:airframe==='fixed-wing'?'Fixed-wing contoh':'Quadcopter contoh',link:'sim',simulated:true,t:new Date(now).toISOString()};});
 }
 
-export function shareCamera({selectedCoordinates,camera,demo=false,hasLiveSession=false}){return selectedCoordinates||(demo?[112.955,-8.015]:hasLiveSession?null:[camera.lon,camera.lat]);}
+export function shareCamera({selectedCoordinates,camera,demo=false,hasLiveSession=false,privateArea=false}){return selectedCoordinates||(demo?[112.955,-8.015]:hasLiveSession||privateArea?null:[camera.lon,camera.lat]);}
 
 export function fleetTelemetryStatus(drone,feed={}){
  const now=feed.now??Date.now(),age=Math.max(0,Math.floor((now-drone.time)/1000));

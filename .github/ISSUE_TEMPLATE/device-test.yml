@@ -1,47 +1,47 @@
-name: device test / uji perangkat
+name: device test
 description: Share what you actually tested with a drone, controller, or telemetry gateway.
 title: "device: "
 body:
   - type: markdown
     attributes:
       value: |
-        Report a completed test, including failures. Indonesian or English is fine.
+        Report a completed test, including failures. English is preferred.
         Keep aircraft serial numbers, precise private locations, access keys, and identifiable flight logs out of this public report.
         Fire Tracker reads telemetry; it does not send flight commands.
   - type: dropdown
     id: test-kind
     attributes:
-      label: What was tested? / Jenis pengujian
+      label: What was tested?
       options:
-        - Physical aircraft / pesawat fisik
-        - Hardware controller or gateway only / kontroler atau gateway saja
-        - Software simulator / simulator perangkat lunak
-        - Synthetic packets or fixtures / paket sintetis atau fixture
+        - Physical aircraft
+        - Hardware controller or gateway only
+        - Software simulator
+        - Synthetic packets or fixtures
     validations:
       required: true
   - type: textarea
     id: setup
     attributes:
-      label: Hardware, firmware, and software / Perangkat dan versi
+      label: Hardware, firmware, and software
       description: Aircraft or controller model, firmware version, gateway/bridge version, OS, and Fire Tracker commit if known. Do not include serial numbers.
     validations:
       required: true
   - type: textarea
     id: connection
     attributes:
-      label: Connection / Sambungan
+      label: Connection
       description: Protocol and transport, such as MAVLink over UDP, DJI gateway over HTTP, or JSON over WebSocket. Redact credentials and private addresses.
     validations:
       required: true
   - type: textarea
     id: result
     attributes:
-      label: Result / Hasil
+      label: Result
       description: Which fields worked, which were missing or wrong, disconnect/stale behavior, and whether a real camera stream was tested. Do not call a basemap preview camera footage.
     validations:
       required: true
   - type: textarea
     id: reproduce
     attributes:
-      label: Steps and safe evidence / Langkah dan bukti
+      label: Steps and safe evidence
       description: Include sanitized packets or a minimal reproduction using synthetic coordinates when possible. Keep simulation labels visible.

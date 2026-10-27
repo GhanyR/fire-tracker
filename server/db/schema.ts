@@ -35,3 +35,30 @@ export const operationsRateLimits = sqliteTable('operations_rate_limits', {
   expiresAt: integer('expires_at').notNull(),
   count: integer('count').notNull(),
 }, table => [index('operations_rate_limits_expiry').on(table.expiresAt)]);
+
+// Long-lived, explicitly opted-in watches; never reuse ephemeral operations GPS.
+export const alertWatches = sqliteTable('alert_watches', {
+  id: text('id').primaryKey(),
+  tokenHash: text('token_hash').notNull(),
+  endpointHash: text('endpoint_hash').notNull(),
+  payloadCiphertext: text('payload_ciphertext').notNull(),
+  createdAt: integer('created_at').notNull(),
+  expiresAt: integer('expires_at').notNull(),
+  lastCheckedAt: integer('last_checked_at'),
+  leaseToken: text('lease_token'),
+  leaseUntil: integer('lease_until'),
+  nextAttemptAt: integer('next_attempt_at'),
+  failureCount: integer('failure_count').notNull().default(0),
+}, table => [uniqueIndex('alert_watches_endpoint').on(table.endpointHash), index('alert_watches_expiry').on(table.expiresAt)]);
+
+export const alertDeliveries = sqliteTable('alert_deliveries', {
+  watchId: text('watch_id').notNull().references(() => alertWatches.id, { onDelete: 'cascade' }),
+  observationId: text('observation_id').notNull(),
+  observedAt: integer('observed_at').notNull(),
+}, table => [primaryKey({ columns: [table.watchId, table.observationId] }), index('alert_deliveries_observed').on(table.observedAt)]);
+
+export const alertRateLimits = sqliteTable('alert_rate_limits', {
+  key: text('key').primaryKey(),
+  expiresAt: integer('expires_at').notNull(),
+  count: integer('count').notNull(),
+}, table => [index('alert_rate_limits_expiry').on(table.expiresAt)]);

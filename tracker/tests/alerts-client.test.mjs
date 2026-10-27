@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readSavedAlert,clearLocalAlert,isStaleWatchError,ALERT_STORAGE} from '../lib/alerts-client.mjs';
+const saved={id:'a'.repeat(22),token:'b'.repeat(43),watch:{name:'Area',lat:-8,lon:113,radiusKm:10,minConfidence:1},expiresAt:'2027-01-01T00:00:00Z'};
+test('saved alerts restore only valid credentials, coordinates and future expiry',()=>{assert.equal(readSavedAlert(JSON.stringify(saved),Date.UTC(2026,9,27)).id,saved.id);assert.equal(readSavedAlert(JSON.stringify({...saved,watch:{...saved.watch,lat:NaN}})),null);assert.equal(readSavedAlert(JSON.stringify(saved),Date.UTC(2028,0,1)),null);assert.equal(readSavedAlert('{'),null);});
+test('401 expiry is recognized without treating temporary service failures as revocation',()=>{assert.equal(isStaleWatchError({status:401}),true);assert.equal(isStaleWatchError({status:410}),true);assert.equal(isStaleWatchError({status:503}),false);});
+test('retiring a stale watch clears credentials and browser subscription so re-enable can succeed',async()=>{const store=new Map([[ALERT_STORAGE,JSON.stringify(saved)]]);let retired=false;await clearLocalAlert({storage:{removeItem:key=>store.delete(key)},worker:{getRegistration:async()=>({pushManager:{getSubscription:async()=>({unsubscribe:async()=>{retired=true;}})}})},scope:'https://example.com/alerts/'});assert.equal(store.has(ALERT_STORAGE),false);assert.equal(retired,true);});

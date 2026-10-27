@@ -1,24 +1,24 @@
-name: bug report / laporan masalah
+name: bug report
 description: A reproducible problem with the map, data, playback, or exports.
 title: "bug: "
 body:
   - type: markdown
     attributes:
       value: |
-        Describe one problem. Indonesian or English is fine.
+        Describe one problem. English is preferred.
         Use public coordinates only. Remove operation keys, tokens, private team locations, and personal information from screenshots and logs.
         This issue tracker is not an emergency-reporting channel.
   - type: textarea
     id: problem
     attributes:
-      label: What happened? / Apa masalahnya?
+      label: What happened?
       description: What did you expect, and what happened instead?
     validations:
       required: true
   - type: textarea
     id: reproduce
     attributes:
-      label: Steps to reproduce / Cara mengulang
+      label: Steps to reproduce
       placeholder: |
         1. Open the map...
         2. Choose...
@@ -28,17 +28,17 @@ body:
   - type: input
     id: environment
     attributes:
-      label: Browser and device / Browser dan perangkat
+      label: Browser and device
       placeholder: Firefox 142, Android 15 / desktop
     validations:
       required: true
   - type: textarea
     id: context
     attributes:
-      label: Public map link and source time / Tautan peta dan waktu sumber
+      label: Public map link and source time
       description: If relevant, include the region, acquisition time, snapshot time, and public coordinates. Never include private session links or keys.
   - type: textarea
     id: evidence
     attributes:
-      label: Screenshots or sanitized logs / Bukti yang aman dibagikan
+      label: Screenshots or sanitized logs
       description: Keep source dates and simulation labels visible. Remove private data before attaching.

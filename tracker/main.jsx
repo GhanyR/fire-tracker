@@ -1,3 +1,4 @@
+import './styles/nearby-alerts.css';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import FireDashboard from './components/FireDashboard';

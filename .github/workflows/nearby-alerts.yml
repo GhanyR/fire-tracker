@@ -1,0 +1,27 @@
+name: Check nearby alerts
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['tools/dispatch-alerts.mjs', '.github/workflows/nearby-alerts.yml']
+permissions:
+  contents: read
+concurrency:
+  group: nearby-alerts
+  cancel-in-progress: false
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check saved areas
+        env:
+          ALERT_DISPATCH_TOKEN: ${{ secrets.ALERT_DISPATCH_TOKEN }}
+          ALERTS_ORIGIN: ${{ vars.ALERTS_ORIGIN }}
+        run: node tools/dispatch-alerts.mjs

@@ -27,3 +27,10 @@ test('app updates preserve offline data and caches belonging to other sites', as
   assert.equal(saved.get('pantau-api-v5-pkg'), 'offline incident package');
   assert.equal(saved.has('pantau-api-v4-shell'), false);
 });
+
+test('private APIs and authenticated requests bypass offline caching',async()=>{
+ const handlers=new Map();vm.runInNewContext(source,{self:{location:{origin:'https://example.org'},addEventListener:(name,handler)=>handlers.set(name,handler)},URL,caches:{open:async()=>({match:async()=>null,put:async()=>{}})},fetch:async()=>new Response('{}')});
+ for(const request of [new Request('https://example.org/api/alerts/status',{headers:{Authorization:'Bearer private','X-Alert-Id':'watch'}}),new Request('https://example.org/api/operations/state'),new Request('https://example.org/export.json',{headers:{Authorization:'Bearer private'}})]){
+  let intercepted=false;handlers.get('fetch')({request,respondWith:work=>{intercepted=true;work.catch(()=>{});}});assert.equal(intercepted,false,request.url);
+ }
+});

@@ -71,7 +71,9 @@ jobs:
         run: |
           python -m unittest discover -s bridge/tests -v
           npm test --prefix sdk
-      - name: Uji API operasi privat
+      - name: Prepare server dependencies
+        run: npm ci --prefix server
+      - name: Test private operations and nearby alerts
         run: node --test server/tests/*.test.mjs
       - name: Uji penyimpanan offline
         run: node --test web/tests/*.test.mjs
