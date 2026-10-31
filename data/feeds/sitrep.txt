@@ -1,0 +1,20 @@
+*SITREP KARHUTLA NASIONAL*
+Data satelit s.d. 2026-10-31 15:35 WIB (NASA FIRMS)
+Deteksi 24 jam: 5.069 | 7 hari: 53.560
+Insiden aktif 24 jam: 423 (kritis: 1)
+Provinsi teratas (deteksi 24 jam):
+1. Papua Selatan: 1147
+2. Kalimantan Tengah: 513
+3. Kalimantan Timur: 359
+4. Sulawesi Tengah: 618
+5. Sulawesi Tenggara: 546
+6. Nusa Tenggara Timur: 209
+Insiden prioritas tertinggi:
+1. KRH-SP5Y Pulang Pisau 1 (Kalimantan Tengah) skor 72, 86 deteksi 24j, -2.5559,114.1469
+2. KRH-BORC Merauke 1 (Papua Selatan) skor 64, 237 deteksi 24j, -7.8514,140.6154
+3. KRH-AGOS Merauke 2 (Papua Selatan) skor 59, 105 deteksi 24j, -8.2302,138.2714
+4. KRH-DM7H Merauke 3 (Papua Selatan) skor 59, 90 deteksi 24j, -7.2701,140.6773
+5. KRH-80TV Merauke 4 (Papua Selatan) skor 56, 37 deteksi 24j, -9.0196,140.9836
+6. KRH-MJ69 Bone 1 (Sulawesi Selatan) skor 56, 34 deteksi 24j, -4.4805,120.1486
+7. KRH-R9VC Banyu Asin 1 (Sumatera Selatan) skor 56, 10 deteksi 24j, -3.0156,104.5774
+8. KRH-TA0N Barito Selatan 1 (Kalimantan Tengah) skor 55, 47 deteksi 24j, -2.4212,114.6446
