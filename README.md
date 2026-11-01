@@ -9,11 +9,11 @@
 <h1 align="center">Fire Tracker</h1>
 <p align="center">see recent satellite hotspots across Indonesia</p>
 <p align="center">
-  <a href="https://ghanyr.github.io/fire-tracker/">open the map</a> ·
+  <a href="https://firetracker.id/">open the map</a> ·
   <a href="#run-the-map-locally">run locally</a>
 </p>
 
-<a href="https://ghanyr.github.io/fire-tracker/#scene=bromo&amp;hours=168">
+<a href="https://firetracker.id/#scene=bromo&amp;hours=168">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/readme/map-dark.jpg">
     <img src="assets/readme/map-light.jpg" alt="Real NASA FIRMS hotspot observations around Bromo–Semeru, with 3D terrain, acquisition-age bands and a seven-day timeline" width="1280">
@@ -31,7 +31,7 @@ Choose 24 hours, 48 hours, or seven days. Press play to move through satellite a
   <img src="assets/readme/history.gif" alt="Screen recording of satellite observation history: the acquisition clock, counts and map advance together as the camera visits newly revealed hotspots" width="960">
 </picture>
 
-A shortened recording of the actual app. This is observation history, not a simulation of fire spread. [Replay recording](assets/readme/history.gif) · [Open the same area →](https://ghanyr.github.io/fire-tracker/#scene=bromo&hours=168)
+A shortened recording of the actual app. This is observation history, not a simulation of fire spread. [Replay recording](assets/readme/history.gif) · [Open the same area →](https://firetracker.id/#scene=bromo&hours=168)
 
 ## open a point, check the evidence
 
@@ -63,7 +63,7 @@ Collection runs every three hours; alert checks run about every fifteen minutes,
 
 The fleet view shows aircraft, missions, GPS age, battery and flight paths. Ground teams can share positions in a private operation session. EO/IR viewing requires a compatible camera stream.
 
-<a href="https://ghanyr.github.io/fire-tracker/#fleet=1&amp;demo=1">
+<a href="https://firetracker.id/#fleet=1&amp;demo=1">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/readme/fleet-dark.jpg">
     <img src="assets/readme/fleet-light.jpg" alt="Simulated UAV fleet over a 3D basemap, with aircraft missions, status, battery levels and a selected unit" width="1440">
@@ -74,7 +74,7 @@ The fleet view shows aircraft, missions, GPS age, battery and flight paths. Grou
 
 Team GPS sharing is opt-in and requires the page to remain in the foreground.
 
-[Try the fleet demo](https://ghanyr.github.io/fire-tracker/#fleet=1&demo=1) · [Device guide](docs/UAV.md) · [JavaScript SDK](sdk/README.md) · [Private operations API](docs/OPERATIONS.md) · [Host the API](server/README.md)
+[Try the fleet demo](https://firetracker.id/#fleet=1&demo=1) · [Device guide](docs/UAV.md) · [JavaScript SDK](sdk/README.md) · [Private operations API](docs/OPERATIONS.md) · [Host the API](server/README.md)
 
 </details>
 
