@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {expression} from '@maplibre/maplibre-gl-style-spec';
-import {createReplayDataWriter,replayTimeFilter,observationCollection,playbackFrameReady,observeTerrainAvailability,preparePlaybackTerrain} from '../lib/map-observations.mjs';
+import {createReplayDataWriter,replayTimeFilter,observationCollection,playbackFrameReady,observeTerrainAvailability,prepareTerrain} from '../lib/map-observations.mjs';
 const row=(id,t,lon=113,lat=-8)=>[id,lon,lat,t,null,1,0,0,0];
 function visible(filter,observed){const parsed=expression.createExpression(filter);assert.equal(parsed.result,'success');return parsed.value.evaluate({zoom:10},{type:1,properties:{observed}});}
 test('preloaded replay geometry hides future acquisitions and reveals the exact clock edge while scrubbing in both directions',()=>{
@@ -34,7 +34,7 @@ test('failed DEM completion stays flat; only successful destination or cached te
  const events=new Map(),calls=[];let moving=true,sourceLoaded=true,center={lng:112,lat:-8};
  const map={on:(e,f)=>{if(!events.has(e))events.set(e,new Set());events.get(e).add(f);},off:(e,f)=>events.get(e)?.delete(f),isSourceLoaded:()=>sourceLoaded,getCenter:()=>center,getZoom:()=>10,isMoving:()=>moving,setTerrain:x=>calls.push(x)};
  const emit=(type,e)=>{for(const f of events.get(type)||[])f(e);};
- const terrain=observeTerrainAvailability(map),stop=preparePlaybackTerrain(map,1.5,terrain.available);
+ const terrain=observeTerrainAvailability(map),stop=prepareTerrain(map,1.5,terrain.available);
  const tile={tileID:{canonical:{z:6,x:51,y:33}},state:'errored'};
  emit('sourcedata',{sourceId:'dem',tile});moving=false;t.mock.timers.tick(1000);assert.deepEqual(calls,[null]);
  tile.state='loaded';tile.dem={};emit('sourcedata',{sourceId:'dem',tile});sourceLoaded=false;t.mock.timers.tick(250);assert.equal(calls.length,1);
@@ -42,6 +42,6 @@ test('failed DEM completion stays flat; only successful destination or cached te
  stop();assert.equal(events.get('idle').size,0);
  center={lng:127,lat:-1};assert.equal(terrain.available(),false);center={lng:112,lat:-8};assert.equal(terrain.available(),true);
  delete tile.dem;assert.equal(terrain.available(),false);
- const cancel=preparePlaybackTerrain(map,1.5,terrain.available);cancel();tile.dem={};emit('sourcedata',{sourceId:'dem',tile});t.mock.timers.tick(1000);assert.equal(calls.length,3);
+ const cancel=prepareTerrain(map,1.5,terrain.available);cancel();tile.dem={};emit('sourcedata',{sourceId:'dem',tile});t.mock.timers.tick(1000);assert.equal(calls.length,3);
  terrain.dispose();assert.equal(events.get('sourcedata').size,0);
 });

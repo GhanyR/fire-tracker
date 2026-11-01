@@ -17,7 +17,7 @@ export function playbackFrameReady({moving,sourceLoaded,tilesLoaded,elapsed}){re
 // Keep imagery and observations readable while a distant destination's terrain
 // loads. The DEM remains requested by hillshade; restore elevation only after
 // the new camera has settled and its tiles are available.
-export function preparePlaybackTerrain(map,exaggeration,terrainAvailable){
+export function prepareTerrain(map,exaggeration,terrainAvailable){
  map.setTerrain(null);
  let timer,restored=false;
  const check=()=>{if(!restored&&!map.isMoving()&&terrainAvailable()){restored=true;clearInterval(timer);map.setTerrain({source:'dem',exaggeration});}};
