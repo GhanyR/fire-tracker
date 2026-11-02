@@ -1,8 +1,8 @@
 'use client';
-import {useCallback,useDeferredValue,useEffect,useMemo,useRef,useState} from 'react';
+import {lazy,Suspense,useCallback,useDeferredValue,useEffect,useMemo,useRef,useState} from 'react';
 import {Video,Drone,Activity,ArrowDownToLine,ArrowRight,ArrowUpRight,Check,ChevronDown,ChevronRight,Clock3,CloudFog,Copy,Download,ExternalLink,Eye,Flame,Focus,Globe2,Info,Layers3,LocateFixed,Map as MapIcon,MapPin,Mountain,Pause,Phone,Play,Radio,RefreshCw,Search,Settings2,Share2,ShieldCheck,SlidersHorizontal,Wind,X,Building2,Satellite,Printer,FileJson,FileSpreadsheet,Menu,ChevronLeft,Users,Bell} from 'lucide-react';
-import DroneShowcase from './DroneShowcase';
-import DesignLab from './DesignLab';
+const DroneShowcase=deferred(()=>import('./DroneShowcase'));
+const DesignLab=deferred(()=>import('./DesignLab'));
 import {DESIGN_BRANCH} from '../lib/design-branch.mjs';
 import {previewFleet} from '../lib/uav-preview.mjs';
 import FireMap from './FireMap';
@@ -10,29 +10,33 @@ import FireLogo from './FireLogo';
 import GithubMark from './GithubMark';
 import ThemeToggle from './ThemeToggle';
 import useColorTheme from './useColorTheme';
-import DronePanel from './DronePanel';
-import DroneVideo from './DroneVideo';
-import FleetHud from './FleetHud';
-import OperationsPanel,{FieldCompanion} from './OperationsPanel';
+const DronePanel=deferred(()=>import('./DronePanel'));
+const DroneVideo=deferred(()=>import('./DroneVideo'));
+const FleetHud=deferred(()=>import('./FleetHud'));
+const OperationsPanel=deferred(()=>import('./OperationsPanel'));
+const FieldCompanion=deferred(()=>import('./OperationsPanel').then(m=>({default:m.FieldCompanion})));
 import useOperationsSession from './useOperationsSession';
 import {demoResources,parseFieldInvite} from '../lib/operations-client.mjs';
 import useDroneFeed from './useDroneFeed';
-import DetailPanel from './DetailPanel';
-import TerrainInspector from './TerrainInspector';
+const DetailPanel=deferred(()=>import('./DetailPanel'));
+
 import TemporalTimeline from './TemporalTimeline';
 import ObservationHUD from './ObservationHUD';
-import SituationReport from './SituationReport';
+const SituationReport=deferred(()=>import('./SituationReport'));
 import {AGE_BANDS,temporalRange,summarizeSituation} from '../lib/observation-time.mjs';
 import {playbackBins,playbackFocus,nextPlaybackProgress} from '../lib/playback-focus.mjs';
 import LatestPanel from './LatestPanel';
-import NearbyAlerts from './NearbyAlerts';
-import {assetUrl,fetchObservations,isStatic,json,REPOSITORY,PUBLIC_DATA} from '../lib/data-client.mjs';
+const NearbyAlerts=deferred(()=>import('./NearbyAlerts'));
+import {assetUrl,fetchObservations,isStatic,json,REPOSITORY,PUBLIC_DATA,loadInitialFeeds} from '../lib/data-client.mjs';
 import {reportPeriod} from '../lib/report-period.mjs';
 import {shareCamera} from '../lib/drone-data.mjs';
 import {parseCoordinateSearch,validateSnapshot} from '../lib/discovery.mjs';
 import {SCENES,withinScene,filterSceneRows,sceneMetrics} from '../lib/terrain-scenes.mjs';
 import {filterRows,mergeRows,toCSV,pointInGeometry,validCoordinates,nearestFacilities,SOURCE_FEEDS,resolveShared} from '../lib/fire-data.mjs';
 import {number,title,time,date,age,confidenceNames,download} from './format.mjs';
+function deferred(load){const View=lazy(load);return function DeferredView(props){return <Suspense fallback={<div className="deferred-loading" role="status">Memuat tampilan…</div>}><View {...props}/></Suspense>;};}
+const EMPTY=[];
+const EMPTY_CONTEXT={operations:EMPTY,communityReports:EMPTY,facilities:EMPTY,airQuality:EMPTY,contacts:EMPTY};
 const initialLayers={satellite:true,operations:false,citizens:false,facilities:false,air:false,bmkg:false,boundaries:false};
 const news=[{title:'Asap sempat terpantau di Jabodetabek, kini menjauh',agency:'BMKG',date:'17 Okt 2026',url:'https://www.bmkg.go.id/siaran-pers/bmkg-asap-sempat-terpantau-sesaat-di-jabodetabek-kini-sudah-menjauh'},{title:'Operasi karhutla diperkuat, termasuk Tanjung Puting',agency:'Kementerian Kehutanan',date:'16 Okt 2026',url:'https://www.kehutanan.go.id/news/kemenhut-berduka-operasi-karhutla-diperkuat'},{title:'Laporan resmi insiden petugas dan relawan di Bromo',agency:'Kementerian Kehutanan',date:'16 Okt 2026',url:'https://www.kehutanan.go.id/news/kemenhut-berduka-atas-gugurnya-empat-petugas-dan-relawan-saat-pemadaman-karhutla-di-bromo'}];
 const layerDefinitions=[['satellite','Observasi satelit','NASA FIRMS · 4 sensor','#ed613c',Satellite],['operations','Penanganan resmi','SiPongi & BPBD Kobar','#65816b',ShieldCheck],['citizens','Kebakaran & asap warga','PetaBencana · belum terverifikasi','#dca043',Radio],['facilities','Posko & fasilitas','Lokasi resmi · kesiapan belum diketahui','#439d88',Building2],['air','Kualitas udara','Indeks dan kategori sumber','#9a7ac1',Wind],['bmkg','GeoHotspot BMKG','Produk terpisah dari NASA','#369ebd',Activity],['boundaries','Batas provinsi','Geometri publik BMKG','#a1a798',MapIcon]];
@@ -45,7 +49,7 @@ export default function FireDashboard({initialNow}={}){
  const [actionsOpen,setActionsOpen]=useState(false);
  const [alertPreview,setAlertPreview]=useState(null),[privateAlertFocus,setPrivateAlertFocus]=useState(false);
  const bridge=useDroneFeed(),operations=useOperationsSession();
- const drone={...bridge,vehicles:operations.session?operations.drones:bridge.vehicles,mode:operations.session?'live':bridge.mode,status:operations.session?operations.status:bridge.status,error:operations.session?operations.error:bridge.error,sessionKind:operations.session?'operations':'bridge',hasLiveSession:bridge.hasLiveSession||operations.hasPrivateSession,connect:(address,token)=>{operations.disconnect();return bridge.connect(address,token);},disconnect:()=>{bridge.disconnect();operations.disconnect();},startDemo:()=>{operations.disconnect();bridge.startDemo();}};
+ const drone={...bridge,now:operations.session?operations.now:bridge.now,vehicles:operations.session?operations.drones:bridge.vehicles,mode:operations.session?'live':bridge.mode,status:operations.session?operations.status:bridge.status,error:operations.session?operations.error:bridge.error,sessionKind:operations.session?'operations':'bridge',hasLiveSession:bridge.hasLiveSession||operations.hasPrivateSession,connect:(address,token)=>{operations.disconnect();return bridge.connect(address,token);},disconnect:()=>{bridge.disconnect();operations.disconnect();},startDemo:()=>{operations.disconnect();bridge.startDemo();}};
  const ops={...operations,create:label=>{bridge.disconnect();return operations.create(label);},connect:credentials=>{bridge.disconnect();return operations.connect(credentials);}};
  const [selectedDroneId,setSelectedDroneId]=useState(null),[followDrone,setFollowDrone]=useState(false),[selectedTeamId,setSelectedTeamId]=useState(null),[videoOpen,setVideoOpen]=useState(false),[virtualView,setVirtualView]=useState(false),[fieldInvite,setFieldInvite]=useState(null);
  const fieldLinkRef=useRef(null),resourceClock=useRef(0);if(drone.mode==='demo'&&!drone.paused)resourceClock.current=drone.now;
@@ -53,7 +57,7 @@ export default function FireDashboard({initialNow}={}){
  const activeDrone=drone.vehicles.find(d=>d.id===selectedDroneId)||drone.vehicles[0];
  useEffect(()=>{const consume=()=>{const invite=parseFieldInvite(location.hash);if(invite){bridge.disconnect();operations.disconnect();fieldLinkRef.current=invite;setFieldInvite(invite);history.replaceState(null,'',location.pathname+location.search);}};consume();window.addEventListener('hashchange',consume);return()=>window.removeEventListener('hashchange',consume);},[]);
  const [scene,setScene]=useState(null),[exaggeration,setExaggeration]=useState(1.5),[orbit,setOrbit]=useState(false);
- const [data,setData]=useState(null),[context,setContext]=useState(null),[boundaries,setBoundaries]=useState(null),[bmkg,setBmkg]=useState(null);
+ const [data,setData]=useState(null),[context,setContext]=useState(EMPTY_CONTEXT),[boundaries,setBoundaries]=useState(null),[bmkg,setBmkg]=useState(null);
  const [loading,setLoading]=useState(true),[loadError,setLoadError]=useState(''),[refreshing,setRefreshing]=useState(false),[sourceStatuses,setSourceStatuses]=useState([]),[contextStatuses,setContextStatuses]=useState([]),[lastChecked,setLastChecked]=useState(null);
  const [now,setNow]=useState(()=>Number.isFinite(initialNow)?initialNow:Date.now()),[province,setProvince]=useState(-1),[municipality,setMunicipality]=useState(-1),[hours,setHours]=useState(24),[confidence,setConfidence]=useState(0),[sensor,setSensor]=useState(-1),[query,setQuery]=useState('');const deferredQuery=useDeferredValue(query);
  const [tab,setTab]=useState('ringkasan'),[modal,setModal]=useState(null),[selected,setSelected]=useState(null),[layers,setLayers]=useState(initialLayers),[terrain,setTerrain]=useState(true),[basemap,setBasemap]=useState('satellite'),[camera,setCamera]=useState(null),[mapCenter,setMapCenter]=useState({lon:112.955,lat:-8.015,zoom:11.35});
@@ -65,25 +69,37 @@ export default function FireDashboard({initialNow}={}){
  const [panelOpen,setPanelOpen]=useState(true),[mobilePanel,setMobilePanel]=useState(false),[toast,setToast]=useState(''),[timeline,setTimeline]=useState(100),[fixedCutoff,setFixedCutoff]=useState(null),[playing,setPlaying]=useState(false),[playbackAnchor,setPlaybackAnchor]=useState(null),[playSpeed,setPlaySpeed]=useState(1),[storyFollow,setStoryFollow]=useState(false),[reportSnapshot,setReportSnapshot]=useState(null),[listLimit,setListLimit]=useState(12),[reportKind,setReportKind]=useState('operations');
  const modalRef=useRef(null),panelScrollRef=useRef(null);
  const storyChapterRef=useRef(null),playbackBinsRef=useRef([]);
+ const initialContextReady=useRef(Promise.resolve()),feedLifetime=useRef(null);
  const dataRef=useRef(null),contextRef=useRef(null),searchRef=useRef(null),mapRef=useRef(null),initialRef=useRef(false),pendingShare=useRef(null);dataRef.current=data;contextRef.current=context;
  const notify=useCallback(s=>{setToast(s);setTimeout(()=>setToast(''),3800);},[]);
  const refresh=useCallback(async(silent=false)=>{
-  if(!dataRef.current)return;setRefreshing(true);
+  if(!dataRef.current||feedLifetime.current?.signal.aborted)return;setRefreshing(true);
   let satelliteOK=false;
-  try{const next=await fetchObservations();setData(old=>!old||Date.parse(next.retrievedAt)>=Date.parse(old.retrievedAt)?next:old);setSourceStatuses(next.sources.map(s=>({...s,fetchedAt:next.retrievedAt})));setFeedError(false);satelliteOK=true;}
-  catch{setFeedError(true);}
-  if(!isStatic())try{
-   const result=await json('/api/context');setContextStatuses(result.outcomes.map(({data,...rest})=>rest));
+  const satellite=async()=>{try{const next=await fetchObservations({signal:feedLifetime.current?.signal});setData(old=>!old||Date.parse(next.retrievedAt)>Date.parse(old.retrievedAt)?next:old);setSourceStatuses(next.sources.map(s=>({...s,fetchedAt:next.retrievedAt})));setFeedError(false);satelliteOK=true;}
+  catch{setFeedError(true);}};
+  const fieldContext=async()=>{if(isStatic())return;await initialContextReady.current;if(feedLifetime.current?.signal.aborted)return;try{
+   const result=await json('/api/context',{signal:feedLifetime.current?.signal,timeoutMs:8000});setContextStatuses(result.outcomes.map(({data,...rest})=>rest));
    const geo=result.outcomes.find(x=>x.id==='bmkg-geohotspot'&&x.ok);if(geo)setBmkg({rows:geo.data.bmkgRows,retrieved_at:geo.fetchedAt});
    setContext(old=>{const next={...old};for(const out of result.outcomes){if(!out.ok)continue;for(const [key,values] of Object.entries(out.data)){if(key==='bmkgRows')continue;let keep=next[key]||[];if(out.id==='sipongi-operations')keep=keep.filter(x=>!x.id.startsWith('sipongi-'));else if(out.id==='kobar-operations')keep=keep.filter(x=>!x.id.startsWith('kobar-'));else if(out.id==='community-fire')keep=keep.filter(x=>x.disaster!=='fire');else if(out.id==='community-haze')keep=keep.filter(x=>x.disaster!=='haze');else if(out.id==='facilities')keep=keep.filter(x=>x.id.startsWith('kobar-'));else keep=[];next[key]=[...keep,...values];}}return next;});
-  }catch{setContextStatuses([{id:'Sumber lapangan',ok:false,error:'Data tersimpan tetap tersedia dengan tanggal laporan'}]);}
+  }catch{setContextStatuses([{id:'Sumber lapangan',ok:false,error:'Data tersimpan tetap tersedia dengan tanggal laporan'}]);}};
+  await Promise.all([satellite(),fieldContext()]);
   setLastChecked(new Date().toISOString());setNow(Date.now());setRefreshing(false);
   if(!silent)notify(satelliteOK?'Data nasional diperiksa. Waktu pengamatan mengikuti satelit.':'Pembaruan gagal. Data tersimpan tetap tersedia dengan waktunya.');
  },[notify]);
- useEffect(()=>{if(fieldLinkRef.current){setLoading(false);return;}let mounted=true;
- const fallback={operations:[],communityReports:[],facilities:[],airQuality:[],contacts:[]};
- Promise.all([(isStatic()?fetchObservations():json(assetUrl('data/observations.json')).then(validateSnapshot).catch(()=>fetchObservations())),json(assetUrl('data/context.json')).catch(()=>fallback),json(assetUrl('data/provinces.geojson')).catch(()=>null),json(assetUrl('data/bmkg-geohotspot.json')).catch(()=>null)]).then(([d,c,b,g])=>{if(!mounted)return;setData(d);setContext(c);setBoundaries(b);setBmkg(g);setSourceStatuses(d.sources.map(s=>({...s,fetchedAt:d.retrievedAt})));setLoading(false);}).catch(()=>{if(mounted){setLoading(false);setLoadError('Data belum berhasil dimuat. Periksa koneksi, lalu muat ulang.');}});
- const tick=setInterval(()=>setNow(Date.now()),60000);return()=>{mounted=false;clearInterval(tick);};},[]);
+ useEffect(()=>{if(fieldLinkRef.current){setLoading(false);return;}const controller=new AbortController(),options={signal:controller.signal,priority:'low',timeoutMs:8000};feedLifetime.current=controller;
+ const feeds=loadInitialFeeds({
+  snapshot:()=>isStatic()?fetchObservations(options):json(assetUrl('data/observations.json'),{...options,priority:'high',timeoutMs:15000}).then(validateSnapshot).catch(error=>{if(controller.signal.aborted)throw error;return fetchObservations(options);}),
+  context:()=>json(assetUrl('data/context.json'),options),
+  boundaries:()=>json(assetUrl('data/provinces.geojson'),options),
+  bmkg:()=>json(assetUrl('data/bmkg-geohotspot.json'),options),
+ },(key,value)=>{
+  if(key==='snapshot'){setData(old=>!old||Date.parse(value.retrievedAt)>Date.parse(old.retrievedAt)?value:old);setSourceStatuses(value.sources.map(s=>({...s,fetchedAt:value.retrievedAt})));setLoading(false);}
+  else if(key==='context')setContext(value);
+  else if(key==='boundaries')setBoundaries(value);
+  else if(key==='bmkg')setBmkg(value);
+ },key=>{if(key==='snapshot'){setLoading(false);setLoadError('Data belum berhasil dimuat. Periksa koneksi, lalu muat ulang.');}});
+ initialContextReady.current=Promise.allSettled([feeds.completed.context,feeds.completed.bmkg]);
+ const tick=setInterval(()=>setNow(Date.now()),60000);return()=>{feeds.cancel();controller.abort();clearInterval(tick);};},[]);
  useEffect(()=>{if(!data||!context||initialRef.current)return;initialRef.current=true;const p=new URLSearchParams(window.location.hash.slice(1));setModal(null);setReportSnapshot(null);setCinema(p.get('showcase')==='1');setDesignLab(p.get('designs')==='1'||['ember','field'].includes(DESIGN_BRANCH));setPreviewUav(p.get('preview')==='1');setScene(null);setProvince(-1);setMunicipality(-1);setQuery('');setConfidence(0);setSensor(-1);setHours(24);setTimeline(100);setFixedCutoff(null);setPlaybackAnchor(null);setSelected(null);setOrbit(false);setPlaying(false);setFollowDrone(false);setPanelOpen(true);setTab('ringkasan');if(p.get('fleet')==='1'){setTab('drone');setMobilePanel(true);}if(p.get('ops')==='1'){setTab('teams');setMobilePanel(true);}if(p.get('q'))setMobilePanel(true);if(p.has('scene')){const sharedScene=SCENES.find(x=>x.id===p.get('scene'));setScene(sharedScene||null);if(sharedScene){setCamera({...sharedScene});setProvince(data.provinces.indexOf(sharedScene.province));}}else if(p.has('prov')||p.has('lon'))setScene(null);if(p.has('prov')){const idx=data.provinces.indexOf(p.get('prov'));setProvince(idx);}if(p.has('q'))setQuery(p.get('q'));if(p.has('mun'))setMunicipality(data.municipalities.indexOf(p.get('mun')));if(['24','48','168'].includes(p.get('hours')))setHours(Number(p.get('hours')));if(['0','1','2'].includes(p.get('confidenceFilter')))setConfidence(Number(p.get('confidenceFilter')));if(['-1','0','1','2','3'].includes(p.get('sensorFilter')))setSensor(Number(p.get('sensorFilter')));if(p.has('until')){const cutoff=Number(p.get('until')),sharedAnchor=Number(p.get('at')),anchor=Number.isFinite(sharedAnchor)&&sharedAnchor>0&&sharedAnchor<=Date.now()?sharedAnchor:Date.now(),windowHours=['24','48','168'].includes(p.get('hours'))?Number(p.get('hours')):24;if(Number.isFinite(cutoff)&&cutoff>0&&cutoff<=anchor){setPlaybackAnchor(anchor);setFixedCutoff(cutoff);setTimeline(Math.max(0,Math.min(100,100*(cutoff-(anchor-windowHours*3600000))/(windowHours*3600000))));setTimelineOpen(true);}}pendingShare.current=p;const shared=resolveShared(p,data,context,bmkg);if(shared.item){setSelected(shared.item);setMobilePanel(true);pendingShare.current=null;}if(shared.camera)setCamera(shared.camera);if(p.get('demo')==='1'){setVirtualView(true);drone.startDemo();setSelectedDroneId('DEMO-01');setTab('drone');setMobilePanel(true);if(!shared.camera)setCamera({center:[112.955,-8.015],zoom:12,pitch:64,bearing:-26});}else if(drone.mode==='demo')drone.disconnect();
  },[!!data,!!context,refresh,hashRevision]);
  useEffect(()=>{const change=()=>{initialRef.current=false;setHashRevision(x=>x+1);};window.addEventListener('hashchange',change);return()=>window.removeEventListener('hashchange',change);},[]);
@@ -110,7 +126,7 @@ export default function FireDashboard({initialNow}={}){
  const scopedContext=useMemo(()=>{if(!context||!data)return null;const p=data.provinces[province];if(!p)return context;const f=boundaries?.features.find(f=>f.properties.provinsi===p);const match=x=>(!scene?.bbox||withinScene(x.coordinates,scene))&&(x.province?.toUpperCase()===p||(x.coordinates&&f&&pointInGeometry(x.coordinates,f.geometry)));return {...context,operations:context.operations.filter(match),communityReports:context.communityReports.filter(match),facilities:context.facilities.filter(match),airQuality:context.airQuality.filter(match)};},[context,data,province,boundaries,scene]);
  const latest=filtered.reduce((m,r)=>Math.max(m,r[3]),0);const high=filtered.filter(r=>r[5]===2).length;const scope=data?.provinces[province];
  const selectScene=useCallback(next=>{setScene(next);setMunicipality(-1);setSelected(null);setOrbit(false);setQuery('');setFixedCutoff(null);setPlaybackAnchor(null);setTimeline(100);setPlaying(false);if(data)setProvince(data.provinces.indexOf(next.province));setCamera({...next});},[data]);
- const selectProvince=useCallback(index=>{setScene(null);setOrbit(false);setProvince(index);setMunicipality(-1);setQuery('');setSelected(null);setListLimit(12);setFixedCutoff(null);setPlaybackAnchor(null);setTimeline(100);setPlaying(false);if(index<0)setCamera({bounds:[[94,-11],[142,6]]});else{const f=boundaries?.features.find(f=>f.properties.provinsi===data?.provinces[index]);if(f)setCamera({bounds:getBounds(f)});}},[boundaries,data]);
+ const selectProvince=useCallback(index=>{setScene(null);setOrbit(false);setProvince(index);setMunicipality(-1);setQuery('');setSelected(null);setListLimit(12);setFixedCutoff(null);setPlaybackAnchor(null);setTimeline(100);setPlaying(false);if(index<0)setCamera({bounds:[[94,-11],[142,6]]});else{const f=boundaries?.features.find(f=>f.properties.provinsi===data?.provinces[index]);if(f)setCamera({bounds:getBounds(f)});else{const points=data?.rows.filter(r=>r[7]===index)||[];if(points.length)setCamera({bounds:points.reduce((b,r)=>[[Math.min(b[0][0],r[1]),Math.min(b[0][1],r[2])],[Math.max(b[1][0],r[1]),Math.max(b[1][1],r[2])]],[[142,7],[94,-12]]),maxZoom:9});}}},[boundaries,data]);
  const selectItem=useCallback(item=>{setStoryFollow(false);setOrbit(false);setFollowDrone(false);setPlaying(false);setStoryFollow(false);setSelected(item);setPanelOpen(true);setMobilePanel(true);if(item.coordinates)setCamera({center:item.coordinates,zoom:item.kind==='satellite'?10.5:11});},[]);
  const getShareUrl=useCallback((freeze=false)=>{const p=new URLSearchParams();if(previewUav&&drone.mode!=='live')p.set('preview','1');if(drone.mode==='demo'&&['drone','teams'].includes(tab))p.set('demo','1');if(tab==='drone')p.set('fleet','1');if(tab==='teams')p.set('ops','1');if(scene)p.set('scene',scene.id);if(data?.provinces[province])p.set('prov',data.provinces[province]);p.set('hours',String(hours));if(data?.municipalities[municipality])p.set('mun',data.municipalities[municipality]);if(query)p.set('q',query);p.set('confidenceFilter',String(confidence));p.set('sensorFilter',String(sensor));if(freeze||range.historical){p.set('at',String(range.anchor));p.set('until',String(until));}if(selected){p.set('id',selected.id);p.set('kind',selected.kind);if(selected.row){p.set('time',String(selected.row[3]));p.set('sensor',String(selected.row[6]));}}const c=shareCamera({selectedCoordinates:selected?.coordinates,camera:mapCenter,demo:drone.mode==='demo',hasLiveSession:drone.hasLiveSession,privateArea:privateAlertFocus||tab==='alerts'});if(c){p.set('lon',c[0].toFixed(6));p.set('lat',c[1].toFixed(6));p.set('zoom',String(Math.round(mapCenter.zoom)));}return location.origin+location.pathname+'#'+p.toString();},[data,province,municipality,query,hours,confidence,sensor,timeline,fixedCutoff,until,range.historical,range.anchor,selected,mapCenter,notify,scene,drone.mode,drone.hasLiveSession,previewUav,tab,privateAlertFocus]);
  const share=useCallback(async()=>{const url=getShareUrl();try{await navigator.clipboard.writeText(url);notify(drone.hasLiveSession?'Tautan peta disalin. Koneksi dan posisi drone tidak ikut dibagikan.':'Tautan peta disalin.');}catch{setModal('share');setToast(url);}},[getShareUrl,notify,drone.hasLiveSession]);
@@ -148,7 +164,7 @@ export default function FireDashboard({initialNow}={}){
  const previewVisible=previewUav&&drone.mode!=='live';
  const presentationFleet=useMemo(()=>previewVisible?previewFleet(timeline/100*20000,previewCenter,range.start):[],[previewVisible,timeline,previewCenter,range.start]);
  const fleetMode=['drone','teams'].includes(tab)&&!selected;
- const mapFleet=previewVisible?presentationFleet:fleetMode?drone.vehicles:[];
+ const mapFleet=previewVisible?presentationFleet:fleetMode?drone.vehicles:EMPTY;
  const showDroneView=d=>{setSelectedDroneId(d.id);setMobilePanel(false);if(d.streams?.length)setVideoOpen(true);else{setVirtualView(true);setFollowDrone(true);setCamera({center:[d.lon,d.lat],zoom:13.2,pitch:65,key:Date.now()});}};
  if(fieldInvite)return <main className={`workspace operational field-mode theme-${colorTheme}`}><FieldCompanion key={fieldInvite.sessionId+':'+fieldInvite.inviteToken} invite={fieldInvite} onExit={()=>location.assign(location.pathname)}/></main>;
  const useSelectedTheme=({theme,sceneId,hours:nextHours})=>{chooseColorTheme(theme);setDesignLab(false);setPlaying(false);const next=SCENES.find(s=>s.id===sceneId);if(next)selectScene(next);setHours(nextHours);const p=new URLSearchParams({scene:sceneId,hours:String(nextHours)});history.replaceState(null,'',location.pathname+location.search+'#'+p);};
@@ -174,7 +190,7 @@ export default function FireDashboard({initialNow}={}){
  <nav className="icon-rail" aria-label="Navigasi utama"><button className={tab==='ringkasan'&&!selected?'active':''} title="Ringkasan peta" aria-label="Ringkasan peta" onClick={()=>openPublicMap(true)}><MapIcon size={20}/><span>Peta</span></button><button className={tab==='laporan'?'active':''} title="Laporan penanganan" aria-label="Laporan penanganan" onClick={()=>{setTab('laporan');setSelected(null);setPanelOpen(true);setMobilePanel(true);}}><ShieldCheck size={20}/><span>Laporan</span></button><button className={tab==='lapisan'?'active':''} title="Lapisan data" aria-label="Lapisan data" onClick={()=>{setTab('lapisan');setSelected(null);setPanelOpen(true);setMobilePanel(true);}}><Layers3 size={20}/><span>Lapisan</span></button><button className={tab==='sumber'?'active':''} title="Sumber dan metodologi" aria-label="Sumber dan metodologi" onClick={()=>{setTab('sumber');setSelected(null);setPanelOpen(true);setMobilePanel(true);}}><Activity size={20}/><span>Sumber</span></button><button className={tab==='alerts'?'active alerts-rail-button':'alerts-rail-button'} title="Nearby alerts" aria-label="Nearby alerts" onClick={openAlertsPanel}><Bell size={19}/><span>Alerts</span></button><div className="rail-spacer"/><button title="Panduan penggunaan" aria-label="Panduan penggunaan" onClick={()=>setModal('guide')}><Info size={19}/><span>Panduan</span></button><button title="Kontak bantuan" aria-label="Kontak bantuan" onClick={()=>setModal('contacts')}><Phone size={19}/><span>Bantuan</span></button><span className="rail-country">ID</span></nav>
  <div className="toolbar"><div className="search-box"><Search size={15}/><input ref={searchRef} aria-label="Cari wilayah atau koordinat" placeholder="Cari wilayah atau koordinat…" value={query} onChange={e=>onSearch(e.target.value)}/>{query?<button aria-label="Hapus pencarian" onClick={()=>setQuery('')}><X size={13}/></button>:<kbd>/</kbd>}</div><div className="toolbar-separator"/><label className="region-select"><MapPin size={14}/><select aria-label="Wilayah pengamatan" value={province} onChange={e=>selectProvince(Number(e.target.value))}><option value={-1}>Seluruh Indonesia</option>{data?.provinces.map((p,i)=><option key={p} value={i}>{title(p)}</option>)}</select><ChevronDown size={11}/></label><div className="toolbar-spacer"/><button className={`text-button ${refreshing?'refreshing':''}`} disabled={refreshing||loading} aria-label="Perbarui data" onClick={()=>refresh()}><RefreshCw size={13}/><span>{refreshing?'Memeriksa sumber…':'Perbarui'}</span></button><span className="data-tag"><span/>DATA PUBLIK</span><button className="mobile-detail-toggle" aria-label="Buka panel" onClick={()=>setMobilePanel(x=>!x)}><SlidersHorizontal size={18}/></button></div>
  {coordinateSearch&&<button className="coordinate-jump button" onClick={()=>{setScene(null);setOrbit(false);setCamera({center:coordinateSearch,zoom:11,key:Date.now()});setMobilePanel(false);}}>Buka {coordinateSearch[1]}, {coordinateSearch[0]}<ArrowUpRight size={13}/></button>}
- <section className="map-region" aria-label="Area peta"><FireMap watchArea={tab==='alerts'&&!selected?alertPreview:null} playbackTarget={range.historical?playbackTarget:null} colorMode={colorTheme} metadata={data} referenceTime={range.end} playbackRows={range.historical?scopedRows:null} onPlaybackReady={onPlaybackReady} rows={filtered} context={scopedContext} bmkg={bmkg} layers={layers} terrain={terrain} basemap={basemap} camera={camera} selected={selected} exaggeration={exaggeration} orbit={orbit} onOrbitStop={()=>{setOrbit(false);setFollowDrone(false);setStoryFollow(false);}} vehicles={mapFleet} selectedDroneId={previewVisible?previewId:activeDrone?.id} droneNow={drone.now} onSelectDrone={previewVisible?setPreviewId:pickDrone} onSelect={selectItem} onReady={m=>{mapRef.current=m;}} onMove={setMapCenter} teams={fleetMode?groundResources:[]} selectedTeamId={selectedTeamId} onSelectTeam={pickTeam}/>
+ <section className="map-region" aria-label="Area peta"><FireMap watchArea={tab==='alerts'&&!selected?alertPreview:null} playbackTarget={range.historical?playbackTarget:null} colorMode={colorTheme} metadata={data} referenceTime={range.end} playbackRows={range.historical?scopedRows:null} onPlaybackReady={onPlaybackReady} rows={filtered} context={scopedContext} bmkg={bmkg} layers={layers} terrain={terrain} basemap={basemap} camera={camera} selected={selected} exaggeration={exaggeration} orbit={orbit} onOrbitStop={()=>{setOrbit(false);setFollowDrone(false);setStoryFollow(false);}} vehicles={mapFleet} selectedDroneId={previewVisible?previewId:activeDrone?.id} droneNow={drone.now} onSelectDrone={previewVisible?setPreviewId:pickDrone} onSelect={selectItem} onReady={m=>{mapRef.current=m;}} onMove={setMapCenter} teams={fleetMode?groundResources:EMPTY} selectedTeamId={selectedTeamId} onSelectTeam={pickTeam}/>
  {data&&!previewVisible&&!fleetMode&&<ObservationHUD scope={scopeLabel} summary={situation} range={range} now={now} playing={playing} onReport={openSituation}/>}
  {fleetMode&&activeDrone&&tab==='drone'&&<FleetHud drone={activeDrone} feed={drone} virtual={virtualView} onVirtual={()=>{setVirtualView(v=>!v);setFollowDrone(true);}} onCamera={()=>setVideoOpen(true)} onClose={()=>setVirtualView(false)}/>}
  {fleetMode&&tab==='teams'&&<div className="teams-map-heading"><Users size={17}/><strong>{operations.session?.label||(drone.mode==='demo'?'Contoh operasi':'Tim & kendaraan')}</strong><span>{operations.session?'SESI PRIVAT':drone.mode==='demo'?'SIMULASI':'BELUM ADA SESI'}</span></div>}

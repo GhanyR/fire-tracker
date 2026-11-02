@@ -12,7 +12,7 @@ export function replayTimeFilter(at){
  return Number.isFinite(at)?['all',['==',['typeof',['get','observed']],'number'],['<=',['get','observed'],at]]:['literal',false];
 }
 
-export function playbackFrameReady({moving,sourceLoaded,tilesLoaded,elapsed}){return !moving&&sourceLoaded&&(tilesLoaded||elapsed>=15000);}
+export function playbackFrameReady({moving,sourceLoaded,tilesLoaded,elapsed}){return !moving&&sourceLoaded&&(tilesLoaded||elapsed>=1500);}
 
 // Keep imagery and observations readable while a distant destination's terrain
 // loads. The DEM remains requested by hillshade; restore elevation only after

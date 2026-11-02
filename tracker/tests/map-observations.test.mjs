@@ -24,9 +24,9 @@ test('invalid geometry or acquisition times never enter replay rendering, and fe
 });
 
 test('playback waits for movement and observation geometry before advancing; slow base tiles have a bounded wait',()=>{
- for(const state of [{moving:true,sourceLoaded:true,tilesLoaded:true,elapsed:20000},{moving:false,sourceLoaded:false,tilesLoaded:true,elapsed:20000},{moving:false,sourceLoaded:true,tilesLoaded:false,elapsed:14999}])assert.equal(playbackFrameReady(state),false);
+ for(const state of [{moving:true,sourceLoaded:true,tilesLoaded:true,elapsed:20000},{moving:false,sourceLoaded:false,tilesLoaded:true,elapsed:20000},{moving:false,sourceLoaded:true,tilesLoaded:false,elapsed:1499}])assert.equal(playbackFrameReady(state),false);
  assert.equal(playbackFrameReady({moving:false,sourceLoaded:true,tilesLoaded:true,elapsed:0}),true);
- assert.equal(playbackFrameReady({moving:false,sourceLoaded:true,tilesLoaded:false,elapsed:15000}),true);
+ assert.equal(playbackFrameReady({moving:false,sourceLoaded:true,tilesLoaded:false,elapsed:1500}),true);
 });
 
 test('failed DEM completion stays flat; only successful destination or cached terrain can restore 3D',t=>{

@@ -15,5 +15,5 @@ export default function useOperationsSession(){
  useEffect(()=>()=>{generation.current++;pending.current?.abort();},[]);
  useEffect(()=>{if(!session)return;const timer=setInterval(()=>setClock(Date.now()),1000);return()=>clearInterval(timer);},[session?.id]);
  const visibleUnits=useMemo(()=>visibleOperationUnits(units,clock,session?.expiresAt),[units,clock,session?.expiresAt]);const validIds=new Set(visibleUnits.filter(u=>Number.isFinite(u.lat)&&Number.isFinite(u.lon)).map(u=>'ops:'+u.id));
- return {session,units:visibleUnits,drones:drones.filter(d=>validIds.has(d.id)),status:session&&Date.parse(session.expiresAt)<=clock?'expired':status,error,keys,hasPrivateSession,create,connect,disconnect,end};
+ return {now:clock,session,units:visibleUnits,drones:drones.filter(d=>validIds.has(d.id)),status:session&&Date.parse(session.expiresAt)<=clock?'expired':status,error,keys,hasPrivateSession,create,connect,disconnect,end};
 }

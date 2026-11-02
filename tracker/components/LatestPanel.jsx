@@ -8,7 +8,7 @@ import {number,title,time,age,confidenceNames} from './format.mjs';
 export default function LatestPanel({summary,range,actualNow,onPlay,onReport,onOverview,rows,data,hours,scope,scene,query,now,refreshing,lastChecked,feedError,onSelect,onArea,onClear,onScene,onTab}){
  const [mode,setMode]=useState('wilayah'),[limit,setLimit]=useState(20);
  const groups=summary.groups;
- const latest=useMemo(()=>latestRows(rows),[rows]);const newest=latest[0]?.[3];const snapshotLatest=data?.latestObservedAt?Date.parse(data.latestObservedAt):0;const stale=snapshotLatest>0&&snapshotLatest<now-hours*3600000;
+ const latest=useMemo(()=>mode==='titik'?latestRows(rows):[],[rows,mode]);const newest=summary.latest;const snapshotLatest=data?.latestObservedAt?Date.parse(data.latestObservedAt):0;const stale=snapshotLatest>0&&snapshotLatest<now-hours*3600000;
  return <div className="latest-panel">
   <div className="section-eyebrow">SITUASI WILAYAH <span className="quiet-tag">{range.historical?'REKAMAN':'NASA FIRMS'}</span></div>
   <div className="discovery-heading"><h2>{hours===168?'Tujuh hari terakhir':hours+' jam terakhir'}</h2><button aria-label="Buka filter dan lapisan" onClick={()=>onTab('lapisan')}><SlidersHorizontal size={16}/></button></div>

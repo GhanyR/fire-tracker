@@ -1,7 +1,8 @@
 'use client';
 import {ChevronDown,Clock3,Drone,FileText,LocateFixed,Pause,Play,RotateCcw} from 'lucide-react';
 import {number,time,title} from './format.mjs';
-const clock=value=>new Intl.DateTimeFormat('id-ID',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit',hour12:false}).format(value);
+const clockFormatter=new Intl.DateTimeFormat('id-ID',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit',hour12:false});
+const clock=value=>clockFormatter.format(value);
 export default function TemporalTimeline({mapLoading=false,focus,previewUav,onPreview,summary,range,progress,playing,speed,expanded,following,onPlay,onScrub,onNow,onSpeed,onExpand,onFollow,onHours,onReport,disabled}){
  const frame=summary.frame,max=Math.max(1,...summary.bins.map(x=>x.count));
  const historical=range.historical||playing;

@@ -24,7 +24,7 @@ export function parseFirmsCSV(text,sensor){
 }
 export function filterRows(rows,{now=Date.now(),hours=24,confidence=0,sensor=-1,province=-1,municipality=-1,query='',provinces=[],municipalities=[],until=now}={}){
  const since=now-hours*3600000,q=query.trim().toLocaleLowerCase('id');
- return rows.filter(r=>r[3]>=since&&r[3]<=Math.min(now,until)&&r[5]>=confidence&&(sensor<0||r[6]===sensor)&&(province<0||r[7]===province)&&(municipality<0||r[8]===municipality)&&(!q||`${provinces[r[7]]||''} ${municipalities[r[8]]||''} ${r[1]} ${r[2]}`.toLocaleLowerCase('id').includes(q)));
+ return rows.filter(r=>r[3]>=since&&r[3]<=Math.min(now,until)&&r[5]>=confidence&&(sensor<0||r[6]===sensor)&&(province<0||r[7]===province)&&(municipality<0||r[8]===municipality)&&(!q||`${provinces[r[7]]||''} ${municipalities[r[8]]||''} ${r[1]} ${r[2]}`.toLowerCase().includes(q)));
 }
 export function mergeRows(oldRows,newRows){
  const key=r=>`${r[6]}:${r[1]}:${r[2]}:${r[3]}`;const merged=new Map(oldRows.map(r=>[key(r),r]));for(const r of newRows){const k=key(r),old=merged.get(k);merged.set(k,old?[old[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7]>=0?r[7]:old[7],r[8]>=0?r[8]:old[8]]:r);}return [...merged.values()];

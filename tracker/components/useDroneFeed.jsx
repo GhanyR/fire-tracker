@@ -26,6 +26,7 @@ export default function useDroneFeed(){
    ws.onclose=e=>{clearInterval(heartbeat);clearTimeout(handshake);if(current!==session.current||intentional)return;if(e.code===1008){setStatus('error');setError('Token tidak diterima atau izin koneksi ditolak.');return;}setStatus('reconnecting');timer=setTimeout(open,Math.min(15000,1000*2**Math.min(attempt++,4)));};
   };open();cleanup.current=()=>{intentional=true;clearTimeout(timer);clearTimeout(handshake);clearInterval(heartbeat);ws?.close();};return true;
  },[stop]);
- useEffect(()=>{const tick=setInterval(()=>setNow(Date.now()),1000);return()=>{clearInterval(tick);stop();};},[stop]);
+ useEffect(()=>()=>stop(),[stop]);
+ useEffect(()=>{if(mode==='none')return;setNow(Date.now());const tick=setInterval(()=>{if(!document.hidden)setNow(Date.now());},1000);return()=>clearInterval(tick);},[mode]);
  return {vehicles,status,error,mode,hasLiveSession,paused,now,startDemo,togglePause,connect,disconnect};
 }
