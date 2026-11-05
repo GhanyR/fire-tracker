@@ -182,3 +182,6 @@ export function buildSituationBrief(summary, {scope, range, retrievedAt, generat
   );
   return lines.join('\n');
 }
+
+// A snapshot retrieved before the requested window cannot establish a zero count.
+export function snapshotCoversRange(data,range){const retrieved=Date.parse(data?.retrievedAt);return Number.isFinite(retrieved)&&Number.isFinite(range?.start)&&retrieved>=range.start;}

@@ -35,7 +35,7 @@ A shortened recording of the actual app. This is observation history, not a simu
 
 ## open a point, check the evidence
 
-Each detection includes its acquisition time, sensor, confidence, coordinates and source link. FRP is shown when available. Copy a brief, download CSV or GeoJSON, or open the coordinate in another map.
+Each detection includes its acquisition time, sensor, confidence, coordinates and source link. NOAA ended S-NPP data delivery on 2 November 2026; its earlier observations remain available in the history window. [NOAA notice](https://www.nesdis.noaa.gov/news/update-4-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-november-2-2026-1800-utc). FRP is shown when available. Copy a brief, download CSV or GeoJSON, or open the coordinate in another map.
 
 ![Selected satellite observation with its sensor, acquisition time, fire radiative power and confidence](assets/readme/observation.jpg)
 

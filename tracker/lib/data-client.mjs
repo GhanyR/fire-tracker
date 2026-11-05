@@ -10,7 +10,7 @@ export async function json(url,{signal,timeoutMs=35000,...options}={}){
  try{const response=await fetch(url,{...options,signal:request.signal});if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json();}
  finally{clearTimeout(timer);signal?.removeEventListener('abort',cancel);}
 }
-export async function fetchObservations({signal}={}){return validateSnapshot(await json(isStatic()?assetUrl('data/observations.json'):PUBLIC_DATA+'observations.json',{cache:'no-cache',signal,timeoutMs:8000}));}
+export async function fetchObservations({signal}={}){const direct=isStatic()?assetUrl('data/observations.json'):PUBLIC_DATA+'observations.json';if(!isStatic())try{return validateSnapshot(await json('/api/snapshot',{signal,timeoutMs:135000}));}catch(error){if(signal?.aborted)throw error;}return validateSnapshot(await json(isStatic()?direct:'https://raw.githubusercontent.com/GhanyR/fire-tracker/data/data/observations.json',{cache:'no-cache',signal,timeoutMs:180000}));}
 export function fetchWeather(lon,lat,options={}){const url=isStatic()?`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,precipitation&timezone=UTC`:`/api/weather?lon=${lon}&lat=${lat}`;return json(url,options);}
 
 // Critical observations publish independently of optional GIS/context requests.
