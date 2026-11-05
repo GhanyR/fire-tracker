@@ -139,6 +139,17 @@ jobs:
           path: site
     outputs:
       pages: ${{ steps.pages.outcome }}
+      data_fallback: ${{ steps.data.outputs.lama }}
+
+  data_freshness:
+    needs: build
+    if: needs.build.outputs.data_fallback == '1'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report stale source data
+        run: |
+          echo "::error::NASA FIRMS refresh failed. The site still serves the previous dated snapshot."
+          exit 1
 
   deploy:
     needs: build
