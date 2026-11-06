@@ -124,4 +124,10 @@ Satellite detections are not confirmed incidents, ignition times, burned area or
 
 Data sources include NASA FIRMS, BMKG, SiPongi, BPBD Kotawaringin Barat and PetaBencana. Terrain and imagery attribution stays on the map. Source data and imagery retain their own terms; see the [reference](docs/REFERENCE.md#sumber-data--lisensi).
 
+## credit and reuse
+
+Fire Tracker was created by [Ghany Rasyid](https://github.com/GhanyR). You can fork, modify and use it commercially under the [MIT license](LICENSE). When distributing copies or substantial portions of the code, keep the copyright and license notice.
+
+If you build on Fire Tracker, please credit the project and link to this repository. A ready-to-use citation is available in [CITATION.cff](CITATION.cff).
+
 [MIT](LICENSE) · maintained by [Ghany Rasyid](https://github.com/GhanyR) · [media and capture notes](assets/readme/README.md)
