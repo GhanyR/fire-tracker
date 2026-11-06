@@ -8,6 +8,7 @@
 </p>
 <h1 align="center">Fire Tracker</h1>
 <p align="center">see recent satellite hotspots across Indonesia</p>
+<p align="center">created by <a href="https://github.com/GhanyR">Ghany Rasyid</a></p>
 <p align="center">
   <a href="https://firetracker.id/">open the map</a> ·
   <a href="#run-the-map-locally">run locally</a>

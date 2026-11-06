@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use Fire Tracker, please cite the project."
+type: software
+title: Fire Tracker
+authors:
+  - given-names: Ghany
+    family-names: Rasyid
+repository-code: "https://github.com/GhanyR/fire-tracker"
+url: "https://firetracker.id/"
+license: MIT
