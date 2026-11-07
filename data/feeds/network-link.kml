@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><NetworkLink><name>Fire Tracker (otomatis diperbarui)</name>
+<refreshVisibility>0</refreshVisibility><Link><href>https://GhanyR.github.io/fire-tracker/data/feeds/incidents.kml</href><refreshMode>onInterval</refreshMode><refreshInterval>1800</refreshInterval></Link></NetworkLink></kml>
